@@ -67,9 +67,13 @@
 }
 
 .title {
-	color: #f9a11b;
 	margin: 0;
 	padding: 0;
+}
+
+.title>a{
+	text-decoration: none;
+	color: #f9a11b;
 	line-height: 60px;
 	font-size: 1.8em;
 	font-weight: bold;
@@ -96,7 +100,7 @@
 	<div class="header-all-wrap">
 		<div class="header-wrap">
 			<div class="col-md-3 header">
-				<p class="title">모방의 민족</p>
+				<p class="title"><a href="/">모방의 민족</a></p>
 			</div>
 			<div class="col-md-6 header"></div>
 			<div class="col-md-3 header">
