@@ -68,10 +68,10 @@
             width: 900px;
             height: 200px;
             display: block;
-            border-radius: 15px;
+            box-shadow: 0px 0px 5px gray;
             margin: 0 auto;
             position: absolute;
-            background-color: #e8e8e8;
+            background-color: white;
             top: 42%;
             left: 50%;
             transform: translateX(-50%);
@@ -91,7 +91,7 @@
             border: none;
             border-radius: 40px;
             margin-top: 30px;
-            background-color: lightgray;
+            background-color: #e8e8e8;
         }
 
         .category-box-wrap {

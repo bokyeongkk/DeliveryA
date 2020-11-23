@@ -131,15 +131,18 @@
 			$(".id").val("");
             $(".pw").val("");
 			$(".login-modal-wrap").css('display', 'flex');
+			$('body').css("overflow", "hidden");	//boddy 스크롤 막기	
 		}
 		 //닫기 버튼
         $("input[type=button]").click(function(){
             $(".login-modal-wrap").css('display','none');
+            $('body').css("overflow", "scroll");
         });
         
         //이렇게 할 경우 자식을 클릭해도 사라지므로 버블링 걸어줘야 함
         $(".login-modal-wrap").click(function(){
             $(".login-modal-wrap").css('display','none');
+            $('body').css("overflow", "scroll");
         });
         
         //이벤트 버블링 막기
