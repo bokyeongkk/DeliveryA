@@ -77,10 +77,12 @@
 
 .nav-link {
 	line-height: 60px;
-	padding: 0;
-	margin: 0;
 	color: #f9a11b;
 }
+.header-nav-link{
+	padding: 0;
+	margin: 0;
+	}
 
 .nav-link:hover {
 	color: white;
@@ -102,14 +104,14 @@
 					<%
 						if (m == null) {
 					%>
-					<li class="nav-item"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="javascript:void(0)" onclick="showLogin();">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="#">회원가입</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">로그아웃</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="#">마이페이지</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="#">로그아웃</a></li>
 					<%
 						}
 					%>

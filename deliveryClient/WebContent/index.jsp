@@ -8,6 +8,9 @@
 </head>
 <body>
 	<%@include file ="/WEB-INF/views/common/header.jsp" %>
+	<div class="main-wrap">
+	
+	</div>
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
