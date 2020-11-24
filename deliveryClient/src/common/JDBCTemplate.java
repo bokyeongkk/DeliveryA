@@ -11,9 +11,9 @@ public class JDBCTemplate {
 		Connection conn = null;
 
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String dbID = "";
-		String dbPW = "";
+		String url = "jdbc:oracle:thin:@1.220.236.74:15214:xe";
+		String dbID = "delivery";
+		String dbPW = "delivery";
 
 		try {
 			Class.forName(driver);
