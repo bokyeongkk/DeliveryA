@@ -139,7 +139,7 @@
             padding: 0;
             line-height: 60px;
         }
-        .category-img>img{
+        .category-img>a>img{
             width: 100%;
             height: 100%;
         }
@@ -170,9 +170,21 @@
         </div>
         <div class="category-box-wrap">
             <div class="category-box-list">
-                <div class="category-box">
+				<div class="category-box">
+					<div class="category-img">
+						<a href="/searchCategory?categoryNo=1"> 
+							<!--여기에 img 넣기-->테스트
+						</a>
+					</div>
+					<div class="category-text">
+						<p>text</p>
+					</div>
+				</div>
+				<div class="category-box">
                     <div class="category-img">
-                    <!--여기에 img 넣기-->
+                    	<a href="/searchCategory?categoryNo=2"> 
+							<!--여기에 img 넣기-->
+						</a>
                     </div>
                     <div class="category-text">
                         <p>text</p>
@@ -180,41 +192,9 @@
                 </div>
                 <div class="category-box">
                     <div class="category-img">
-                    <!--여기에 img 넣기-->
-                    </div>
-                    <div class="category-text">
-                        <p>text</p>
-                    </div>
-                </div>
-                <div class="category-box">
-                    <div class="category-img">
-                    <!--여기에 img 넣기-->
-                    </div>
-                    <div class="category-text">
-                        <p>text</p>
-                    </div>
-                </div>
-            </div>
-            <div class="category-box-list">
-                <div class="category-box">
-                    <div class="category-img">
-                    <!--여기에 img 넣기-->
-                    </div>
-                    <div class="category-text">
-                        <p>text</p>
-                    </div>
-                </div>
-                <div class="category-box">
-                    <div class="category-img">
-                    <!--여기에 img 넣기-->
-                    </div>
-                    <div class="category-text">
-                        <p>text</p>
-                    </div>
-                </div>
-                <div class="category-box">
-                    <div class="category-img">
-                    <!--여기에 img 넣기-->
+						<a href="/searchCategory?categoryNo=3"> 
+							<!--여기에 img 넣기-->
+						</a>                    
                     </div>
                     <div class="category-text">
                         <p>text</p>
@@ -224,7 +204,9 @@
             <div class="category-box-list">
                 <div class="category-box">
                     <div class="category-img">
-                    <!--여기에 img 넣기-->
+						<a href="/searchCategory?categoryNo=4"> 
+							<!--여기에 img 넣기-->
+						</a>
                     </div>
                     <div class="category-text">
                         <p>text</p>
@@ -232,7 +214,9 @@
                 </div>
                 <div class="category-box">
                     <div class="category-img">
-                    <!--여기에 img 넣기-->
+						<a href="/searchCategory?categoryNo=5"> 
+							<!--여기에 img 넣기-->
+						</a>
                     </div>
                     <div class="category-text">
                         <p>text</p>
@@ -240,13 +224,47 @@
                 </div>
                 <div class="category-box">
                     <div class="category-img">
-                    <!--여기에 img 넣기-->
+						<a href="/searchCategory?categoryNo=6"> 
+							<!--여기에 img 넣기-->
+						</a>
                     </div>
                     <div class="category-text">
                         <p>text</p>
                     </div>
                 </div>
             </div>
+            <div class="category-box-list">
+                <div class="category-box">
+                    <div class="category-img">
+						<a href="/searchCategory?categoryNo=7"> 
+							<!--여기에 img 넣기-->
+						</a>
+                    </div>
+                    <div class="category-text">
+                        <p>text</p>
+                    </div>
+                </div>
+                <div class="category-box">
+                    <div class="category-img">
+						<a href="/searchCategory?categoryNo=8"> 
+							<!--여기에 img 넣기-->
+						</a>
+                    </div>
+                    <div class="category-text">
+                        <p>text</p>
+                    </div>
+                </div>
+				<div class="category-box">
+					<div class="category-img">
+						<a href="/searchCategory?categoryNo=9">
+							<!--여기에 img 넣기-->
+						</a>
+					</div>
+					<div class="category-text">
+						<p>text</p>
+					</div>
+				</div>
+			</div>
         </div>
         <div class="content-recommend">
             
