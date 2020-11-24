@@ -1,5 +1,11 @@
+<%@page import="store.model.vo.Store"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%
+		ArrayList<Store> list = (ArrayList<Store>)request.getAttribute("list");
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +26,11 @@
 <body>
 
 	<section>
+	<%for(Store s : list) {%>
+		<h2><%=s.getStoreCeo() %></h2>
+	
+	
+	<%} %>	
 	<div class="content-wrap" style="width: 1300px; margin: 0 auto;">
 		<div class="category-navi">
 			<ul>
@@ -39,7 +50,7 @@
 
 			<div class="store-box">
 				<div class="store-box-img">
-					<img src="bhc.png" style="width: 100%; height: 100%;">
+					<img src="" style="width: 100%; height: 100%;">
 				</div>
 				<div class="store-box-text">
 					<ul>
@@ -54,16 +65,15 @@
 				</div>
 			</div>
 
-			<div class="store-box" name="">
+			<div class="store-box">
 				<div class="store-box-img">
-					<img src="unnamed.png" style="width: 100%; height: 100%;">
+					<img src="" style="width: 100%; height: 100%;">
 				</div>
 				<div class="store-box-text">
 					<ul>
 						<li class="store-name">Store Name</li>
-						<li class="store-etc"><i class="fas fa-star" id="star"></i> (<span>4.5</span>)
-							/ 리뷰 (<span>13</span>)</li>
-						<li class="store-etc">매일 11:00 - 23:00</li>
+						<li class="store-etc">11:00 ~ 23:00</li>
+						<li class="store-etc">매주 월요일 휴무</li>
 						<br>
 						<li id="coupon">쿠폰사용가능</li>
 					</ul>

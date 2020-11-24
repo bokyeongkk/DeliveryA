@@ -142,7 +142,7 @@
                                     <input type="text" class="menu-price" value="메뉴가격">
                                 </div>
                                 <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in" id="cart-in">장바구니 담기</button>
+                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
                             </li>
                             <li>
@@ -152,7 +152,7 @@
                                     <input type="text" class="menu-price" value="메뉴가격">
                                 </div>
                                 <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in" id="cart-in">장바구니 담기</button>
+                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
                             </li>
                             <li>
@@ -162,7 +162,7 @@
                                     <input type="text" class="menu-price" value="메뉴가격">
                                 </div>
                                 <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in" id="cart-in">장바구니 담기</button>
+                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
                             </li>
                             <li>
@@ -172,7 +172,7 @@
                                     <input type="text" class="menu-price" value="메뉴가격">
                                 </div>
                                 <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in" id="cart-in">장바구니 담기</button>
+                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
                             </li>
                         </ul>
