@@ -116,7 +116,7 @@
 						} else {
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link" href="#">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="#">로그아웃</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="/logout">로그아웃</a></li>
 					<%
 						}
 					%>
