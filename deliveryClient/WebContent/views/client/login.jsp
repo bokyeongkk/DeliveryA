@@ -109,9 +109,9 @@
             <div class="login-modal-content">
                 <form action="/login" method="post">
                    <p>아이디</p>
-                    <input type="text" name="id" class="id" placeholder="아이디를 입력하세요">
+                    <input type="text" name="cliId" class="id" placeholder="아이디를 입력하세요">
                     <p>비밀번호</p>
-                    <input type="password" name="pw" class="pw" placeholder="비밀번호를 입력하세요">
+                    <input type="password" name="cliPw" class="pw" placeholder="비밀번호를 입력하세요">
                     <div class="login-menu">
                         <p><a href="#">아이디 / 비밀번호 찾기</a></p>
                         <p>아직 회원이 아니신가요? <a href="/views/client/join.jsp" id="join">회원가입</a></p>
