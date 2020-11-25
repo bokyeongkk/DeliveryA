@@ -110,7 +110,7 @@
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="javascript:void(0)" onclick="showLogin();">로그인</a></li>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="#">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="/views/client/join.jsp">회원가입</a></li>
 					<%
 						} else {
 					%>
