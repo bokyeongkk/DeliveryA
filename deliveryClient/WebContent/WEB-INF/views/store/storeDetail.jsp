@@ -1,5 +1,14 @@
+<%@page import="store.model.vo.Review"%>
+<%@page import="store.model.vo.Menu"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="store.model.vo.Store"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	Store s = (Store)request.getAttribute("s");
+    	ArrayList<Menu> listMenu = (ArrayList<Menu>)request.getAttribute("listMenu");
+    	ArrayList<Review> listRev = (ArrayList<Review>)request.getAttribute("listRev"); 
+    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,6 +16,10 @@
 <!-- jQuery -->
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-3.3.1.js"></script>
+<!-- 부트스트랩 사용 -->
+<link 
+	rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" 
+	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">	
 <!-- fontawesome 아이콘 -->
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <!-- googlefont -->
@@ -15,13 +28,65 @@
 	rel="stylesheet">
 <!-- storeLis.css 가져오기 -->	
 <link href="/css/store/storeDetail.css" rel="stylesheet" type="text/css">
-<title>Insert title here</title>
+
+<style>
+	     /*모달창 스타일*/
+        .reveiw-modal-wrap {
+            display: none;
+  
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .review-modal {
+            background-color: #ffffff;
+            width: 30vw;
+            max-height: 900px;
+            min-width: 300px;
+            min-height: 340px;
+            padding: 35px;
+        }
+
+        .review-modal-btn {
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 15px;
+        }
+
+        .review-modal-btn input {
+            width: 40%;
+            height: 50px;
+        }
+        
+        #star {
+            color: #f6b352;
+            width: 28px;
+            height: 28px;
+        }
+</style>
+
 <title>Insert title here</title>
 </head>
 <body>
-	<script>
-		$(function() {
 
+      	<script>
+		$(function() {
+			
+			//모달 창 닫기 버튼
+			$(".modal-cancel").click(function() {
+				$(".grade-mark").removeClass("fas fa-star");
+				$(".grade-mark").addClass("far fa-star");
+				$(".modal-content").val("");
+				$(".reveiw-modal-wrap").css('display', 'none');
+			});
+			
 			//탭 설정
 			$(".store-tap").eq(0).addClass("selectTab");
 			$(".store-cont").hide();
@@ -43,17 +108,6 @@
 				alert("장바구니에 담겼습니다.")
 			});
 
-			//리뷰 작성하기 버튼 클릭 이벤트 (모달창)
-			$(".btn-review-write").click(function() {
-				url: "mo"
-				$(".review-modal-wrap").css("display", "flex");
-			});
-
-			//모달 창 닫기 버튼
-			$("input[type=button]").click(function() {
-				$(".review-modal-wrap").css("display", "none");
-			});
-
 			//장바구니 전체 삭제 이벤트
 			$("#trashbox").click(function() {
 				$("#trashbox").parent().siblings(".cart-menu-box").remove();
@@ -64,10 +118,71 @@
 			$(".btn-delete").click(function() {
 				$(this).parents(".cart-menu-box").remove();
 			});
-
+			
+			
+			//장바구니 (-)수량 버튼
+			$(".minus").click(function() {
+				var n = $('.minus').index(this);
+				var num = $(".counter:eq("+n+")").val();
+				if(num > 1) {
+					num = $(".counter:eq("+n+")").val(num*1-1);
+				}
+			});
+			
+			//장바구니 (+)수량 버튼
+			$(".plus").click(function() {
+				var n = $(".plus").index(this);
+				var num = $(".counter:eq("+n+")").val();
+				num = $(".counter:eq("+n+")").val(num*1+1);
+			});
+			
 		});
+		
+		function reviewWriteFrm(cliId, storeNo) {
+			$.ajax({
+				url:"/reviewWriteFrm",
+				data:{
+					cliId : cliId,
+					storeNo : storeNo
+				},
+				type:"post",
+				success : function(data){
+					
+				}
+			})
+			
+			
+			$(".reveiw-modal-wrap").css("display", "flex");
+			$('body').css("overflow", "hidden");
+		}
+
+		//리뷰 작성 시 별점 이벤트
+       $(document).on("click",".grade-mark",function(){
+
+            mark = $(".grade-mark");
+            idx = $(".grade-mark").index(this);
+
+            mark.removeClass("fas fa-star");
+            mark.removeClass("far fa-star");
+
+            mark.each(function(index, item) {
+                if (index <= idx) {
+                    
+                    $(item).addClass("fas fa-star");
+                } else {
+                    $(item).addClass("far fa-star");
+                }
+            });
+
+            $(".grade").val((idx + 1));
+            console.log($(".grade").val());
+            
+         });
+	
 	</script>
 
+
+	<%@include file ="/WEB-INF/views/common/header.jsp" %>
 
 	<section>
         <div class="content-wrap" style="width: 1300px; margin: 0 auto;">
@@ -77,14 +192,14 @@
                 <!--가게정보div-->
                 <div class="store-info">
                     <div class="store-info-img">
-                        <img src="" style="width:100%; height: 100%;">
+                        <img src="\upload\test.png" style="width:100%; height: 100%;">
                     </div>
                     <div class="store-info-text">
                         <ul>
-                            <li>가게명</li><br>
-                            <li>전화번호 : 02-1234-5678</li>
-                            <li>주소 : 서울시 영등포구 선유로 이레빌딩 1층 </li>
-                            <li>사랑하는 고객님 ~~^^!! 정성을 다해 만드는 BHC입니다~~ 지금 주문하세요 ♥</li>
+                            <li><%=s.getStoreName() %></li><br>
+                            <li>전화번호 : <%=s.getStoreTel() %></li>
+                            <li>주소 : <%=s.getStoreAddr() %> </li>
+                            <li><%=s.getStoreDet() %></li>
                         </ul>
                     </div>
                 </div>
@@ -142,27 +257,7 @@
                                     <input type="text" class="menu-price" value="메뉴가격">
                                 </div>
                                 <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="menu-text">
-                                    <input type="text" class="menu-name" value="메뉴이름"><br>
-                                    <input type="text" class="menu-desc" value="메뉴설명"><br>
-                                    <input type="text" class="menu-price" value="메뉴가격">
-                                </div>
-                                <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="menu-text">
-                                    <input type="text" class="menu-name" value="메뉴이름"><br>
-                                    <input type="text" class="menu-desc" value="메뉴설명"><br>
-                                    <input type="text" class="menu-price" value="메뉴가격">
-                                </div>
-                                <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
+                                    <button type="submit" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
                             </li>
                             <li>
@@ -197,9 +292,11 @@
                         </div>
                     </div>
                     <div class="review-write">
-                        <button type="button" class="btn btn-warning btn-review-write" onclick="reviewWriteFrm();">
-                            리뷰 작성하기
-                        </button>
+                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('user01','1');" value="리뷰 작성하기">
+
+<%--                     	<a href="/reviewWriteFrm?storeNo=<%=s.getStoreNo() %>" class="btn btn-warning btn-review-write">
+                    		리뷰 작성하기
+                    	</a> --%>
                     </div>
                     <div class="review-view-wrap">
                         <div class="review-view">
@@ -243,7 +340,31 @@
                 </div>
                 <br><br><br><br><br><br>
             </div><!-- store-wrap 닫는 div -->
+            
+            
 
+         <!--모달div-->
+        <div class="reveiw-modal-wrap">
+            <div class="review-modal">
+                <h1>리뷰 작성하기</h1>
+                <hr>
+                <h4>고객님 오늘 음식은 어떠셨어요?</h4>
+                <i class="far fa-star grade-mark" id="star"></i>
+                <i class="far fa-star grade-mark" id="star"></i>
+                <i class="far fa-star grade-mark" id="star"></i>
+                <i class="far fa-star grade-mark" id="star"></i>
+                <i class="far fa-star grade-mark" id="star"></i>
+                <input class="grade" type="hidden" value="">
+                <br><br>
+                <textarea class="form-control modal-content" name="reviewContent" cols="40" rows="8" style="resize: none"></textarea>
+                <div class="review-modal-btn">
+                    <input type="button" class="btn btn-dark modal-cancel" value="취소">
+                    <input type="submit" class="btn btn-outline-dark" value="작성완료">
+                </div>
+            </div>
+        </div>
+            
+            
             <!--장바구니div-->
             <div class="cart-wrap">
                 <div class="cart-sticky">
@@ -258,9 +379,9 @@
 
                             <input type="text" name="orderName" class="cart-name" value="메뉴이름">
 
-                            <button type="button" class="btn-cart-num" id="minus"><i class="fas fa-minus"></i></button>
-                            <input type="text" name="orderConter" class="btn-cart-num" id="counter" value="1">
-                            <button type="button" class="btn-cart-num" id="plus"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="btn-cart-num minus"><i class="fas fa-minus"></i></button>
+                            <input type="text" name="orderConter" class="btn-cart-num counter" value="1">
+                            <button type="button" class="btn-cart-num plus"><i class="fas fa-plus"></i></button>
 
                             <input type="text" name="orderPrice" class="cart-price" value="19,800"><span class="won"> 원</span>
                         </div>
@@ -276,7 +397,6 @@
             </div>
         </div>
       </section>
-      <%@ include file="/views/store/reviewWriteFrm.jsp"%>
       
 </body>
 </html>

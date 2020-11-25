@@ -5,14 +5,20 @@
 	box-sizing: border-box;
 }
 
+.content-wrap {
+	width: 1300px;
+	margin: 0 auto;
+	padding-top : 30px;
+	padding-bottom: 70px;
+}
+
 .category-navi {
 	width: 100%;
 }
 
 .category-navi ul {
 	list-style: none;
-	margin-top: 50px;
-	margin-bottom: 50px;
+	margin-bottom: 70px;
 	padding: 0;
 	overflow: hidden;
 }
@@ -84,7 +90,7 @@
 	padding: 1px;
 }
 
-.store-name {
+#store-name {
 	display : block;
 	width : 100%;
 	height : 100%;
@@ -95,7 +101,7 @@
 	color: #383a3f;
 }
 
-.store-name:hover {
+#store-name:hover {
 	text-decoration: none;
 	color: #383a3f;
 }

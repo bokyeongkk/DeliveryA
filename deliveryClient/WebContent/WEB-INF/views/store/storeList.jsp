@@ -1,10 +1,9 @@
 <%@page import="store.model.vo.Store"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
 	<%
-		ArrayList<Store> list = (ArrayList<Store>)request.getAttribute("list");
+		ArrayList<Store> listStore = (ArrayList<Store>)request.getAttribute("listStore");
 	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -24,69 +23,67 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
+	<%@include file ="/WEB-INF/views/common/header.jsp" %>
+	
 	<section>
-	<%for(Store s : list) {%>
-		<h2><%=s.getStoreCeo() %></h2>
+
+	<div class="content-wrap">
 	
-	
-	<%} %>	
-	<div class="content-wrap" style="width: 1300px; margin: 0 auto;">
 		<div class="category-navi">
 			<ul>
-				<li><a href="#">치킨</a></li>
-				<li><a href="#">피자</a></li>
-				<li><a href="#">한식</a></li>
-				<li><a href="#">중식</a></li>
-				<li><a href="#">일식</a></li>
-				<li><a href="#">양식</a></li>
-				<li><a href="#">분식</a></li>
-				<li><a href="#">족발·보쌈</a></li>
-				<li><a href="#">패스트푸드</a></li>
+				<li><a href="/searchCategory?categoryNo=1">치킨</a></li>
+				<li><a href="/searchCategory?categoryNo=2">피자</a></li>
+				<li><a href="/searchCategory?categoryNo=3">한식</a></li>
+				<li><a href="/searchCategory?categoryNo=4">중식</a></li>
+				<li><a href="/searchCategory?categoryNo=5">일식</a></li>
+				<li><a href="/searchCategory?categoryNo=6">양식</a></li>
+				<li><a href="/searchCategory?categoryNo=7">분식</a></li>
+				<li><a href="/searchCategory?categoryNo=8">족발·보쌈</a></li>
+				<li><a href="/searchCategory?categoryNo=9">패스트푸드</a></li>
 			</ul>
 		</div>
 
 		<div class="store-box-wrap">
 
+		<%for(Store s : listStore) {%>
 			<div class="store-box">
 				<div class="store-box-img">
-					<img src="" style="width: 100%; height: 100%;">
+					<img src="\upload\test.png" style="width: 100%; height: 100%;">
 				</div>
 				<div class="store-box-text">
 					<ul>
-						<li><a href="/StoreDetail" class="store-name">BHC
-								당산역점</a></li>
-						<li class="store-etc"><i class="fas fa-star" id="star"></i> (<span>4.5</span>)
-							/ 리뷰 (<span>13</span>)</li>
-						<li class="store-etc">매일 11:00 - 23:00</li>
+						<li class="store-name"><a href="/storeDetailView?storeNo=<%=s.getStoreNo() %>" id="store-name"><%=s.getStoreName() %></a></li>
+						<li class="store-etc">매주 <%=s.getStoreRest() %> 휴무</li>
+						<li class="store-etc">운영시간  : <%=s.getStoreStartT() %> ~ <%=s.getStoreEndT() %></li>
 						<br>
 						<li id="coupon">쿠폰사용가능</li>
 					</ul>
 				</div>
 			</div>
-
-			<div class="store-box">
-				<div class="store-box-img">
-					<img src="" style="width: 100%; height: 100%;">
-				</div>
-				<div class="store-box-text">
-					<ul>
-						<li class="store-name">Store Name</li>
-						<li class="store-etc">11:00 ~ 23:00</li>
-						<li class="store-etc">매주 월요일 휴무</li>
-						<br>
-						<li id="coupon">쿠폰사용가능</li>
-					</ul>
-				</div>
-			</div>
+		<%} %>	
+		
 		</div>
-	</div>
-	<!--전체content를 감싸는 div--> </section>
+		
+	</div><!--전체content를 감싸는 div--> 
+	
+	</section>
+	
+	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 
 	<script>
 		
-	</script>
+		//div를 클릭해도 내부 a태그의 링크로 이동
+    	$(".store-box").click(function() {
+        	location.href=$(this).children().find("a").attr("href");
+    	});
+    
+		//a태그 이벤트 버블링 제거
+     	$(".store-box a").click(function(event){
+         	event.stopPropagation();
+     	});
 
+	</script>
 
 </body>
 </html>

@@ -11,19 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import store.model.service.StoreService;
+import store.model.vo.Menu;
+import store.model.vo.Review;
 import store.model.vo.Store;
 
 /**
- * Servlet implementation class SearchCategoryServlet
+ * Servlet implementation class StoreDetailViewServlet
  */
-@WebServlet(name = "SearchCategory", urlPatterns = { "/searchCategory" })
-public class SearchCategoryServlet extends HttpServlet {
+@WebServlet(name = "StoreDetailView", urlPatterns = { "/storeDetailView" })
+public class StoreDetailViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchCategoryServlet() {
+    public StoreDetailViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,22 +37,27 @@ public class SearchCategoryServlet extends HttpServlet {
 		//1. 인코딩 (필터로 생략)
 		
 		//2. view에서 넘어온 데이터 저장
-		int storeCateId = Integer.parseInt(request.getParameter("categoryNo"));
+		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 		
 		//3. 비지니스 로직
-		ArrayList<Store> listStore = new StoreService().selcetStoreList(storeCateId);
-
+		Store s = new StoreService().selectStoreView(storeNo);
+		ArrayList<Menu> listMenu = new StoreService().selectMenuView(storeNo);
+		ArrayList<Review> listRev = new StoreService().seleceRevView(storeNo);
+		
 		//4. 결과처리
-		if(listStore.isEmpty()) {
+		if(s == null && listMenu.isEmpty()) { //가게 정보가 없거나 메뉴가 없을 때
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "해당 카테고리는 입점 준비 중 입니다.");
-			request.setAttribute("loc", "/");
+			request.setAttribute("msg", "상세 페이지 준비중");
+			request.setAttribute("loc", "/SearchCategory?categoryNo="+s.getStoreCateId());
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/store/storeList.jsp");
-			request.setAttribute("listStore", listStore);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/store/storeDetail.jsp");
+			request.setAttribute("s", s);
+			request.setAttribute("listMenu", listMenu);
+			request.setAttribute("listRev", listRev);
 			rd.forward(request, response);
 		}
+		
 	}
 
 	/**

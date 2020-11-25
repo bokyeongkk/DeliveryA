@@ -1,7 +1,8 @@
 package store.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import store.model.service.StoreService;
-import store.model.vo.Store;
-
 /**
- * Servlet implementation class SearchCategoryServlet
+ * Servlet implementation class ReviewWriteFrmServlet
  */
-@WebServlet(name = "SearchCategory", urlPatterns = { "/searchCategory" })
-public class SearchCategoryServlet extends HttpServlet {
+@WebServlet(name = "ReviewWriteFrm", urlPatterns = { "/reviewWriteFrm" })
+public class ReviewWriteFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchCategoryServlet() {
+    public ReviewWriteFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,22 +33,21 @@ public class SearchCategoryServlet extends HttpServlet {
 		//1. 인코딩 (필터로 생략)
 		
 		//2. view에서 넘어온 데이터 저장
-		int storeCateId = Integer.parseInt(request.getParameter("categoryNo"));
+		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+		String cliId = request.getParameter("cliId");
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		String now = sdf.format(date)+" ";
+		System.out.println(now);
+		//3개 를 조건식으로 사용해서 Order객체를 여기로 가지고오죠 그리고 null인지 아닌지 if로 나누는것까지만 먼저작성 결과처리는 지우고
 		
 		//3. 비지니스 로직
-		ArrayList<Store> listStore = new StoreService().selcetStoreList(storeCateId);
-
+		
+		
+		
 		//4. 결과처리
-		if(listStore.isEmpty()) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "해당 카테고리는 입점 준비 중 입니다.");
-			request.setAttribute("loc", "/");
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/store/storeList.jsp");
-			request.setAttribute("listStore", listStore);
-			rd.forward(request, response);
-		}
+
+		
 	}
 
 	/**
