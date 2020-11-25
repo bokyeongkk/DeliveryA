@@ -1,34 +1,35 @@
+<%@page import="client.model.vo.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	String m = (String) request.getAttribute("user");
+	Client c = (Client) session.getAttribute("client");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
+
+	<link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
 	crossorigin="anonymous">
-<link
+	<link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
 	rel="stylesheet">
 
 
-<link rel="stylesheet"
+	<link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
 	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
 	crossorigin="anonymous">
-<script
+	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
+	<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
+	<script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<script type="text/javascript"
+	<script type="text/javascript"
 	src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <style>
 * {
@@ -106,16 +107,16 @@
 			<div class="col-md-3 header">
 				<ul class="nav justify-content-end">
 					<%
-						if (m == null) {
+						if (c == null) {
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="javascript:void(0)" onclick="showLogin();">로그인</a></li>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="#">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="/views/client/join.jsp">회원가입</a></li>
 					<%
 						} else {
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link" href="#">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="#">로그아웃</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="/logout">로그아웃</a></li>
 					<%
 						}
 					%>
