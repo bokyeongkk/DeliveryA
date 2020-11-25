@@ -27,4 +27,11 @@ public class ClientService {
 		return result;
 	}
 
+	public Client selectOneClient(Client client) {
+		Connection conn = JDBCTemplate.getConnection();
+		Client loginClient = new ClientDao().selectOneClient(conn, client);
+		JDBCTemplate.close(conn);
+		return loginClient;
+	}
+
 }

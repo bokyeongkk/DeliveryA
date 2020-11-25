@@ -44,7 +44,12 @@ public class JoinServlet extends HttpServlet {
 		client.setCliEmail(request.getParameter("cliEmail"));
 		client.setCliTel(request.getParameter("cliTel"));
 		client.setCliBirth(request.getParameter("cliBirth"));
-		client.setCliGender(request.getParameter("cliGender"));
+		if(request.getParameter("cliGender").equals("f")) {
+			client.setCliGender("여");
+		} else {
+			client.setCliGender("남");
+		}
+		
 		//test용 주소
 		client.setCliAddr("주소");
 		client.setCliAddrDet("상세주소");

@@ -1,7 +1,8 @@
+<%@page import="client.model.vo.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	String m = (String) request.getAttribute("user");
+	Client c = (Client) session.getAttribute("client");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -106,7 +107,7 @@
 			<div class="col-md-3 header">
 				<ul class="nav justify-content-end">
 					<%
-						if (m == null) {
+						if (c == null) {
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link"
 						href="javascript:void(0)" onclick="showLogin();">로그인</a></li>
