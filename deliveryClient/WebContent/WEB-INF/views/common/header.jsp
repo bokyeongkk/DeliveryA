@@ -97,7 +97,10 @@
 </head>
 
 <body>
-	<input type="hidden" name="uri" id="uri">
+	<form action="/logout" method="get" name="logoutFrm">
+		<input type="hidden" name="uri" id="uri">
+		<input type="hidden" name="param" id="param">
+	</form>
 	<div class="header-all-wrap">
 		<div class="header-wrap">
 			<div class="col-md-3 header">
@@ -116,7 +119,8 @@
 						} else {
 					%>
 					<li class="nav-item"><a class="nav-link header-nav-link" href="#">마이페이지</a></li>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="/logout">로그아웃</a></li>
+					<!-- <li class="nav-item"><a class="nav-link header-nav-link" href="/logout">로그아웃</a></li> -->
+					<li class="nav-item"><a class="nav-link header-nav-link" href="javascript:void(0)" onclick="logout();">로그아웃</a></li>
 					<%
 						}
 					%>
@@ -126,8 +130,13 @@
 	</div>
 	<%@ include file="/views/client/login.jsp"%>
 	<script>
-		console.log(window.location.pathname);
-		$("uri").val(window.location.pathname);
+		function logout(){
+			alert(window.location.pathname);
+			$("#uri").val(window.location.pathname);
+			$("#param").val(window.location.search);
+			var logoutFrm = $("[name=logoutFrm]");
+			logoutFrm.submit();
+		}
 	</script>
 </body>
 </html>

@@ -33,6 +33,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 인코딩
 				request.setCharacterEncoding("utf-8");
+				
 				//2. view에서 넘어온 데이터 저장
 				//3. 비지니스 로직
 				HttpSession session = request.getSession(false);
@@ -42,8 +43,8 @@ public class LogoutServlet extends HttpServlet {
 				
 				//4. 결과처리
 				String uri = request.getParameter("uri");
-				System.out.println("uri test"+uri);
-				response.sendRedirect("/");
+				String param = request.getParameter("param");
+				response.sendRedirect(uri+param);
 				
 				
 				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
