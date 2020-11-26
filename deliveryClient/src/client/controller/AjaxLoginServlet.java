@@ -1,8 +1,6 @@
 package client.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.bind.v2.runtime.Location;
+import com.google.gson.Gson;
+
+import client.model.service.ClientService;
+import client.model.vo.Client;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class AjaxLoginServlet
  */
-@WebServlet(name = "Logout", urlPatterns = { "/logout" })
-public class LogoutServlet extends HttpServlet {
+@WebServlet(name = "AjaxLogin", urlPatterns = { "/ajaxLogin" })
+public class AjaxLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public AjaxLoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,26 +32,23 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-				request.setCharacterEncoding("utf-8");
-				//2. view에서 넘어온 데이터 저장
-				//3. 비지니스 로직
-				HttpSession session = request.getSession(false);
-				if(session != null) {
-					session.invalidate();
-				}
-				
-				//4. 결과처리
-				String uri = request.getParameter("uri");
-				System.out.println("uri test"+uri);
-				response.sendRedirect("/");
-				
-				
-				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-//				request.setAttribute("msg", "로그아웃 되었습니다.");
-//				request.setAttribute("loc", "/");
-
-				//rd.forward(request, response);
+		//request.setCharacterEncoding("utf-8");
+		Client client = new Client();
+		client.setCliId(request.getParameter("cliId"));
+		client.setCliPw(request.getParameter("cliPw"));
+		
+		Client loginClient = new ClientService().selectOneClient(client);
+		
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		if(loginClient!=null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("client", loginClient);
+			new Gson().toJson(1, response.getWriter());
+		} else {
+			new Gson().toJson(0, response.getWriter());
+		}
 	}
 
 	/**

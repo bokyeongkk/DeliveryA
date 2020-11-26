@@ -39,12 +39,12 @@
             text-align: center;
         }
         
-        .login-modal-content>form>p{
+        .login-modal-content>p{
             margin: 0;
             padding: 0;
         }
         
-        .login-modal-content>form>input{
+        .login-modal-content>input{
             display: block;
             /*무조건 넣기!*/
             outline: none;
@@ -54,7 +54,7 @@
             border: 1px solid #ccc;
         }
         
-        .login-modal-content>form>p{
+        .login-modal-content>p{
             margin-right: 48px;
             margin-left: 48px;
             margin-bottom: -10px;
@@ -107,11 +107,11 @@
                 <h1>로그인</h1>
             </div>
             <div class="login-modal-content">
-                <form action="/login" method="post">
+                <!-- <form action="/login" method="post"> -->
                    <p>아이디</p>
-                    <input type="text" name="cliId" class="id" placeholder="아이디를 입력하세요">
+                    <input type="text" name="cliId" class="cliId" placeholder="아이디를 입력하세요">
                     <p>비밀번호</p>
-                    <input type="password" name="cliPw" class="pw" placeholder="비밀번호를 입력하세요">
+                    <input type="password" name="cliPw" class="cliPw" placeholder="비밀번호를 입력하세요">
                     <div class="login-menu">
                         <p><a href="#">아이디 / 비밀번호 찾기</a></p>
                         <p>아직 회원이 아니신가요? <a href="/views/client/join.jsp" id="join">회원가입</a></p>
@@ -119,34 +119,57 @@
                     <br>
                     <br>
                     <div class="login-btn">
-                        <input type="submit" value="로그인">	
+                        <input type="button" id="login" value="로그인">	
                     	<input type="button" value="닫기">
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
     </div>
     <script>
+    	$("#login").click(function(event){
+    		var cliId = $(".cliId").val();
+    		var cliPw = $(".cliPw").val();
+    		$.ajax({
+				url : "/ajaxLogin",
+				type : "post",
+				data : {cliId : cliId,
+						cliPw : cliPw},
+				success : function(data){
+					console.log(data);
+					if(data == 1){
+						location.reload();
+					} else {
+						alert("아이디 또는 비밀번호를 확인하세요");
+					}
+				}
+			});
+    	});
+    
+    
+    
 		function showLogin() {
-			$(".id").val("");
-            $(".pw").val("");
+			$(".cliId").val("");
+            $(".cliPw").val("");
 			$(".login-modal-wrap").css('display', 'flex');
 			$('body').css("overflow", "hidden");	//boddy 스크롤 막기	
 		}
 		 //닫기 버튼
-        $("input[type=button]").click(function(){
+        $("input[type=button]").eq(1).click(function(){
+        	console.log("닫기");
             $(".login-modal-wrap").css('display','none');
             $('body').css("overflow", "scroll");
         });
         
         //이렇게 할 경우 자식을 클릭해도 사라지므로 버블링 걸어줘야 함
         $(".login-modal-wrap").click(function(){
+        	console.log("배경");
             $(".login-modal-wrap").css('display','none');
             $('body').css("overflow", "scroll");
         });
         
         //이벤트 버블링 막기
-        $(".login-modal-wrap>*").click(function(event){
+        $(".login-modal-wrap *").click(function(event){
         	event.stopPropagation();
         });
 	</script>

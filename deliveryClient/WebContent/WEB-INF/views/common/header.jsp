@@ -97,7 +97,7 @@
 </head>
 
 <body>
-
+	<input type="hidden" name="uri" id="uri">
 	<div class="header-all-wrap">
 		<div class="header-wrap">
 			<div class="col-md-3 header">
@@ -125,5 +125,9 @@
 		</div>
 	</div>
 	<%@ include file="/views/client/login.jsp"%>
+	<script>
+		console.log(window.location.pathname);
+		$("uri").val(window.location.pathname);
+	</script>
 </body>
 </html>
