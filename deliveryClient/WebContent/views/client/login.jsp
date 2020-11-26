@@ -113,7 +113,7 @@
                     <p>비밀번호</p>
                     <input type="password" name="cliPw" class="cliPw" placeholder="비밀번호를 입력하세요">
                     <div class="login-menu">
-                        <p><a href="#">아이디 / 비밀번호 찾기</a></p>
+                        <p><a href="/views/client/search.jsp">아이디 / 비밀번호 찾기</a></p>
                         <p>아직 회원이 아니신가요? <a href="/views/client/join.jsp" id="join">회원가입</a></p>
                     </div>
                     <br>
