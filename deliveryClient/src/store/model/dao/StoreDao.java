@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import order.model.vo.Order;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
@@ -168,6 +169,43 @@ public class StoreDao {
 		}
 		
 		return listRev;
+	}
+
+	public Order selectOrder(Connection conn, String cliId, int storeNo, String now) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Order order = null;
+		
+		String query = "select * from ord_db where ord_cli_id=? and ord_store_no=? and ord_date=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliId);
+			pstmt.setInt(2, storeNo);
+			pstmt.setString(3, now);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				order = new Order();
+				order.setOrdNo(rset.getInt("ord_no"));
+				order.setOrdCliId(rset.getString("ord_cli_id"));
+				order.setOrdTPrice(rset.getInt("ord_total_t"));
+				order.setOrdStoreNo(rset.getInt("ord_store_no"));
+				order.setOrdAddr(rset.getString("ord_addr"));
+				order.setOrdSub(rset.getString("ord_sub"));
+				order.setOrdCpId(rset.getInt("ord_cp_id"));
+				order.setOrdDate(rset.getString("ord_date"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return order;
 	}
 	
 	

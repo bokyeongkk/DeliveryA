@@ -34,7 +34,7 @@
         .reveiw-modal-wrap {
             display: none;
   
-            position: absolute;
+            position: fixed;
             top: 0px;
             left: 0px;
             width: 100%;
@@ -79,15 +79,7 @@
       	<script>
 		$(function() {
 			
-			//모달 창 닫기 버튼
-			$(".modal-cancel").click(function() {
-				$(".grade-mark").removeClass("fas fa-star");
-				$(".grade-mark").addClass("far fa-star");
-				$(".modal-content").val("");
-				$(".reveiw-modal-wrap").css('display', 'none');
-			});
-			
-			//탭 설정
+			//로드 시 menu탭 설정
 			$(".store-tap").eq(0).addClass("selectTab");
 			$(".store-cont").hide();
 			$(".store-cont").eq(0).show();
@@ -111,7 +103,6 @@
 			//장바구니 전체 삭제 이벤트
 			$("#trashbox").click(function() {
 				$("#trashbox").parent().siblings(".cart-menu-box").remove();
-
 			});
 
 			//장바구니 메뉴박스 삭제 이벤트
@@ -138,25 +129,40 @@
 			
 		});
 		
+		//!함수는 $(function(){}); 밖에서 선언
+		//리뷰 작성 모달창 생성
 		function reviewWriteFrm(cliId, storeNo) {
 			$.ajax({
-				url:"/reviewWriteFrm",
+				url:"/searchOrder",
 				data:{
 					cliId : cliId,
 					storeNo : storeNo
 				},
 				type:"post",
 				success : function(data){
-					
+					if(data  == "1"){
+						$(".reveiw-modal-wrap").css("display", "flex");			
+					}else{
+						alert("주문하고 누르렴");
+					}
 				}
 			})
-			
-			
-			$(".reveiw-modal-wrap").css("display", "flex");
-			$('body').css("overflow", "hidden");
 		}
-
-		//리뷰 작성 시 별점 이벤트
+		
+		//!함수는 $(function(){}); 밖에서 선언
+		//리뷰 작성 모달창 취소 버튼
+		function reviewWriteCancel() {
+			//채워진 별모양 remove
+			$(".grade-mark").removeClass("fas fa-star");
+			//안채워진 별 모양으로 add
+			$(".grade-mark").addClass("far fa-star");
+			//리뷰 내용 초기화
+			$(".modal-content").val("");
+			//모달창 닫기
+			$(".reveiw-modal-wrap").css('display', 'none');
+		}
+		
+		//리뷰 작성 - 별 클릭하면 채워진 별로 변경하는 이벤트
        $(document).on("click",".grade-mark",function(){
 
             mark = $(".grade-mark");
@@ -250,26 +256,20 @@
                     <div class="menu-wrap">
                         <ul class="menu-view">
                             <li> 우리 가게 메뉴</li>
+                            <%for(Menu m : listMenu) {%>
                             <li>
+                            	<form action="/cartInMenu" method="post">
                                 <div class="menu-text">
-                                    <input type="text" class="menu-name" value="메뉴이름"><br>
-                                    <input type="text" class="menu-desc" value="메뉴설명"><br>
-                                    <input type="text" class="menu-price" value="메뉴가격">
+                                    <input type="text" name="menuName" class="menu-name" value="<%=m.getMenuDet() %>"><br>
+                                    <input type="text" name="menuDesc" class="menu-desc" value="<%=m.getMenuDet() %>"><br>
+                                    <input type="text" name="menuPrice" class="menu-price" value="<%=m.getMenuPrice() %>">
                                 </div>
                                 <div class="menu-cart">
                                     <button type="submit" class="btn btn-outline-warning cart-in">장바구니 담기</button>
                                 </div>
+                                </form>
                             </li>
-                            <li>
-                                <div class="menu-text">
-                                    <input type="text" class="menu-name" value="메뉴이름"><br>
-                                    <input type="text" class="menu-desc" value="메뉴설명"><br>
-                                    <input type="text" class="menu-price" value="메뉴가격">
-                                </div>
-                                <div class="menu-cart">
-                                    <button type="button" class="btn btn-outline-warning cart-in">장바구니 담기</button>
-                                </div>
-                            </li>
+                            <%} %>
                         </ul>
                     </div>
                 </div>
@@ -293,10 +293,6 @@
                     </div>
                     <div class="review-write">
                      <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('user01','1');" value="리뷰 작성하기">
-
-<%--                     	<a href="/reviewWriteFrm?storeNo=<%=s.getStoreNo() %>" class="btn btn-warning btn-review-write">
-                    		리뷰 작성하기
-                    	</a> --%>
                     </div>
                     <div class="review-view-wrap">
                         <div class="review-view">
@@ -346,6 +342,7 @@
          <!--모달div-->
         <div class="reveiw-modal-wrap">
             <div class="review-modal">
+            	<form action="/insertRiview" method="post">
                 <h1>리뷰 작성하기</h1>
                 <hr>
                 <h4>고객님 오늘 음식은 어떠셨어요?</h4>
@@ -354,13 +351,15 @@
                 <i class="far fa-star grade-mark" id="star"></i>
                 <i class="far fa-star grade-mark" id="star"></i>
                 <i class="far fa-star grade-mark" id="star"></i>
-                <input class="grade" type="hidden" value="">
+                <input class="grade" name="reviewScore" type="hidden" value="">
                 <br><br>
                 <textarea class="form-control modal-content" name="reviewContent" cols="40" rows="8" style="resize: none"></textarea>
+                
                 <div class="review-modal-btn">
-                    <input type="button" class="btn btn-dark modal-cancel" value="취소">
+                    <input type="button" class="btn btn-dark" onclick="reviewWriteCancel();" value="취소">
                     <input type="submit" class="btn btn-outline-dark" value="작성완료">
                 </div>
+                </form>
             </div>
         </div>
             

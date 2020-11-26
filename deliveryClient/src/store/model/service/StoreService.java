@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import order.model.vo.Order;
 import store.model.dao.StoreDao;
 import store.model.vo.Menu;
 import store.model.vo.Review;
@@ -41,6 +42,14 @@ public class StoreService {
 		JDBCTemplate.close(conn);
 		
 		return listRev;
+	}
+
+	public Order selectOrder(String cliId, int storeNo, String now) {
+		Connection conn = JDBCTemplate.getConnection();
+		Order order = new StoreDao().selectOrder(conn, cliId, storeNo, now);
+		JDBCTemplate.close(conn);
+
+		return order;
 	}
 
 
