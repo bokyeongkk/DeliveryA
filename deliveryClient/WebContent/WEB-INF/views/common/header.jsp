@@ -126,8 +126,8 @@
 	</div>
 	<%@ include file="/views/client/login.jsp"%>
 	<script>
-		console.log(location.pathname);
-		$("uri").val(location.pathname);
+		console.log(window.location.pathname);
+		$("uri").val(window.location.pathname);
 	</script>
 </body>
 </html>
