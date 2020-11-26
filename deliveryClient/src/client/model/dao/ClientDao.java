@@ -83,8 +83,8 @@ public class ClientDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, client.getCliId());
 			pstmt.setString(2, client.getCliPw());
-			System.out.println(client.getCliId());
-			System.out.println(client.getCliPw());
+			System.out.println("DAO selectOneClient id> "+client.getCliId());
+			System.out.println("DAO selectOneClient pw> "+client.getCliPw());
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {

@@ -47,13 +47,14 @@ public class LoginServlet extends HttpServlet {
 		if(c!=null) {	//로그인 성공
 			HttpSession session = request.getSession();
 			session.setAttribute("client", c);
-			response.sendRedirect("/");
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
-			request.setAttribute("loc", "/views/client/login.jsp");
-			rd.forward(request, response);
-		}
+			//response.sendRedirect("/");
+		} 
+//		else {
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+//			request.setAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
+//			request.setAttribute("loc", "/views/client/login.jsp");
+//			rd.forward(request, response);
+//		}
 				
 	}
 

@@ -41,10 +41,14 @@ public class LogoutServlet extends HttpServlet {
 				}
 				
 				//4. 결과처리
+				String uri = request.getParameter("uri");
+				response.sendRedirect(uri);
+				
+				
 				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 //				request.setAttribute("msg", "로그아웃 되었습니다.");
 //				request.setAttribute("loc", "/");
-				response.sendRedirect("/");
+
 				//rd.forward(request, response);
 	}
 
