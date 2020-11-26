@@ -1,3 +1,4 @@
+<%@page import="store.model.vo.StoreReviewData"%>
 <%@page import="store.model.vo.Review"%>
 <%@page import="store.model.vo.Menu"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,7 +8,7 @@
     <%
     	Store s = (Store)request.getAttribute("s");
     	ArrayList<Menu> listMenu = (ArrayList<Menu>)request.getAttribute("listMenu");
-    	ArrayList<Review> listRev = (ArrayList<Review>)request.getAttribute("listRev"); 
+    	StoreReviewData srd = (StoreReviewData)request.getAttribute("srd"); 
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,51 +27,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
 	rel="stylesheet">
-<!-- storeLis.css 가져오기 -->	
+<!-- storeDetail.css 가져오기 -->	
 <link href="/css/store/storeDetail.css" rel="stylesheet" type="text/css">
-
-<style>
-	     /*모달창 스타일*/
-        .reveiw-modal-wrap {
-            display: none;
-  
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-
-            justify-content: center;
-            align-items: center;
-        }
-
-        .review-modal {
-            background-color: #ffffff;
-            width: 30vw;
-            max-height: 900px;
-            min-width: 300px;
-            min-height: 340px;
-            padding: 35px;
-        }
-
-        .review-modal-btn {
-            text-align: center;
-            padding-top: 40px;
-            padding-bottom: 15px;
-        }
-
-        .review-modal-btn input {
-            width: 40%;
-            height: 50px;
-        }
-        
-        #star {
-            color: #f6b352;
-            width: 28px;
-            height: 28px;
-        }
-</style>
 
 <title>Insert title here</title>
 </head>
@@ -79,7 +37,7 @@
       	<script>
 		$(function() {
 			
-			//로드 시 menu탭 설정
+			//로드 시 MENU탭으로 설정
 			$(".store-tap").eq(0).addClass("selectTab");
 			$(".store-cont").hide();
 			$(".store-cont").eq(0).show();
@@ -109,7 +67,6 @@
 			$(".btn-delete").click(function() {
 				$(this).parents(".cart-menu-box").remove();
 			});
-			
 			
 			//장바구니 (-)수량 버튼
 			$(".minus").click(function() {
@@ -143,7 +100,7 @@
 					if(data  == "1"){
 						$(".reveiw-modal-wrap").css("display", "flex");			
 					}else{
-						alert("주문하고 누르렴");
+						alert("오늘 주문하신 내역이 없어요");
 					}
 				}
 			})
@@ -152,17 +109,19 @@
 		//!함수는 $(function(){}); 밖에서 선언
 		//리뷰 작성 모달창 취소 버튼
 		function reviewWriteCancel() {
-			//채워진 별모양 remove
+			//채워진 별모양 삭제
 			$(".grade-mark").removeClass("fas fa-star");
-			//안채워진 별 모양으로 add
+			//안채워진 별 모양으로 추가
 			$(".grade-mark").addClass("far fa-star");
-			//리뷰 내용 초기화
+			//리뷰 작성된 내용 초기화
 			$(".modal-content").val("");
 			//모달창 닫기
 			$(".reveiw-modal-wrap").css('display', 'none');
 		}
 		
 		//리뷰 작성 - 별 클릭하면 채워진 별로 변경하는 이벤트
+		//한번만 클릭되고 다음부터는 안되는 문제가 있었음
+		//-> $(document).on 페이지가 로드 될때 계속 새로운 클래스로 생성
        $(document).on("click",".grade-mark",function(){
 
             mark = $(".grade-mark");
@@ -173,13 +132,13 @@
 
             mark.each(function(index, item) {
                 if (index <= idx) {
-                    
                     $(item).addClass("fas fa-star");
                 } else {
                     $(item).addClass("far fa-star");
                 }
             });
 
+            //input val에 숫자로 값 넣어주기
             $(".grade").val((idx + 1));
             console.log($(".grade").val());
             
@@ -277,7 +236,7 @@
                 <div class="store-cont">
                     <div class="review-title">
                         <div class="review-title-left">
-                            <h3>4.3</h3>
+                            <h3><%=srd.getAvgRev() %></h3>
                             <span class="star">
                                 <i class="fas fa-star" id="star-lg"></i>
                                 <i class="fas fa-star" id="star-lg"></i>
@@ -287,18 +246,21 @@
                             </span>
                         </div>
                         <div class="review-title-right">
-                            <h3>최근 리뷰 43개</h3>
-                            <p>사장님이 남긴 댓글 17개</p>
+                            <h3>최근 리뷰 <%=srd.getCntRev() %>개</h3>
+                            <p>사장님이 남긴 댓글 0개</p>
                         </div>
                     </div>
+                    <!-- 여기 나중에 로그인 됐을 때는 안보이게 수정 -->
                     <div class="review-write">
-                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('user01','1');" value="리뷰 작성하기">
+                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('a','10');" value="리뷰 작성하기">
                     </div>
+                    
                     <div class="review-view-wrap">
+                    	<%for(Review r : srd.getListRev()) {%>
                         <div class="review-view">
                             <ul>
-                                <li class="nickname">Nickname</li>
-                                <li class="review-date">주문일자</li>
+                                <li class=""><%=r.getRevCliId() %></li>
+                                <li class="review-date"><%=r.getRevEnrollDate() %></li>
                                 <li>
                                     <i class="fas fa-star" id="star-sm"></i>
                                     <i class="fas fa-star" id="star-sm"></i>
@@ -306,30 +268,14 @@
                                     <i class="fas fa-star" id="star-sm"></i>
                                     <i class="fas fa-star" id="star-sm"></i>
                                 </li>
-                                <li class="review-cont">리뷰 내용</li>
+                                <li class="review-cont"><%=r.getRevContent() %></li>
                                 <br>
                                 <li class="review-menu">주문메뉴</li>
                             </ul>
                         </div>
-
-                        <div class="review-view">
-                            <ul>
-                                <li class="nickname">Nickname</li>
-                                <li class="review-date">주문일자</li>
-                                <li>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                </li>
-                                <li class="review-cont">리뷰 내용</li>
-                                <br>
-                                <li class="review-menu">주문메뉴</li>
-                            </ul>
-                        </div>
-
+                        <%} %>
                     </div>
+                    
                     <div class="reivew-more">
                         <button class="btn btn-dark" currentCount="0" value="" totalCount="" id="more-btn">더보기</button>
                     </div>

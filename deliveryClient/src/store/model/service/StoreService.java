@@ -9,6 +9,7 @@ import store.model.dao.StoreDao;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
+import store.model.vo.StoreReviewData;
 
 public class StoreService {
 
@@ -36,12 +37,23 @@ public class StoreService {
 		return listMenu;
 	}
 
-	public ArrayList<Review> seleceRevView(int storeNo) {
+	public StoreReviewData seleceRevView(int storeNo) {
 		Connection conn = JDBCTemplate.getConnection();
+		
+		//이건 리뷰 리스트 가져오는 DAO
 		ArrayList<Review> listRev = new StoreDao().selectRevView(conn, storeNo);
+		
+		//이건 해당 가게 리뷰 갯수 가져오는 DAO
+		int cntRev = new StoreDao().selectRevCnt(conn, storeNo);
+		
+		//이건 해당 가게 리뷰 평균 점수 가져오는 DAO
+		int avgRev = new StoreDao().selectRevAvg(conn, storeNo);
+		
 		JDBCTemplate.close(conn);
 		
-		return listRev;
+		StoreReviewData srd = new StoreReviewData(listRev, cntRev, avgRev);
+		
+		return srd;
 	}
 
 	public Order selectOrder(String cliId, int storeNo, String now) {

@@ -207,6 +207,52 @@ public class StoreDao {
 		
 		return order;
 	}
+
+	public int selectRevCnt(Connection conn, int storeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int cntRev = 0;
+		String query = "select count(*) as cnt from rev_db where rev_store = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, storeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				cntRev = rset.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cntRev;
+	}
+
+	public int selectRevAvg(Connection conn, int storeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int avgRev = 0;
+		String query = "select round(avg(rev_score),1) as avg from rev_db where rev_store = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, storeNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				avgRev = rset.getInt("avg");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return avgRev;
+	}
 	
 	
 

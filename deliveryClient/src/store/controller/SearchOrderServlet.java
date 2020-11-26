@@ -40,7 +40,7 @@ public class SearchOrderServlet extends HttpServlet {
 		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
 		
 		Date date = new Date();
-		//MM대문자가 월이고 mm소문자는 시간 - 소문자dd가 일
+		//MM대문자 : 월 //mm소문자 : 시간  //dd소문자 : 일
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 		String now = sdf.format(date);
 		System.out.println(now);
