@@ -8,21 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.bind.v2.runtime.Location;
+import client.model.service.ClientService;
+import client.model.vo.Client;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class SearchPwServlet
  */
-@WebServlet(name = "Logout", urlPatterns = { "/logout" })
-public class LogoutServlet extends HttpServlet {
+@WebServlet(name = "SearchPw", urlPatterns = { "/searchPw" })
+public class SearchPwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public SearchPwServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,27 +31,21 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
-				request.setCharacterEncoding("utf-8");
-				
-				//2. view에서 넘어온 데이터 저장
-				//3. 비지니스 로직
-				HttpSession session = request.getSession(false);
-				if(session != null) {
-					session.invalidate();
-				}
-				
-				//4. 결과처리
-				String uri = request.getParameter("uri");
-				String param = request.getParameter("param");
-				response.sendRedirect(uri+param);
-				
-				
-				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-//				request.setAttribute("msg", "로그아웃 되었습니다.");
-//				request.setAttribute("loc", "/");
-
-				//rd.forward(request, response);
+		request.setCharacterEncoding("utf-8");
+		
+		String cliId = request.getParameter("cliId");
+		String cliTel = request.getParameter("cliTel2");
+		
+		Client client = new ClientService().searchPw(cliId, cliTel);
+		if(client!=null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/searchId.jsp");
+			rd.forward(request, response);
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			request.setAttribute("msg", "회원정보와 일치하는 계정이 존재하지 않습니다.");
+			request.setAttribute("loc", "/views/client/search.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	/**

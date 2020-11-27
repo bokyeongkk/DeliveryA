@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import client.model.vo.Client;
 import common.JDBCTemplate;
@@ -107,6 +108,79 @@ public class ClientDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return loginClient;
+	}
+
+	public ArrayList<Client> searchId(Connection conn, String cliName, String cliTel) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Client> list = new ArrayList<Client>();
+		String query = "select * from client_db where cli_name=? and cli_tel=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliName);
+			pstmt.setString(2, cliTel);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Client client = new Client();
+				client.setCliId(rset.getString("cli_id"));
+				client.setCliPw(rset.getString("cli_pw"));
+				client.setCliName(rset.getString("cli_name"));
+				client.setCliNickname(rset.getString("cli_nickname"));
+				client.setCliTel(rset.getString("cli_tel"));
+				client.setCliEmail(rset.getString("cli_email"));
+				client.setCliAddr(rset.getString("cli_addr"));
+				client.setCliGender(rset.getString("cli_gender"));
+				client.setCliBirth(rset.getString("cli_birth"));
+				client.setCliEnrollDate(rset.getString("cli_enroll_date"));
+				client.setCliAddrDet(rset.getString("cli_addr_det"));
+				list.add(client);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return list;
+	}
+
+	public Client searchPw(Connection conn, String cliId, String cliTel) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Client client = null;
+		String query = "select * from client_db where cli_id=? and cli_tel=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliId);
+			pstmt.setString(2, cliTel);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				client = new Client();
+				client.setCliId(rset.getString("cli_id"));
+				client.setCliPw(rset.getString("cli_pw"));
+				client.setCliName(rset.getString("cli_name"));
+				client.setCliNickname(rset.getString("cli_nickname"));
+				client.setCliTel(rset.getString("cli_tel"));
+				client.setCliEmail(rset.getString("cli_email"));
+				client.setCliAddr(rset.getString("cli_addr"));
+				client.setCliGender(rset.getString("cli_gender"));
+				client.setCliBirth(rset.getString("cli_birth"));
+				client.setCliEnrollDate(rset.getString("cli_enroll_date"));
+				client.setCliAddrDet(rset.getString("cli_addr_det"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return client;
 	}
 
 }

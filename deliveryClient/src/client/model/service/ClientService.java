@@ -1,6 +1,7 @@
 package client.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import client.model.dao.ClientDao;
 import client.model.vo.Client;
@@ -32,6 +33,20 @@ public class ClientService {
 		Client loginClient = new ClientDao().selectOneClient(conn, client);
 		JDBCTemplate.close(conn);
 		return loginClient;
+	}
+
+	public ArrayList<Client> searchId(String cliName, String cliTel) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Client> list = new ClientDao().searchId(conn, cliName, cliTel);
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
+	public Client searchPw(String cliId, String cliTel) {
+		Connection conn = JDBCTemplate.getConnection();
+		Client client = new ClientDao().searchPw(conn, cliId, cliTel);
+		JDBCTemplate.close(conn);
+		return client;
 	}
 
 }
