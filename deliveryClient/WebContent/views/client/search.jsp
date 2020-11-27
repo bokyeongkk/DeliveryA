@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>아아디 / 비밀번호 찾기</title>
+<title>아이디 / 비밀번호 찾기</title>
 	
     <style>
         .content-all-wrap {
@@ -125,7 +125,7 @@
                     <li><a href="javascript:void(0)" id="pw">비밀번호</a></li>
                 </ul>
                 <div class="search">
-                    <form action="#" method="post" id="idFrm">
+                    <form action="/searchId" method="post" id="idFrm">
                         <table class="search-table">
                             <tr>
                                 <th>이름</th>
@@ -146,7 +146,7 @@
                     </form>
                 </div>
                 <div class="search">
-                    <form action="#" method="post" id="pwFrm">
+                    <form action="/searchPw" method="post" id="pwFrm">
                         <table class="search-table">
                             <tr>
                                 <th>아이디</th>
