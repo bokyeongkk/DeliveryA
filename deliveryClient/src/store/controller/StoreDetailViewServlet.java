@@ -14,7 +14,7 @@ import store.model.service.StoreService;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
-import store.model.vo.StoreReviewData;
+import store.model.vo.ReviewData;
 
 /**
  * Servlet implementation class StoreDetailViewServlet
@@ -43,7 +43,7 @@ public class StoreDetailViewServlet extends HttpServlet {
 		//3. 비지니스 로직
 		Store s = new StoreService().selectStoreView(storeNo);
 		ArrayList<Menu> listMenu = new StoreService().selectMenuView(storeNo);
-		StoreReviewData srd = new StoreService().seleceRevView(storeNo);
+		ReviewData srd = new StoreService().seleceRevView(storeNo);
 		
 		//4. 결과처리
 		if(s == null && listMenu.isEmpty()) { //가게 정보가 없거나 메뉴가 없을 때

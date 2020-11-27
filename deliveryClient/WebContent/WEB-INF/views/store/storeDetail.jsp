@@ -1,4 +1,5 @@
-<%@page import="store.model.vo.StoreReviewData"%>
+<%@page import="store.model.vo.Cart"%>
+<%@page import="store.model.vo.ReviewData"%>
 <%@page import="store.model.vo.Review"%>
 <%@page import="store.model.vo.Menu"%>
 <%@page import="java.util.ArrayList"%>
@@ -7,8 +8,10 @@
     pageEncoding="UTF-8"%>
     <%
     	Store s = (Store)request.getAttribute("s");
-    	ArrayList<Menu> listMenu = (ArrayList<Menu>)request.getAttribute("listMenu");
-    	StoreReviewData srd = (StoreReviewData)request.getAttribute("srd"); 
+        ArrayList<Menu> listMenu = (ArrayList<Menu>)request.getAttribute("listMenu");
+        ReviewData srd = (ReviewData)request.getAttribute("srd");
+        
+        ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");  	
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,11 +56,12 @@
 				$(".store-cont").eq(idx).show();
 			});
 
-			//장바구니 담기 버튼 클릭 이벤트
+/* 			//장바구니 담기 버튼 클릭 이벤트
 			$(".cart-in").click(function() {
 				alert("장바구니에 담겼습니다.")
 			});
-
+ */
+ 
 			//장바구니 전체 삭제 이벤트
 			$("#trashbox").click(function() {
 				$("#trashbox").parent().siblings(".cart-menu-box").remove();
@@ -71,17 +75,17 @@
 			//장바구니 (-)수량 버튼
 			$(".minus").click(function() {
 				var n = $('.minus').index(this);
-				var num = $(".counter:eq("+n+")").val();
+				var num = $(".count:eq("+n+")").val();
 				if(num > 1) {
-					num = $(".counter:eq("+n+")").val(num*1-1);
+					num = $(".count:eq("+n+")").val(num*1-1);
 				}
 			});
 			
 			//장바구니 (+)수량 버튼
 			$(".plus").click(function() {
 				var n = $(".plus").index(this);
-				var num = $(".counter:eq("+n+")").val();
-				num = $(".counter:eq("+n+")").val(num*1+1);
+				var num = $(".count:eq("+n+")").val();
+				num = $(".count:eq("+n+")").val(num*1+1);
 			});
 			
 		});
@@ -119,7 +123,7 @@
 			$(".reveiw-modal-wrap").css('display', 'none');
 		}
 		
-		//리뷰 작성 - 별 클릭하면 채워진 별로 변경하는 이벤트
+		//리뷰 작성 - 별 클릭하면 채워진 별 이미지로 변경하는 이벤트
 		//한번만 클릭되고 다음부터는 안되는 문제가 있었음
 		//-> $(document).on 페이지가 로드 될때 계속 새로운 클래스로 생성
        $(document).on("click",".grade-mark",function(){
@@ -219,6 +223,7 @@
                             <li>
                             	<form action="/cartInMenu" method="post">
                                 <div class="menu-text">
+                                	<input type="hidden" name="storeNo" value="<%=s.getStoreNo() %>">
                                     <input type="text" name="menuName" class="menu-name" value="<%=m.getMenuDet() %>"><br>
                                     <input type="text" name="menuDesc" class="menu-desc" value="<%=m.getMenuDet() %>"><br>
                                     <input type="text" name="menuPrice" class="menu-price" value="<%=m.getMenuPrice() %>">
@@ -250,17 +255,19 @@
                             <p>사장님이 남긴 댓글 0개</p>
                         </div>
                     </div>
-                    <!-- 여기 나중에 로그인 됐을 때는 안보이게 수정 -->
+                    <!-- 로그인 정보가 없을 때 리뷰 작성하기 버튼 안보이게 -->
+                    <%if(c != null) {%>
                     <div class="review-write">
-                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('a','10');" value="리뷰 작성하기">
+                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('<%=c.getCliId() %>','<%=s.getStoreNo() %>');" value="리뷰 작성하기">
                     </div>
-                    
+                    <%} %>
                     <div class="review-view-wrap">
                     	<%for(Review r : srd.getListRev()) {%>
                         <div class="review-view">
                             <ul>
                                 <li class=""><%=r.getRevCliId() %></li>
                                 <li class="review-date"><%=r.getRevEnrollDate() %></li>
+                                <li class="review-score" style="display:none"><%=r.getRevScore() %></li>
                                 <li>
                                     <i class="fas fa-star" id="star-sm"></i>
                                     <i class="fas fa-star" id="star-sm"></i>
@@ -270,7 +277,7 @@
                                 </li>
                                 <li class="review-cont"><%=r.getRevContent() %></li>
                                 <br>
-                                <li class="review-menu">주문메뉴</li>
+                                <li class="review-menu"><%=r.getMenuName() %></li>
                             </ul>
                         </div>
                         <%} %>
@@ -286,9 +293,10 @@
             
 
          <!--모달div-->
+         <%if(c != null) {%>
         <div class="reveiw-modal-wrap">
             <div class="review-modal">
-            	<form action="/insertRiview" method="post">
+            	<form action="/insertReview" method="post">
                 <h1>리뷰 작성하기</h1>
                 <hr>
                 <h4>고객님 오늘 음식은 어떠셨어요?</h4>
@@ -301,6 +309,8 @@
                 <br><br>
                 <textarea class="form-control modal-content" name="reviewContent" cols="40" rows="8" style="resize: none"></textarea>
                 
+                <input type="hidden" name="cliId" value="<%=c.getCliId() %>">
+                <input type="hidden" name="storeNo" value="<%=s.getStoreNo() %>">
                 <div class="review-modal-btn">
                     <input type="button" class="btn btn-dark" onclick="reviewWriteCancel();" value="취소">
                     <input type="submit" class="btn btn-outline-dark" value="작성완료">
@@ -308,29 +318,36 @@
                 </form>
             </div>
         </div>
-            
+         <%} %>
             
             <!--장바구니div-->
             <div class="cart-wrap">
                 <div class="cart-sticky">
-                    <form action="#" method="post">
+                    <form action="/orderPage" method="post">
                         <div class="cart-title">내 장바구니
                             <button type="button" id="trashbox"><i class="fas fa-trash-alt"></i></button>
                         </div>
+                        <%if(listCart == null) {%>
+                        	<h6>장바구니가 비어있습니다.</h6>
+                        <%} else {%> 
+            
+                        <%for(Cart t : listCart) {%>
                         <div class="cart-menu-box">
                             <button type="button" class="btn-delete">
                                 <i class="fas fa-times"></i>
                             </button>
 
-                            <input type="text" name="orderName" class="cart-name" value="메뉴이름">
+                            <input type="text" name="orderName" class="cart-name" value="<%=t.getMenuName() %>">
 
                             <button type="button" class="btn-cart-num minus"><i class="fas fa-minus"></i></button>
-                            <input type="text" name="orderConter" class="btn-cart-num counter" value="1">
+                            <input type="text" name="orderCount" class="btn-cart-num count" value="<%=t.getMenuCount() %>">
                             <button type="button" class="btn-cart-num plus"><i class="fas fa-plus"></i></button>
 
-                            <input type="text" name="orderPrice" class="cart-price" value="19,800"><span class="won"> 원</span>
+                            <input type="text" name="orderPrice" class="cart-price" value="<%=t.getMenuPrice() %>"><span class="won"> 원</span>
                         </div>
-
+                        <%} %> 
+                        
+						<%} %> 
                         <div class="total-price">
                             <span>합계</span><input type="text" name="orderTotalPrice" value="38,000"><span> 원</span>
                         </div>

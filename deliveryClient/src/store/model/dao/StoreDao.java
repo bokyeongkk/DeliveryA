@@ -139,7 +139,7 @@ public class StoreDao {
 		ResultSet rset = null;
 		ArrayList<Review> listRev = new ArrayList<Review>();
 		
-		String query = "select * from rev_db where rev_store = ?";
+		String query = "SELECT REV_NO, REV_ORD_NO, MENU_NAME, REV_SCORE, REV_CONTENT, REV_CLI_ID, REV_STORE, REV_ENROLL_DATE FROM REV_DB JOIN ORD_DET_DB ON (REV_ORD_NO = ORD_DET_NO) JOIN MENU_DB ON (ORD_DET_MENU_NO = MENU_NO) WHERE REV_STORE = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -151,6 +151,7 @@ public class StoreDao {
 				
 				r.setRevNo(rset.getInt("rev_no"));
 				r.setRevOrdNo(rset.getInt("rev_ord_no"));
+				r.setMenuName(rset.getString("menu_name"));
 				r.setRevScore(rset.getInt("rev_score"));
 				r.setRevContent(rset.getString("rev_content"));
 				r.setRevCliId(rset.getString("rev_cli_id"));
@@ -188,8 +189,8 @@ public class StoreDao {
 			if(rset.next()) {
 				order = new Order();
 				order.setOrdNo(rset.getInt("ord_no"));
+				order.setOrdTPrice(rset.getInt("ord_t_price"));
 				order.setOrdCliId(rset.getString("ord_cli_id"));
-				order.setOrdTPrice(rset.getInt("ord_total_t"));
 				order.setOrdStoreNo(rset.getInt("ord_store_no"));
 				order.setOrdAddr(rset.getString("ord_addr"));
 				order.setOrdSub(rset.getString("ord_sub"));
@@ -231,10 +232,10 @@ public class StoreDao {
 		return cntRev;
 	}
 
-	public int selectRevAvg(Connection conn, int storeNo) {
+	public double selectRevAvg(Connection conn, int storeNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int avgRev = 0;
+		double avgRev = 0;
 		String query = "select round(avg(rev_score),1) as avg from rev_db where rev_store = ?";
 		
 		try {
@@ -243,7 +244,7 @@ public class StoreDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				avgRev = rset.getInt("avg");
+				avgRev = rset.getDouble("avg");
 			}
 			
 		} catch (SQLException e) {
@@ -252,6 +253,36 @@ public class StoreDao {
 		}
 		
 		return avgRev;
+	}
+
+	public int insertReview(Connection conn, Review review) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into rev_db values (rev_db_seq.nextval, ?,?,?,?,?, to_char(sysdate, 'yyyy-mm-dd'))";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, review.getRevOrdNo());
+			pstmt.setInt(2, review.getRevScore());
+			pstmt.setString(3, review.getRevContent());
+			pstmt.setString(4, review.getRevCliId());
+			pstmt.setInt(5, review.getRevStore());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public String selectMenuName(Connection conn, int storeNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

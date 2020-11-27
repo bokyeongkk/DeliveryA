@@ -9,7 +9,7 @@ import store.model.dao.StoreDao;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
-import store.model.vo.StoreReviewData;
+import store.model.vo.ReviewData;
 
 public class StoreService {
 
@@ -37,21 +37,21 @@ public class StoreService {
 		return listMenu;
 	}
 
-	public StoreReviewData seleceRevView(int storeNo) {
+	public ReviewData seleceRevView(int storeNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		
-		//이건 리뷰 리스트 가져오는 DAO
+		//리뷰 리스트 가져오는 DAO
 		ArrayList<Review> listRev = new StoreDao().selectRevView(conn, storeNo);
 		
-		//이건 해당 가게 리뷰 갯수 가져오는 DAO
+		//해당 가게 리뷰 갯수 가져오는 DAO
 		int cntRev = new StoreDao().selectRevCnt(conn, storeNo);
 		
-		//이건 해당 가게 리뷰 평균 점수 가져오는 DAO
-		int avgRev = new StoreDao().selectRevAvg(conn, storeNo);
+		//해당 가게 리뷰 평균 점수 가져오는 DAO
+		double avgRev = new StoreDao().selectRevAvg(conn, storeNo);
 		
 		JDBCTemplate.close(conn);
 		
-		StoreReviewData srd = new StoreReviewData(listRev, cntRev, avgRev);
+		ReviewData srd = new ReviewData(listRev, cntRev, avgRev);
 		
 		return srd;
 	}
@@ -62,6 +62,34 @@ public class StoreService {
 		JDBCTemplate.close(conn);
 
 		return order;
+	}
+
+	public int insertReview(Review review) {
+		Connection conn = JDBCTemplate.getConnection();
+		String cliId = review.getRevCliId();
+		int storeNo = review.getRevStore();
+		String now = review.getRevEnrollDate();
+				
+		Order order = new StoreDao().selectOrder(conn, cliId, storeNo, now);
+		
+		int orderNo = order.getOrdNo();
+		review.setRevOrdNo(orderNo);
+		
+		int result = new StoreDao().insertReview(conn, review);
+
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int searchIndex(String menuName) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

@@ -9,6 +9,7 @@ public class Review {
 	private String revCliId;
 	private int revStore;
 	private String revEnrollDate;
+	private String MenuName;
 	
 	
 	public Review() {
@@ -18,7 +19,7 @@ public class Review {
 	
 	
 	public Review(int revNo, int revOrdNo, int revScore, String revContent, String revCliId, int revStore,
-			String revEnrollDate) {
+			String revEnrollDate, String menuName) {
 		super();
 		this.revNo = revNo;
 		this.revOrdNo = revOrdNo;
@@ -27,9 +28,10 @@ public class Review {
 		this.revCliId = revCliId;
 		this.revStore = revStore;
 		this.revEnrollDate = revEnrollDate;
+		MenuName = menuName;
 	}
-	
-	
+
+
 	public int getRevNo() {
 		return revNo;
 	}
@@ -73,4 +75,13 @@ public class Review {
 		this.revEnrollDate = revEnrollDate;
 	}
 
+	public String getMenuName() {
+		return MenuName;
+	}
+
+	public void setMenuName(String menuName) {
+		MenuName = menuName;
+	}
+
+	
 }

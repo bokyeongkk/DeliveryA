@@ -2,42 +2,45 @@ package store.model.vo;
 
 import java.util.ArrayList;
 
-public class StoreReviewData {
+public class ReviewData {
 	private ArrayList<Review> listRev;
 	private int cntRev;
-	private int avgRev;
+	private double avgRev;
 	
-	public StoreReviewData() {
+	public ReviewData() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public StoreReviewData(ArrayList<Review> listRev, int cntRev, int avgRev) {
+
+	public ReviewData(ArrayList<Review> listRev, int cntRev, double avgRev) {
 		super();
 		this.listRev = listRev;
 		this.cntRev = cntRev;
 		this.avgRev = avgRev;
 	}
 
-	
 	public ArrayList<Review> getListRev() {
 		return listRev;
 	}
+
 	public void setListRev(ArrayList<Review> listRev) {
 		this.listRev = listRev;
 	}
+
 	public int getCntRev() {
 		return cntRev;
 	}
+
 	public void setCntRev(int cntRev) {
 		this.cntRev = cntRev;
 	}
-	public int getAvgRev() {
+
+	public double getAvgRev() {
 		return avgRev;
 	}
-	public void setAvgRev(int avgRev) {
+
+	public void setAvgRev(double avgRev) {
 		this.avgRev = avgRev;
 	}
-
+	
 }
