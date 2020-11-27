@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	ArrayList<Client> list = (ArrayList<Client>) request.getAttribute("list");
+    	ArrayList<Client> list = (ArrayList<Client>) request.getAttribute("searchId");
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -59,7 +59,7 @@
             text-align: left;
             font-size: 20px;
         }
-        button{
+        .btn-main{
             font-size: 1em;
             height: 60px;
             width: 400px;
@@ -70,7 +70,7 @@
         }
     </style>
 
-	
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="content-all-wrap">
         <div class="search-header">
             <h1>아이디 찾기</h1>
@@ -82,15 +82,16 @@
                     	<tr>
                            <th>아이디 목록</th>
                        </tr>
-                        <%for(Client c : list){%>
+                        <%for(Client client : list){%>
                         	<tr>
-                        		<td><%=c.getCliId() %></td>
+                        		<td><%=client.getCliId() %></td>
                         	</tr>
                         <%} %>
                     </table>
-                <a href="/"><button>메인으로</button></a>
+                <a href="/"><button class="btn-main">메인으로</button></a>
             </div>
         </div>
     </div>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

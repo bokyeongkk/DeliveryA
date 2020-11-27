@@ -38,7 +38,8 @@ public class SearchPwServlet extends HttpServlet {
 		
 		Client client = new ClientService().searchPw(cliId, cliTel);
 		if(client!=null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/searchId.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/updatePw.jsp");
+			request.setAttribute("id", client.getCliId());
 			rd.forward(request, response);
 		} else {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");

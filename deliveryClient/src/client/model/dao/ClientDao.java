@@ -183,4 +183,23 @@ public class ClientDao {
 		return client;
 	}
 
+	public int updatePw(Connection conn, String cliId, String cliPw) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update client_db set cli_pw=? where cli_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliPw);
+			pstmt.setString(2, cliId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 }

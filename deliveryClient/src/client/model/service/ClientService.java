@@ -49,4 +49,16 @@ public class ClientService {
 		return client;
 	}
 
+	public int updatePw(String cliId, String cliPw) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new ClientDao().updatePw(conn, cliId, cliPw);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 }
