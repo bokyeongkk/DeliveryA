@@ -92,6 +92,7 @@
             border-radius: 40px;
             margin-top: 30px;
             background-color: #e8e8e8;
+            text-align: center;
         }
 
         .category-box-wrap {

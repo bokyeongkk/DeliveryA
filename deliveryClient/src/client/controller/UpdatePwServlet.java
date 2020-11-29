@@ -37,15 +37,19 @@ public class UpdatePwServlet extends HttpServlet {
 		
 		int result = new ClientService().updatePw(cliId, cliPw);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+//		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {	//비밀번호 변경 성공
-			request.setAttribute("msg", "비밀번호 변경성공.");
-			request.setAttribute("loc", "/"); //비밀번호 변경 성공 메세지를 보여주는 창 만들고, 로그인하기 버튼 만들기
+//			request.setAttribute("msg", "비밀번호 변경성공.");
+//			request.setAttribute("loc", "/views/client/completePw.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/client/completePw.jsp");
+			rd.forward(request, response);
 		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			request.setAttribute("msg", "비밀번호 변경 실패\n관리자에게 문의하세요");
 			request.setAttribute("loc", "/views/client/search.jsp");
+			rd.forward(request, response);
 		}
-		rd.forward(request, response);
+//		rd.forward(request, response);
 	}
 
 	/**
