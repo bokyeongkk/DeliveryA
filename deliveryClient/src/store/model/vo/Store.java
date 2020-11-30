@@ -109,5 +109,4 @@ public class Store {
 	public void setStoreRest(String storeRest) {
 		this.storeRest = storeRest;
 	}
-	111
 }
