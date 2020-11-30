@@ -1,7 +1,6 @@
 package client.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import client.model.service.ClientService;
-import client.model.vo.Client;
 
 /**
- * Servlet implementation class SearchIdServlet
+ * Servlet implementation class UpdatePwServlet
  */
-@WebServlet(name = "SearchId", urlPatterns = { "/searchId" })
-public class SearchIdServlet extends HttpServlet {
+@WebServlet(name = "updatePw", urlPatterns = { "/updatePw" })
+public class UpdatePwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchIdServlet() {
+    public UpdatePwServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,20 +32,24 @@ public class SearchIdServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		String cliName = request.getParameter("cliName");
-		String cliTel = request.getParameter("cliTel1");
+		String cliId = request.getParameter("cliId");
+		String cliPw = request.getParameter("cliPw");
 		
-		ArrayList<Client> list = new ClientService().searchId(cliName, cliTel);
-		if(list.isEmpty()) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "회원정보와 일치하는 계정이 존재하지 않습니다.");
-			request.setAttribute("loc", "/views/client/search.jsp");
+		int result = new ClientService().updatePw(cliId, cliPw);
+		
+//		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		if(result>0) {	//비밀번호 변경 성공
+//			request.setAttribute("msg", "비밀번호 변경성공.");
+//			request.setAttribute("loc", "/views/client/completePw.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/client/completePw.jsp");
 			rd.forward(request, response);
 		} else {
-			request.setAttribute("searchId", list);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/client/searchId.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			request.setAttribute("msg", "비밀번호 변경 실패\n관리자에게 문의하세요");
+			request.setAttribute("loc", "/views/client/search.jsp");
 			rd.forward(request, response);
 		}
+//		rd.forward(request, response);
 	}
 
 	/**

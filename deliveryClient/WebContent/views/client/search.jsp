@@ -98,7 +98,7 @@
             border: 1px solid #cccccc;
             text-align: center;
         }
-        button{
+        .search-btn{
             height: 60px;
             width: 400px;
             background-color: #383a3f;
@@ -137,10 +137,10 @@
                                 <th>전화번호</th>
                             </tr>
                             <tr>
-                                <td><input type="text" id="cliTel1" name="cliTel1"></td>
+                                <td><input type="text" id="cliTel1" name="cliTel1" placeholder="010-0000-0000"></td>
                             </tr>
                             <tr>
-                                <td><button type="submit">찾기</button></td>
+                                <td><button type="submit" class="search-btn">찾기</button></td>
                             </tr>
                         </table>
                     </form>
@@ -158,10 +158,10 @@
                                 <th>전화번호</th>
                             </tr>
                             <tr>
-                                <td><input type="text" id="cliTel2" name="cliTel2"></td>
+                                <td><input type="text" id="cliTel2" name="cliTel2" placeholder="010-0000-0000"></td>
                             </tr>
                             <tr>
-                                <td><button type="submit">찾기</button></td>
+                                <td><button type="submit" class="search-btn">찾기</button></td>
                             </tr>
                         </table>
                     </form>
@@ -172,6 +172,7 @@
     <%@include file="/WEB-INF/views/common/footer.jsp" %>
     <script>
         $(function() {
+        	$(".search-header").children().text('아이디 찾기');
             $("#id").addClass('in');
             $("#pw").addClass('out');
             $(".search").eq(0).css('display', 'block');
@@ -182,6 +183,7 @@
 
             //0 -> id찾기, //1 -> pw찾기
             if (idx == 0) {
+            	$(".search-header").children().text('아이디 찾기');
                 $("#id").removeClass('out');
                 $("#pw").removeClass('in');
                 $("#id").addClass('in');
@@ -189,6 +191,7 @@
                 $(".search").eq(0).css('display', 'block');
                 $(".search").eq(1).css('display', 'none');
             } else {
+            	$(".search-header").children().text('비밀번호 찾기');
                 $("#id").addClass('out');
                 $("#pw").addClass('in');
                 $("#pw").removeClass('out');
