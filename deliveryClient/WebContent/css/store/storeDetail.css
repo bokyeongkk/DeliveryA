@@ -22,6 +22,7 @@
             width: 30%;
             display: inline-block;
             padding-left: 30px;
+            padding-top : 10px;
         }
 
         /*가게정보 스타일----------------------------------------*/
@@ -97,7 +98,7 @@
         }
 
         .selectTab {
-            border-top: 7px solid #383a3f;
+            border-top: 7px solid #f9a11b;
             border-bottom: none;
         }
 
@@ -165,10 +166,10 @@
 
         .menu-view>li:first-child {
             height: 60px;
-            line-height: 60px;
+            line-height: 58px;
             background-color: #383a3f;
-            color: white;
-            font-size: 20px;
+            color: #f9a11b;
+            font-size: 1.4em;
             text-align: center;
             font-weight: bold;
             border : 1px solid #383a3f;
@@ -221,7 +222,6 @@
             overflow: hidden;
             width: 60%;
             margin: 0 auto;
-            height: 150px;
             padding: 30px;
         }
 
@@ -276,7 +276,8 @@
             text-align: center;
         }
 
-        .reivew-more {
+        .review-more {
+        	width : 100%;
             text-align: center;
             margin: 20px;
         }
@@ -291,11 +292,13 @@
 
         .cart-sticky {
             width: 100%;
-            background-color: antiquewhite;
+/*             color: #f9a11b; */
+            background-color: rgb(249, 161, 27, 0.2);
             overflow: hidden;
             position: sticky;
             top: 0px;
             padding: 15px;
+            box-shadow: 5px 5px 5px 3px gray;
         }
 
         .cart-title {
@@ -305,20 +308,18 @@
             font-weight: bolder;
             height: 65px;
             line-height: 50px;
-            color: #383a3f;
+			color : #383a3f;
         }
 
-        #trashbox {
+        .cart-trashbox {
+        	text-decoration : none;
             float: right;
             width: 40px;
-            height: 48px;
-            line-height: 48px;
+			padding-top: 18px;
             text-align: center;
-            border: none;
-            outline: none;
             background-color: transparent;
             font-size: 20px;
-            color: #d8d8d8;
+            color: #383a3f;
             cursor: pointer;
         }
 
@@ -338,6 +339,8 @@
         }
 
         .btn-delete {
+        	color : #d8d8d8;
+        	text-decoration : none;
             width: 30px;
             text-align: center;
             border: none;
@@ -360,7 +363,7 @@
             color: #383a3f;
         }
 
-        .cart-price {
+        .count-price {
             width: 280px;
             text-align: right;
             color: firebrick;
@@ -372,7 +375,6 @@
         .total-price {
             border-top: 2px solid #383a3f;
             margin-top: 40px;
-            padding-top: 20px;
             padding-left: 10px;
         }
 
@@ -383,6 +385,7 @@
         }
 
         .total-price input {
+        	outline : none;
             background-color: transparent;
             border: none;
             text-align: right;
@@ -404,7 +407,7 @@
             font-weight: 800;
         }
         
-        /*모달창 스타일*/
+        /*모달창 스타일------------------------------*/
         .reveiw-modal-wrap {
             display: none;
   

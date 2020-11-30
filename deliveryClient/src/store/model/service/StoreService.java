@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import common.JDBCTemplate;
 import order.model.vo.Order;
 import store.model.dao.StoreDao;
+import store.model.vo.Cart;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
@@ -87,10 +88,18 @@ public class StoreService {
 		return result;
 	}
 
-	public int searchIndex(String menuName) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int searchIndex(ArrayList<Cart> listCart, String menuName) {
+		for(Cart c : listCart) {
+			for(int i=0; i<listCart.size(); i++) {
+				if(c.getMenuName().equals(menuName)) {
+					return i;
+				}
+			}
+		}
+		return -1;
 	}
+
+
 
 
 }

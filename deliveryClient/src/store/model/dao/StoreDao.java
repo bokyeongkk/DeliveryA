@@ -139,7 +139,11 @@ public class StoreDao {
 		ResultSet rset = null;
 		ArrayList<Review> listRev = new ArrayList<Review>();
 		
-		String query = "SELECT REV_NO, REV_ORD_NO, MENU_NAME, REV_SCORE, REV_CONTENT, REV_CLI_ID, REV_STORE, REV_ENROLL_DATE FROM REV_DB JOIN ORD_DET_DB ON (REV_ORD_NO = ORD_DET_NO) JOIN MENU_DB ON (ORD_DET_MENU_NO = MENU_NO) WHERE REV_STORE = ?";
+		String query = "SELECT REV_NO, REV_ORD_NO, MENU_NAME, REV_SCORE, REV_CONTENT, REV_CLI_ID, REV_STORE, REV_ENROLL_DATE "
+				+ "FROM REV_DB "
+				+ "JOIN ORD_DET_DB ON (REV_ORD_NO = ORD_DET_NO) "
+				+ "JOIN MENU_DB ON (ORD_DET_MENU_NO = MENU_NO) "
+				+ "WHERE REV_STORE = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -280,11 +284,5 @@ public class StoreDao {
 		return result;
 	}
 
-	public String selectMenuName(Connection conn, int storeNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 
 }

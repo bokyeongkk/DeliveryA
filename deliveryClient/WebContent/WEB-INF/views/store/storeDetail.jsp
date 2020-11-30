@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="store.model.vo.Cart"%>
 <%@page import="store.model.vo.ReviewData"%>
 <%@page import="store.model.vo.Review"%>
@@ -11,7 +12,18 @@
         ArrayList<Menu> listMenu = (ArrayList<Menu>)request.getAttribute("listMenu");
         ReviewData srd = (ReviewData)request.getAttribute("srd");
         
-        ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");  	
+        //장바구니 세션
+        ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
+        
+        //별 갯수 표현을 위해 소수점 반올림된 변수 생성
+        int storeStar = (int)Math.round(srd.getAvgRev());
+
+        //가격 콤마 표시을 위한 클래스 활용
+        DecimalFormat formatter = new  DecimalFormat("#,###");
+        
+        //가격 콤마 표시 제거
+        //text.replaceAll(",", "");
+        
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -44,7 +56,23 @@
 			$(".store-tap").eq(0).addClass("selectTab");
 			$(".store-cont").hide();
 			$(".store-cont").eq(0).show();
-
+			
+			
+			//장바구니 메뉴들 합계 구하기
+			var sum = 0;
+			//메뉴 가격 가져와서  number로 변환 후 sum 변수에 합치기
+			//이미 가격 ,가 찍혀서 출력되어 있기 때문에 ,를 제거하고 더해줌
+			$(".count-price").each(function() {
+				sum += Number($(this).val().replace(/[^\d]+/g, ""));
+			});
+			
+			//현재 number상태이기 때문에 string으로 변환하고 정규표현식으로 ,를 찍어줌
+			sum = String(sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			
+			//합계  input의 값으로  sum을 넣어줌
+			$(".total-price").val(sum);
+			
+			
 			//탭 메뉴 클릭 이벤트
 			$(".store-tap").click(function() {
 				$(".store-tap").removeClass("selectTab");
@@ -55,43 +83,51 @@
 				$(".store-cont").hide();
 				$(".store-cont").eq(idx).show();
 			});
-
-/* 			//장바구니 담기 버튼 클릭 이벤트
-			$(".cart-in").click(function() {
-				alert("장바구니에 담겼습니다.")
-			});
- */
- 
-			//장바구니 전체 삭제 이벤트
-			$("#trashbox").click(function() {
-				$("#trashbox").parent().siblings(".cart-menu-box").remove();
-			});
-
-			//장바구니 메뉴박스 삭제 이벤트
-			$(".btn-delete").click(function() {
-				$(this).parents(".cart-menu-box").remove();
-			});
-			
-			//장바구니 (-)수량 버튼
-			$(".minus").click(function() {
-				var n = $('.minus').index(this);
-				var num = $(".count:eq("+n+")").val();
-				if(num > 1) {
-					num = $(".count:eq("+n+")").val(num*1-1);
-				}
-			});
-			
-			//장바구니 (+)수량 버튼
-			$(".plus").click(function() {
-				var n = $(".plus").index(this);
-				var num = $(".count:eq("+n+")").val();
-				num = $(".count:eq("+n+")").val(num*1+1);
-			});
 			
 		});
 		
+		
 		//!함수는 $(function(){}); 밖에서 선언
-		//리뷰 작성 모달창 생성
+		
+		function countMinus(menuName) {
+			var n = $('.minus').index(this);
+			var num = $(".count:eq("+n+")").val();
+			
+			//수량이 1보다 클 때만 동작
+			if(num > 1) {
+				$.ajax({
+					url:"/countMinus",
+					data: {
+						menuName : menuName
+					},
+					type:"post",
+					success : function(data){
+						$(".count:eq("+n+")").val(data.count);
+						$(".count-price:eq("+n+")").val(data.countPrice);
+					}
+				})
+			}
+		}
+		
+		function countPlus(menuName) {
+			var n = $(".plus").index(this);
+			var num = $(".count:eq("+n+")").val();
+			
+			$.ajax({
+				url:"/countPlus",
+				data: {
+					menuName : menuName
+				},
+				type:"post",
+				success : function(data){
+					 $(".count:eq("+n+")").val(data);
+				}
+			})
+			
+			
+		}
+		
+		//리뷰 작성하는 모달창 생성
 		function reviewWriteFrm(cliId, storeNo) {
 			$.ajax({
 				url:"/searchOrder",
@@ -104,13 +140,12 @@
 					if(data  == "1"){
 						$(".reveiw-modal-wrap").css("display", "flex");			
 					}else{
-						alert("오늘 주문하신 내역이 없어요");
+						alert("오늘 주문하신 내역이 존재하지 않아요.");
 					}
 				}
 			})
 		}
 		
-		//!함수는 $(function(){}); 밖에서 선언
 		//리뷰 작성 모달창 취소 버튼
 		function reviewWriteCancel() {
 			//채워진 별모양 삭제
@@ -126,7 +161,7 @@
 		//리뷰 작성 - 별 클릭하면 채워진 별 이미지로 변경하는 이벤트
 		//한번만 클릭되고 다음부터는 안되는 문제가 있었음
 		//-> $(document).on 페이지가 로드 될때 계속 새로운 클래스로 생성
-       $(document).on("click",".grade-mark",function(){
+       	$(document).on("click",".grade-mark",function(){
 
             mark = $(".grade-mark");
             idx = $(".grade-mark").index(this);
@@ -146,8 +181,8 @@
             $(".grade").val((idx + 1));
             console.log($(".grade").val());
             
-         });
-	
+        });
+				
 	</script>
 
 
@@ -221,12 +256,14 @@
                             <li> 우리 가게 메뉴</li>
                             <%for(Menu m : listMenu) {%>
                             <li>
-                            	<form action="/cartInMenu" method="post">
+                            	<form action="/insertCart" method="post">
                                 <div class="menu-text">
                                 	<input type="hidden" name="storeNo" value="<%=s.getStoreNo() %>">
+                                	<input type="hidden" name="menuNo" value="<%=m.getMenuNo() %>">
                                     <input type="text" name="menuName" class="menu-name" value="<%=m.getMenuDet() %>"><br>
                                     <input type="text" name="menuDesc" class="menu-desc" value="<%=m.getMenuDet() %>"><br>
                                     <input type="text" name="menuPrice" class="menu-price" value="<%=m.getMenuPrice() %>">
+                                    <!-- formatter.format(m.getMenuPrice()) -->
                                 </div>
                                 <div class="menu-cart">
                                     <button type="submit" class="btn btn-outline-warning cart-in">장바구니 담기</button>
@@ -243,11 +280,14 @@
                         <div class="review-title-left">
                             <h3><%=srd.getAvgRev() %></h3>
                             <span class="star">
-                                <i class="fas fa-star" id="star-lg"></i>
-                                <i class="fas fa-star" id="star-lg"></i>
-                                <i class="fas fa-star" id="star-lg"></i>
-                                <i class="fas fa-star" id="star-lg"></i>
-                                <i class="far fa-star" id="star-lg"></i>
+							<!--스코어 점수 따라서 별 모양 for문 돌리기 -->
+                                    <%for (int i=0;i<5; i++) {%>
+                                    	<%if(storeStar > i) {%>
+                                    	<i class="fas fa-star" id="star-lg"></i>
+                                    	<%} else{%>
+                                    	<i class="far fa-star" id="star-lg"></i>
+                                    	<%} %>
+                                    <%} %>
                             </span>
                         </div>
                         <div class="review-title-right">
@@ -255,25 +295,31 @@
                             <p>사장님이 남긴 댓글 0개</p>
                         </div>
                     </div>
+                    
                     <!-- 로그인 정보가 없을 때 리뷰 작성하기 버튼 안보이게 -->
                     <%if(c != null) {%>
                     <div class="review-write">
-                     <input type="button" class="btn btn-warning" onclick="reviewWriteFrm('<%=c.getCliId() %>','<%=s.getStoreNo() %>');" value="리뷰 작성하기">
+                     <button type="button" class="btn btn-warning" onclick="reviewWriteFrm('<%=c.getCliId() %>', '<%=s.getStoreNo() %>');">
+                     	리뷰 작성하기
+                     </button>
                     </div>
                     <%} %>
+                    
                     <div class="review-view-wrap">
                     	<%for(Review r : srd.getListRev()) {%>
                         <div class="review-view">
                             <ul>
                                 <li class=""><%=r.getRevCliId() %></li>
                                 <li class="review-date"><%=r.getRevEnrollDate() %></li>
-                                <li class="review-score" style="display:none"><%=r.getRevScore() %></li>
                                 <li>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
-                                    <i class="fas fa-star" id="star-sm"></i>
+                                    <!--스코어 점수 따라서 별 모양 for문 돌리기 -->
+                                    <%for (int i=0;i<5; i++) {%>
+                                    	<%if(r.getRevScore() > i) {%>
+                                    	<i class="fas fa-star" id="star-sm"></i>
+                                    	<%} else{%>
+                                    	<i class="far fa-star" id="star-sm"></i>
+                                    	<%} %>
+                                    <%} %>
                                 </li>
                                 <li class="review-cont"><%=r.getRevContent() %></li>
                                 <br>
@@ -282,8 +328,7 @@
                         </div>
                         <%} %>
                     </div>
-                    
-                    <div class="reivew-more">
+                    <div class="review-more">
                         <button class="btn btn-dark" currentCount="0" value="" totalCount="" id="more-btn">더보기</button>
                     </div>
                 </div>
@@ -325,31 +370,41 @@
                 <div class="cart-sticky">
                     <form action="/orderPage" method="post">
                         <div class="cart-title">내 장바구니
-                            <button type="button" id="trashbox"><i class="fas fa-trash-alt"></i></button>
+                        <a href="/deleteCartAll?storeNo=<%=s.getStoreNo() %>" class="cart-trashbox"><i class="fas fa-trash-alt"></i></a>
                         </div>
                         <%if(listCart == null) {%>
-                        	<h6>장바구니가 비어있습니다.</h6>
+                        	<br><br>
+                        	<h6> 장바구니를 채워주세요( ღ'ᴗ'ღ )</h6>
                         <%} else {%> 
             
-                        <%for(Cart t : listCart) {%>
-                        <div class="cart-menu-box">
-                            <button type="button" class="btn-delete">
-                                <i class="fas fa-times"></i>
-                            </button>
+                        	<%for(Cart t : listCart) {%>
+                        	<div class="cart-menu-box">
+                        		<a href="/deleteCartOne?storeNo=<%=s.getStoreNo() %>&menuName=<%=t.getMenuName() %>" class="btn-delete">
+                        		<i class="fas fa-times"></i>
+                        		</a>
+                            
+                            	<input type="hidden" name="orderMenuNo" value="<%=t.getMenuNo() %>">
+                            	<input type="text" name="orderMenuName" class="cart-name" value="<%=t.getMenuName() %>">
 
-                            <input type="text" name="orderName" class="cart-name" value="<%=t.getMenuName() %>">
+                            	<button type="button" class="btn-cart-num minus" onclick="countMinus('<%=t.getMenuName() %>');">
+                            	<i class="fas fa-minus"></i>
+                            	</button>
+                            	<input type="text" name="orderMenuCount" class="btn-cart-num count" value="<%=t.getMenuCount() %>">
+                            	<button type="button" class="btn-cart-num plus" onclick="countPlus('<%=t.getMenuName() %>');">
+                            	<i class="fas fa-plus"></i>
+                            	</button>
 
-                            <button type="button" class="btn-cart-num minus"><i class="fas fa-minus"></i></button>
-                            <input type="text" name="orderCount" class="btn-cart-num count" value="<%=t.getMenuCount() %>">
-                            <button type="button" class="btn-cart-num plus"><i class="fas fa-plus"></i></button>
-
-                            <input type="text" name="orderPrice" class="cart-price" value="<%=t.getMenuPrice() %>"><span class="won"> 원</span>
-                        </div>
-                        <%} %> 
+                            	<input type="text" name="orderMenuPrice" class="count-price" value="<%=formatter.format(t.getCountPrice()) %>">
+                            	<span class="won"> 원</span>
+                        	</div>
+                        	<%} %> 
                         
 						<%} %> 
+						
+						<input type="hidden" name="orderStoreNo" value="<%=s.getStoreNo() %>">
+						
                         <div class="total-price">
-                            <span>합계</span><input type="text" name="orderTotalPrice" value="38,000"><span> 원</span>
+                            <span>합계</span><input type="text" name="orderTotalPrice" class="total-price" value=""><span> 원</span>
                         </div>
                         <div class="cart-order-btn">
                             <input type="submit" class="btn btn-danger btn-order" value="주문하기">
