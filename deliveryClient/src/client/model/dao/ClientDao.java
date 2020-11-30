@@ -202,4 +202,28 @@ public class ClientDao {
 		return result;
 	}
 
+	public int updateClient(Connection conn, Client client) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "update client_db set cli_pw=?, cli_nickname=?, cli_tel=?, cli_addr=?, cli_addr_det=? where cli_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, client.getCliPw());
+			pstmt.setString(2, client.getCliNickname());
+			pstmt.setString(3, client.getCliTel());
+			pstmt.setString(4, client.getCliAddr());
+			pstmt.setString(5, client.getCliAddrDet());
+			pstmt.setString(6, client.getCliId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
 }

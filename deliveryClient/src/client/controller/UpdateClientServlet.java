@@ -13,16 +13,16 @@ import client.model.service.ClientService;
 import client.model.vo.Client;
 
 /**
- * Servlet implementation class MypageServlet
+ * Servlet implementation class UpdateClientServlet
  */
-@WebServlet(name = "Mypage", urlPatterns = { "/mypage" })
-public class MypageServlet extends HttpServlet {
+@WebServlet(name = "UpdateClient", urlPatterns = { "/updateClient" })
+public class UpdateClientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MypageServlet() {
+    public UpdateClientServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,24 +31,39 @@ public class MypageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 인코딩
 		request.setCharacterEncoding("utf-8");
+
 		
-		//2. view에서 넘어온 값 받기
+		Client client = new Client();
 		String cliId = request.getParameter("cliId");
-		Client client = new ClientService().selectOneClient(cliId);
-		//3. 비지니스 로직
-		//4. 결과 처리
-		if(cliId.equals("")) {	//에러처리
-			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "잘못된 접근");
-			request.setAttribute("loc", "/");
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/client/mypage.jsp");
-			request.setAttribute("client", client);
-			rd.forward(request, response);
+		client.setCliId(cliId);
+		client.setCliNickname(request.getParameter("cliNick"));
+		client.setCliTel(request.getParameter("cliTel"));
+		client.setCliAddr(request.getParameter("cliAddr"));
+		client.setCliAddrDet(request.getParameter("cliAddrDet"));
+
+		String oldPw = request.getParameter("oldPw");
+		String newPw = request.getParameter("cliPw");
+		
+		System.out.println("oldPw>"+oldPw);
+		System.out.println("newPw>"+newPw);
+		if(newPw.isEmpty()) {
+			client.setCliPw(oldPw);
+			System.out.println("client.getPw>"+client.getCliPw());
 		}
+		
+		
+		int result = new ClientService().updateClient(client);
+		
+		RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		
+		if(result>0) {
+			request.setAttribute("msg", "정보 수정 성공");
+		} else {
+			request.setAttribute("msg", "정보 수정 실패");
+		}
+		request.setAttribute("loc", "/mypage?cliId="+cliId);
+		rd.forward(request, response);
 	}
 
 	/**

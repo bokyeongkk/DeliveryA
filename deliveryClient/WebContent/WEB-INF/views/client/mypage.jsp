@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	Client client = (Client)request.getAttribute("client");
+    %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -161,6 +164,9 @@
             margin-top: 50px;
             margin-bottom: 30px;
         }
+        input[readonly]{
+        	background-color : lightgray;
+        }
     </style>
 </head>
 
@@ -206,12 +212,13 @@
         </div>
         <div class="content-wrap">
             <form action="/updateClient" method="post">
+           		<input type="hidden" value=<%=client.getCliPw() %> name="oldPw" id="oldPw">
                 <table class="join-table">
                     <tr>
                         <th colspan="3">아이디<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliId" id="cliId" class="join-input" value=<%=c.getCliId() %> readonly></td>
+                        <td colspan="3"><input type="text" name="cliId" id="cliId" class="join-input" value=<%=client.getCliId() %> readonly></td>
                     </tr>
                     <tr>
                         <th colspan="3">비밀번호<span></span></th>
@@ -229,7 +236,7 @@
                         <th colspan="3">이메일<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliEmail" id="cliEmail" class="join-input" <%=c.getCliEmail() %>readonly></td>
+                        <td colspan="3"><input type="text" name="cliEmail" id="cliEmail" class="join-input" value=<%=client.getCliEmail() %> readonly></td>
                     </tr>
                     <tr>
                         <th colspan="3">우편번호<span></span></th>
@@ -242,38 +249,38 @@
                         <th colspan="3">주소<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliAddr" id="cliAddr" class="join-input" value=<%=c.getCliAddr() %>></td>
+                        <td colspan="3"><input type="text" name="cliAddr" id="cliAddr" class="join-input" value=<%=client.getCliAddr() %>></td>
                     </tr>
                     <tr>
                         <th colspan="3">상세주소<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliAddrDet" id="cliAddrDet" class="join-input" value=<%=c.getCliAddrDet() %>></td>
+                        <td colspan="3"><input type="text" name="cliAddrDet" id="cliAddrDet" class="join-input" value=<%=client.getCliAddrDet() %>></td>
                     </tr>
                     <tr>
                         <th colspan="3">이름<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliName" id="cliName" class="join-input" value=<%=c.getCliName() %> readonly></td>
+                        <td colspan="3"><input type="text" name="cliName" id="cliName" class="join-input" value=<%=client.getCliName() %> readonly></td>
                     </tr>
                     <tr>
                         <th colspan="3">전화번호<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliTel" id="cliTel" class="join-input" value=<%=c.getCliTel() %>></td>
+                        <td colspan="3"><input type="text" name="cliTel" id="cliTel" class="join-input" value=<%=client.getCliTel() %>></td>
                     </tr>
                     <tr>
                         <th colspan="3">닉네임<span></span></th>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="text" name="cliNick" id="cliNick" class="join-input" value=<%=c.getCliNickname() %>></td>
+                        <td colspan="3"><input type="text" name="cliNick" id="cliNick" class="join-input" value=<%=client.getCliNickname() %>></td>
                     </tr>
                     <tr>
                         <th colspan="3">생일<span></span></th>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <input type="date" name="cliBirth" id="cliBirth" class="join-input" style="width: 100%;" value=<%=c.getCliBirth() %> readonly>
+                            <input type="date" name="cliBirth" id="cliBirth" class="join-input" style="width: 100%;" value=<%=client.getCliBirth() %> readonly>
                         </td>
                     </tr>
                     <tr>
@@ -296,12 +303,12 @@
                 var reg = /^[A-Za-z0-9_-]{6,18}$/;
                 if (reg.test($(this).val())) {
                     check[0] = true;
-                    $("span").eq(1).text("");
+                    $("span").eq(6).text("");
                     $("#cliPw").css('border', '1px solid #64de40');
                 } else {
                     check[0] = false;
-                    $("span").eq(1).text("영어 대소문자+숫자 6~18자리");
-                    $("span").eq(1).css('color', 'red');
+                    $("span").eq(6).text("영어 대소문자+숫자 6~18자리");
+                    $("span").eq(6).css('color', 'red');
                     $("#cliPw").css('border', '1px solid red');
                 }
             });
@@ -312,12 +319,12 @@
                 if ($("#cliPw").val() != "") {
                     if ($(this).val() == $("#cliPw").val()) {
                         check[1] = true;
-                        $("span").eq(2).text("");
+                        $("span").eq(7).text("");
                         $("#cliPw_re").css('border', '1px solid #64de40');
                     } else {
                         check[1] = false;
-                        $("span").eq(2).text("비밀번호가 일치하지 않습니다.");
-                        $("span").eq(2).css('color', 'red');
+                        $("span").eq(7).text("비밀번호가 일치하지 않습니다.");
+                        $("span").eq(7).css('color', 'red');
                         $("#cliPw_re").css('border', '1px solid red');
                     }
                 }
@@ -327,12 +334,12 @@
                 var reg = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
                 if (reg.test($(this).val())) {
                     check[2] = true;
-                    $("span").eq(8).text("");
+                    $("span").eq(13).text("");
                     $("#cliTel").css('border', '1px solid #64de40');
                 } else {
                     check[2] = false;
-                    $("span").eq(8).text("전화번호 형식 : 000-000(0)-0000 / 00-000(0)-0000");
-                    $("span").eq(8).css('color', 'red');
+                    $("span").eq(13).text("전화번호 형식 : 000-000(0)-0000 / 00-000(0)-0000");
+                    $("span").eq(13).css('color', 'red');
                     $("#cliTel").css('border', '1px solid red');
                 }
             });
@@ -342,12 +349,12 @@
                 var reg = /^[0-9A-Za-z가-힣]{2,10}$/;
                 if (reg.test($(this).val())) {
                     check[3] = true;
-                    $("span").eq(9).text("");
+                    $("span").eq(14).text("");
                     $("#cliNick").css('border', '1px solid #64de40');
                 } else {
                     check[3] = false;
-                    $("span").eq(9).text("2~10글자");
-                    $("span").eq(9).css('color', 'red');
+                    $("span").eq(14).text("2~10글자");
+                    $("span").eq(14).css('color', 'red');
                     $("#cliNick").css('border', '1px solid red');
                 }
             });
