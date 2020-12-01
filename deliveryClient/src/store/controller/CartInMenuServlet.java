@@ -55,7 +55,7 @@ public class CartInMenuServlet extends HttpServlet {
 			session.setAttribute("listCart", listCart); //세션에 담는 것 까지 세팅
 		} else {
 			listCart.add(cart);
-			int index = new StoreService().searchIndex(menuName);
+			//int index = new StoreService().searchIndex(menuName);
 		}
 		
 		//4. 결과처리

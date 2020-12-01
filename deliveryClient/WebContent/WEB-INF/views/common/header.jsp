@@ -118,7 +118,7 @@
 					<%
 						} else {
 					%>
-					<li class="nav-item"><a class="nav-link header-nav-link" href="#">마이페이지</a></li>
+					<li class="nav-item"><a class="nav-link header-nav-link" href="javascript:void(0)" onclick="location.href='/mypage?cliId=<%=c.getCliId()%>'">마이페이지</a></li>
 					<!-- <li class="nav-item"><a class="nav-link header-nav-link" href="/logout">로그아웃</a></li> -->
 					<li class="nav-item"><a class="nav-link header-nav-link" href="javascript:void(0)" onclick="logout();">로그아웃</a></li>
 					<%
@@ -131,7 +131,7 @@
 	<%@ include file="/views/client/login.jsp"%>
 	<script>
 		function logout(){
-			alert(window.location.pathname);
+			//alert(window.location.pathname);
 			$("#uri").val(window.location.pathname);
 			$("#param").val(window.location.search);
 			var logoutFrm = $("[name=logoutFrm]");

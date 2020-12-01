@@ -97,7 +97,8 @@
 
         .category-box-wrap {
             width: 1300px;
-            background-color: lightblue;
+            /* background-color: lightblue; */
+            border : 1px solid #cccccc;
             padding-top: 250px;
             margin: 0 auto;
 
@@ -151,16 +152,21 @@
             background-color: lightcyan;
             margin: 0 auto;
         }
+        
+        .swiper-slide>img{
+        	width:100%;
+        	height:100%;
+        }
     </style>
 
     <div class="content-all-wrap">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
+                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
+                <div class="swiper-slide">Slide</div>
+                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
+                <div class="swiper-slide">Slide</div>
+                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>

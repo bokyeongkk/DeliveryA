@@ -136,7 +136,6 @@
 				data : {cliId : cliId,
 						cliPw : cliPw},
 				success : function(data){
-					console.log(data);
 					if(data == 1){
 						location.reload();
 					} else {

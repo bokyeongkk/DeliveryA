@@ -8,21 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.bind.v2.runtime.Location;
+import client.model.service.ClientService;
+import client.model.vo.Client;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class MypageServlet
  */
-@WebServlet(name = "Logout", urlPatterns = { "/logout" })
-public class LogoutServlet extends HttpServlet {
+@WebServlet(name = "Mypage", urlPatterns = { "/mypage" })
+public class MypageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public MypageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,30 +32,23 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 인코딩
-				request.setCharacterEncoding("utf-8");
-				
-				//2. view에서 넘어온 데이터 저장
-				//3. 비지니스 로직
-				HttpSession session = request.getSession(false);
-				if(session != null) {
-					session.invalidate();
-				}
-				
-				//4. 결과처리
-				String uri = request.getParameter("uri");
-				String param = request.getParameter("param");
-				if(uri.equals("/mypage")) {
-					uri = "/";
-					param= "";
-				}
-				response.sendRedirect(uri+param);
-				
-				
-				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-//				request.setAttribute("msg", "로그아웃 되었습니다.");
-//				request.setAttribute("loc", "/");
-
-				//rd.forward(request, response);
+		request.setCharacterEncoding("utf-8");
+		
+		//2. view에서 넘어온 값 받기
+		String cliId = request.getParameter("cliId");
+		Client client = new ClientService().selectOneClient(cliId);
+		//3. 비지니스 로직
+		//4. 결과 처리
+		if(cliId.equals("")) {	//에러처리
+			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			request.setAttribute("msg", "잘못된 접근");
+			request.setAttribute("loc", "/");
+			rd.forward(request, response);
+		} else {
+			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/client/mypage.jsp");
+			request.setAttribute("client", client);
+			rd.forward(request, response);
+		}
 	}
 
 	/**

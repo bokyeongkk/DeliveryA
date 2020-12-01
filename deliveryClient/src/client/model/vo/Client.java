@@ -12,6 +12,7 @@ public class Client {
 	private String cliBirth;
 	private String cliEnrollDate;
 	private String cliAddrDet;
+
 	public Client() {
 		super();
 		// TODO Auto-generated constructor stub
