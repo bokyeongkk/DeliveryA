@@ -49,7 +49,8 @@ public class UpdateClientServlet extends HttpServlet {
 		System.out.println("newPw>"+newPw);
 		if(newPw.isEmpty()) {
 			client.setCliPw(oldPw);
-			System.out.println("client.getPw>"+client.getCliPw());
+		} else {
+			client.setCliPw(newPw);
 		}
 		
 		
