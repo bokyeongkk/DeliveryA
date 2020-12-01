@@ -89,15 +89,15 @@ public class StoreService {
 	}
 
 	public int searchIndex(ArrayList<Cart> listCart, String menuName) {
-		for(Cart c : listCart) {
-			for(int i=0; i<listCart.size(); i++) {
-				if(c.getMenuName().equals(menuName)) {
-					return i;
-				}
+		
+		for(int i=0; i<listCart.size(); i++) {
+			if(listCart.get(i).getMenuName().equals(menuName)) {
+				return i;
 			}
 		}
 		return -1;
-	}
+	}	
+
 
 
 

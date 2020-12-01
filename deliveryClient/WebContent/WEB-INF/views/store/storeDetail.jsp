@@ -13,7 +13,7 @@
         ReviewData srd = (ReviewData)request.getAttribute("srd");
         
         //장바구니 세션
-        ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
+        ArrayList<Cart> listCart = (ArrayList)session.getAttribute("listCart");
         
         //별 갯수 표현을 위해 소수점 반올림된 변수 생성
         int storeStar = (int)Math.round(srd.getAvgRev());
@@ -22,7 +22,7 @@
         DecimalFormat formatter = new  DecimalFormat("#,###");
         
         //가격 콤마 표시 제거
-        //text.replaceAll(",", "");
+        //str.replaceAll(",", "");
         
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -58,21 +58,6 @@
 			$(".store-cont").eq(0).show();
 			
 			
-			//장바구니 메뉴들 합계 구하기
-			var sum = 0;
-			//메뉴 가격 가져와서  number로 변환 후 sum 변수에 합치기
-			//이미 가격 ,가 찍혀서 출력되어 있기 때문에 ,를 제거하고 더해줌
-			$(".count-price").each(function() {
-				sum += Number($(this).val().replace(/[^\d]+/g, ""));
-			});
-			
-			//현재 number상태이기 때문에 string으로 변환하고 정규표현식으로 ,를 찍어줌
-			sum = String(sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			
-			//합계  input의 값으로  sum을 넣어줌
-			$(".total-price").val(sum);
-			
-			
 			//탭 메뉴 클릭 이벤트
 			$(".store-tap").click(function() {
 				$(".store-tap").removeClass("selectTab");
@@ -84,48 +69,73 @@
 				$(".store-cont").eq(idx).show();
 			});
 			
+			
+ 			//장바구니 메뉴 수량 +(플러스) 버튼 클릭
+			$(".plus").click(function() {
+ 				
+ 				var menuName = $(this).siblings(".cart-name").val();
+ 				
+ 				var n = $(".plus").index(this);
+ 				var count = Number($(".plus").eq(n).prev().val())+1;
+ 				
+ 				$.ajax({
+ 					url:"/countPlag",
+ 					data: {
+ 						menuName : menuName,
+ 						count : count
+ 					},
+ 					type:"post",
+ 					success : function(){
+ 						 location.reload();		 
+ 						 
+ 					}
+ 				}) 
+			});
+ 			
+			//장바구니 메뉴 수량 -(마이너스) 버튼 클릭
+ 			$(".minus").click(function() {
+ 				
+ 				var menuName = $(this).siblings(".cart-name").val();
+ 				
+ 				var n = $(".minus").index(this);
+ 	
+ 				if($(".minus").eq(n).next().val() > 1) {
+								
+					count = Number($(".minus").eq(n).next().val())-1;
+					
+		  			$.ajax({
+						url:"/countPlag",
+						data: {
+							menuName : menuName,
+							count : count
+						},
+						type:"post",
+						success : function(){
+							 location.reload();		 
+							 
+						}
+					}) 
+				}
+ 			});
+			
+ 			//장바구니 메뉴들 합계 구하기
+			var sum = 0;
+			//메뉴 가격들을 가져와서 sum 변수에 합치기
+			$(".count-price").each(function() {
+				sum += Number($(this).val());
+			});
+ 			
+			//합계  input의 값으로  sum을 넣기
+			$(".total-price").val(sum);
+			
+			//정규표현식으로 ,(콤마) 찍기
+			sumStr = String(sum).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			
+			$(".total-price-prt").html(sumStr);
 		});
 		
-		
+ 		
 		//!함수는 $(function(){}); 밖에서 선언
-		
-		function countMinus(menuName) {
-			var n = $('.minus').index(this);
-			var num = $(".count:eq("+n+")").val();
-			
-			//수량이 1보다 클 때만 동작
-			if(num > 1) {
-				$.ajax({
-					url:"/countMinus",
-					data: {
-						menuName : menuName
-					},
-					type:"post",
-					success : function(data){
-						$(".count:eq("+n+")").val(data.count);
-						$(".count-price:eq("+n+")").val(data.countPrice);
-					}
-				})
-			}
-		}
-		
-		function countPlus(menuName) {
-			var n = $(".plus").index(this);
-			var num = $(".count:eq("+n+")").val();
-			
-			$.ajax({
-				url:"/countPlus",
-				data: {
-					menuName : menuName
-				},
-				type:"post",
-				success : function(data){
-					 $(".count:eq("+n+")").val(data);
-				}
-			})
-			
-			
-		}
 		
 		//리뷰 작성하는 모달창 생성
 		function reviewWriteFrm(cliId, storeNo) {
@@ -140,7 +150,7 @@
 					if(data  == "1"){
 						$(".reveiw-modal-wrap").css("display", "flex");			
 					}else{
-						alert("오늘 주문하신 내역이 존재하지 않아요.");
+						alert("오늘 주문하신 내역이 존재하지 않습니다.");
 					}
 				}
 			})
@@ -258,12 +268,14 @@
                             <li>
                             	<form action="/insertCart" method="post">
                                 <div class="menu-text">
+                                
                                 	<input type="hidden" name="storeNo" value="<%=s.getStoreNo() %>">
                                 	<input type="hidden" name="menuNo" value="<%=m.getMenuNo() %>">
-                                    <input type="text" name="menuName" class="menu-name" value="<%=m.getMenuDet() %>"><br>
+                                    <input type="text" name="menuName" class="menu-name" value="<%=m.getMenuName() %>"><br>
                                     <input type="text" name="menuDesc" class="menu-desc" value="<%=m.getMenuDet() %>"><br>
-                                    <input type="text" name="menuPrice" class="menu-price" value="<%=m.getMenuPrice() %>">
-                                    <!-- formatter.format(m.getMenuPrice()) -->
+                                    <input type="hidden" name="menuPrice" value="<%=m.getMenuPrice() %>">
+                                    <input type="text" class="menu-price" value="<%=formatter.format(m.getMenuPrice()) %>">
+
                                 </div>
                                 <div class="menu-cart">
                                     <button type="submit" class="btn btn-outline-warning cart-in">장바구니 담기</button>
@@ -379,6 +391,7 @@
             
                         	<%for(Cart t : listCart) {%>
                         	<div class="cart-menu-box">
+                        	
                         		<a href="/deleteCartOne?storeNo=<%=s.getStoreNo() %>&menuName=<%=t.getMenuName() %>" class="btn-delete">
                         		<i class="fas fa-times"></i>
                         		</a>
@@ -386,25 +399,28 @@
                             	<input type="hidden" name="orderMenuNo" value="<%=t.getMenuNo() %>">
                             	<input type="text" name="orderMenuName" class="cart-name" value="<%=t.getMenuName() %>">
 
-                            	<button type="button" class="btn-cart-num minus" onclick="countMinus('<%=t.getMenuName() %>');">
+                            	<button type="button" class="btn-cart-num minus">
                             	<i class="fas fa-minus"></i>
                             	</button>
                             	<input type="text" name="orderMenuCount" class="btn-cart-num count" value="<%=t.getMenuCount() %>">
-                            	<button type="button" class="btn-cart-num plus" onclick="countPlus('<%=t.getMenuName() %>');">
+                            	<button type="button" class="btn-cart-num plus">
                             	<i class="fas fa-plus"></i>
-                            	</button>
+                            	</button><br>
 
-                            	<input type="text" name="orderMenuPrice" class="count-price" value="<%=formatter.format(t.getCountPrice()) %>">
-                            	<span class="won"> 원</span>
+                            	<input type="hidden" name="orderMenuPrice" class="count-price" value="<%=t.getCountPrice() %>">
+                            	<span id="count-price"><%=formatter.format(t.getCountPrice()) %></span>
+                            	<span> 원</span>
+                            	
                         	</div>
                         	<%} %> 
                         
-						<%} %> 
+						<%} %>
 						
 						<input type="hidden" name="orderStoreNo" value="<%=s.getStoreNo() %>">
 						
-                        <div class="total-price">
-                            <span>합계</span><input type="text" name="orderTotalPrice" class="total-price" value=""><span> 원</span>
+                        <div class="total-price-box">
+                        	<input type="hidden" name="orderTotalPrice" class="total-price" value="">
+                            <span>합계</span><div class="total-price-prt"></div><span> 원</span>
                         </div>
                         <div class="cart-order-btn">
                             <input type="submit" class="btn btn-danger btn-order" value="주문하기">

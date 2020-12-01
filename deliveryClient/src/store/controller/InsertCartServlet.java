@@ -44,12 +44,11 @@ public class InsertCartServlet extends HttpServlet {
 		cart.setMenuName(menuName);
 		cart.setMenuCount(1);
 		cart.setMenuPrice(Integer.parseInt(request.getParameter("menuPrice")));
-		cart.setCountPrice(1*Integer.parseInt(request.getParameter("menuPrice")));
 
 		// 3. 비지니스로직
 		// 장바구니 세션이 존재하는지 검사
 		HttpSession session = request.getSession();
-		ArrayList<Cart> listCart = (ArrayList<Cart>) session.getAttribute("listCart");
+		ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
 
 		// 4. 결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");

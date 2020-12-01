@@ -349,7 +349,7 @@
             background-color: transparent;
         }
 
-        .cart-name {
+       .cart-name {
             margin-bottom: 12px;
             font-size: 1.2em;
             font-weight: 600;
@@ -363,36 +363,34 @@
             color: #383a3f;
         }
 
-        .count-price {
-            width: 280px;
-            text-align: right;
+        #count-price {
             color: firebrick;
             font-weight: bold;
-            margin-top: 12px;
+            padding-left : 220px;
             font-size: 1.2em;
         }
 
-        .total-price {
+        .total-price-box {
             border-top: 2px solid #383a3f;
             margin-top: 40px;
-            padding-left: 10px;
+            padding-top : 20px;
+            padding-left: 8px;
         }
 
-        .total-price span {
+        .total-price-box span {
             color: #383a3f;
             font-size: 1.2em;
             font-weight: 800;
         }
 
-        .total-price input {
-        	outline : none;
-            background-color: transparent;
-            border: none;
-            text-align: right;
+        .total-price-prt {
+        	display : inline-block;
+        	text-align : right;
             font-size: 1.2em;
             font-weight: bolder;
-            width: 240px;
+            width: 250px;
             color: firebrick;
+            padding-right : 5px;
         }
 
         .cart-order-btn {

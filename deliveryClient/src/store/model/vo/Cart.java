@@ -1,6 +1,9 @@
 package store.model.vo;
 
-public class Cart {
+import java.io.Serializable;
+
+//직렬화
+public class Cart implements Serializable{
 	
 	private int menuNo;
 	private String menuName;
@@ -59,14 +62,8 @@ public class Cart {
 
 
 	public int getCountPrice() {
-		return countPrice;
+		return menuPrice*menuCount;
 	}
-
-
-	public void setCountPrice(int countPrice) {
-		this.countPrice = countPrice;
-	}
-
 
 
 }
