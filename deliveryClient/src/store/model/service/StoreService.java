@@ -18,7 +18,7 @@ public class StoreService {
 		Connection conn = JDBCTemplate.getConnection();
 		ArrayList<Store> listStore = new StoreDao().selectStoreList(conn, storeCateId);
 		JDBCTemplate.close(conn);
-
+		
 		return listStore;
 	}
 

@@ -75,12 +75,15 @@ public class OrderPageServlet extends HttpServlet {
 				orderDet.add(det);
 			}
 
-			//여기 나중에 주문하는 페이지(jsp)로 변경
-			RequestDispatcher rd = request.getRequestDispatcher("/orderFrm.jsp");
+			//주문하는 jsp페이지로 이동
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/order/orderFrm.jsp");
 			request.setAttribute("order", order);
 			request.setAttribute("orderDet", orderDet);
 			
 			rd.forward(request, response);
+			
+			//"listCart" 세션 삭제
+			session.removeAttribute("listCart");
 		}
 		
 	}
