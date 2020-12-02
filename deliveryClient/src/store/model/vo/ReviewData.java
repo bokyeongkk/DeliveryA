@@ -2,8 +2,11 @@ package store.model.vo;
 
 import java.util.ArrayList;
 
+import order.model.vo.OrderDetData;
+
 public class ReviewData {
 	private ArrayList<Review> listRev;
+	private ArrayList<OrderDetData> listOrdDet;
 	private int cntRev;
 	private double avgRev;
 	
@@ -12,9 +15,10 @@ public class ReviewData {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReviewData(ArrayList<Review> listRev, int cntRev, double avgRev) {
+	public ReviewData(ArrayList<Review> listRev, ArrayList<OrderDetData> listOrdDet, int cntRev, double avgRev) {
 		super();
 		this.listRev = listRev;
+		this.listOrdDet = listOrdDet;
 		this.cntRev = cntRev;
 		this.avgRev = avgRev;
 	}
@@ -25,6 +29,14 @@ public class ReviewData {
 
 	public void setListRev(ArrayList<Review> listRev) {
 		this.listRev = listRev;
+	}
+
+	public ArrayList<OrderDetData> getListOrdDet() {
+		return listOrdDet;
+	}
+
+	public void setListOrdDet(ArrayList<OrderDetData> listOrdDet) {
+		this.listOrdDet = listOrdDet;
 	}
 
 	public int getCntRev() {
@@ -42,5 +54,6 @@ public class ReviewData {
 	public void setAvgRev(double avgRev) {
 		this.avgRev = avgRev;
 	}
+
 	
 }

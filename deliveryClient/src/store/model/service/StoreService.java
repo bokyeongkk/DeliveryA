@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import order.model.vo.Order;
+import order.model.vo.OrderDetData;
 import store.model.dao.StoreDao;
 import store.model.vo.Cart;
 import store.model.vo.Menu;
@@ -38,11 +39,14 @@ public class StoreService {
 		return listMenu;
 	}
 
-	public ReviewData seleceRevView(int storeNo) {
+	public ReviewData selectRevView(int storeNo) {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//리뷰 리스트 가져오는 DAO
 		ArrayList<Review> listRev = new StoreDao().selectRevView(conn, storeNo);
+		
+		//ORD_DET에서 메뉴 이름 가져오는 DAO
+		ArrayList<OrderDetData> listOrdDet = new StoreDao().selectOrdDet(conn);
 		
 		//해당 가게 리뷰 갯수 가져오는 DAO
 		int cntRev = new StoreDao().selectRevCnt(conn, storeNo);
@@ -52,7 +56,7 @@ public class StoreService {
 		
 		JDBCTemplate.close(conn);
 		
-		ReviewData srd = new ReviewData(listRev, cntRev, avgRev);
+		ReviewData srd = new ReviewData(listRev, listOrdDet, cntRev, avgRev);
 		
 		return srd;
 	}
@@ -88,6 +92,13 @@ public class StoreService {
 		return result;
 	}
 
+	public Review selectOrderRev(int ordNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		Review review = new StoreDao().selectOrderRev(conn, ordNo);
+		JDBCTemplate.close(conn);
+		return review;
+	}
+
 	public int searchIndex(ArrayList<Cart> listCart, String menuName) {
 		
 		for(int i=0; i<listCart.size(); i++) {
@@ -96,10 +107,6 @@ public class StoreService {
 			}
 		}
 		return -1;
-	}	
-
-
-
-
+	}
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import order.model.vo.Order;
+import order.model.vo.OrderDetData;
 import store.model.vo.Menu;
 import store.model.vo.Review;
 import store.model.vo.Store;
@@ -139,11 +140,14 @@ public class StoreDao {
 		ResultSet rset = null;
 		ArrayList<Review> listRev = new ArrayList<Review>();
 		
-		String query = "SELECT REV_NO, REV_ORD_NO, MENU_NAME, REV_SCORE, REV_CONTENT, REV_CLI_ID, REV_STORE, REV_ENROLL_DATE "
+/*		String query = "SELECT REV_NO, REV_ORD_NO, MENU_NAME, REV_SCORE, REV_CONTENT, REV_CLI_ID, REV_STORE, REV_ENROLL_DATE "
 				+ "FROM REV_DB "
 				+ "JOIN ORD_DET_DB ON (REV_ORD_NO = ORD_DET_NO) "
 				+ "JOIN MENU_DB ON (ORD_DET_MENU_NO = MENU_NO) "
-				+ "WHERE REV_STORE = ?";
+				+ "WHERE REV_STORE = ? ORDER BY 7";
+*/
+		
+		String query = "select * from rev_db where rev_store = ? order by 1 desc";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -155,7 +159,7 @@ public class StoreDao {
 				
 				r.setRevNo(rset.getInt("rev_no"));
 				r.setRevOrdNo(rset.getInt("rev_ord_no"));
-				r.setMenuName(rset.getString("menu_name"));
+				//r.setMenuName(rset.getString("menu_name"));
 				r.setRevScore(rset.getInt("rev_score"));
 				r.setRevContent(rset.getString("rev_content"));
 				r.setRevCliId(rset.getString("rev_cli_id"));
@@ -282,6 +286,78 @@ public class StoreDao {
 		}
 		
 		return result;
+	}
+
+
+	public Review selectOrderRev(Connection conn, int ordNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Review r = null;
+		String query = "select * from rev_db where rev_ord_no = ?";
+		
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, ordNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				r = new Review();
+				r.setRevNo(rset.getInt("rev_no"));
+				r.setRevOrdNo(rset.getInt("rev_ord_no"));
+				r.setRevScore(rset.getInt("rev_score"));
+				r.setRevContent(rset.getString("rev_content"));
+				r.setRevCliId(rset.getString("rev_cli_id"));
+				r.setRevStore(rset.getInt("rev_store"));
+				r.setRevEnrollDate(rset.getString("rev_enroll_date"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return r;
+	}
+
+	public ArrayList<OrderDetData> selectOrdDet(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<OrderDetData> listOrdDet = new ArrayList<OrderDetData>();
+		String query = "SELECT ORD_DET_NO, ORD_DET_ORD_NO, ORD_DET_MENU_NO, MENU_NAME, ORD_DET_CNT " + 
+				"FROM ORD_DET_DB " + 
+				"JOIN MENU_DB " + 
+				"ON (ORD_DET_MENU_NO = MENU_NO)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				OrderDetData d = new OrderDetData();
+				
+				d.setOrdDetNo(rset.getInt("ord_det_no"));
+				d.setOrdDetOrdNo(rset.getInt("ord_det_ord_no"));
+				d.setOrdDetMenuNo(rset.getInt("ord_det_menu_no"));
+				d.setMenuName(rset.getString("menu_name"));
+				d.setOrdDetCnt(rset.getInt("ord_det_cnt"));
+				
+				listOrdDet.add(d);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+
+		return listOrdDet;
 	}
 
 
