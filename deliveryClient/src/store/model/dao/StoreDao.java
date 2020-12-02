@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import coupon.model.vo.Coupon;
 import order.model.vo.Order;
 import store.model.vo.Menu;
 import store.model.vo.Review;
@@ -282,6 +283,41 @@ public class StoreDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Coupon> selectOneClientCp(Connection conn, String cliId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Coupon> list = new ArrayList<Coupon>();
+		String query = "select * from cp_db join cp_list_db on cp_no = cp_list_no where cp_list_cli_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				Coupon c = new Coupon();
+				c.setCpListPk(rset.getInt("cp_list_pk"));
+				c.setCpListNo(rset.getInt("cp_list_no"));
+				c.setCpListCliId(rset.getString("cp_list_cli_id"));
+				c.setCpListDate(rset.getString("cp_list_date"));
+				c.setCpListAdminId(rset.getString("cp_list_admin_id"));
+				c.setCpListUse(rset.getString("cp_list_use"));
+				c.setCpName(rset.getString("cp_name"));
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
 	}
 
 

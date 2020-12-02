@@ -1,3 +1,5 @@
+<%@page import="coupon.model.vo.Coupon"%>
+<%@page import="order.model.vo.OrderClient"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="order.model.vo.OrderDet"%>
 <%@page import="order.model.vo.Order"%>
@@ -5,8 +7,7 @@
     pageEncoding="UTF-8"%>
     
     <%
-    	Order order = (Order)request.getAttribute("order");
-    	ArrayList<OrderDet> listDet = (ArrayList<OrderDet>)request.getAttribute("orderDet");
+    	OrderClient oc = (OrderClient)request.getAttribute("orderClient");
     %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -279,11 +280,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="ordAddr" id="ordAddr" value=<%=order.getOrdAddr() %> readonly></td>
+                        <td><input type="text" name="ordAddr" id="ordAddr" value=<%=oc.getOrder().getOrdAddr() %> readonly></td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="ordTel" id="ordTel" value="010-1234-1234" readonly>
+                            <input type="text" name="ordTel" id="ordTel" value=<%=oc.getClient().getCliTel() %> readonly>
                         </td>
                     </tr>
                 </table>
@@ -313,7 +314,10 @@
                 <div class="coupon-div">
                     <h3>쿠폰</h3>
                     <select>
-                        <option>asdf</option>
+                    <option value="no" selected>쿠폰 적용 안함</option>
+                        <%for(Coupon cp : oc.getCpList()) {%>
+                        	<option value=<%=cp.getCpListNo() %>></option>
+                        <%} %>
                     </select>
                 </div>
                 <div class="notice-div"><h6>개인정보 제 3자 제공</h6></div>
@@ -349,7 +353,7 @@
                     <table class="result-table">
                     	<tr>
                             <td>주문금액</td>
-                            <td><input type="text" id="ordPrice" name="ordPrice" value=<%=order.getOrdTPrice() %> readonly></td>
+                            <td><input type="text" id="ordPrice" name="ordPrice" value=<%=oc.getOrder().getOrdTPrice() %> readonly></td>
                         </tr>
                         <tr>
                             <td>쿠폰할인</td>

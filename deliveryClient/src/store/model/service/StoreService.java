@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import common.JDBCTemplate;
+import coupon.model.vo.Coupon;
 import order.model.vo.Order;
 import store.model.dao.StoreDao;
 import store.model.vo.Cart;
 import store.model.vo.Menu;
 import store.model.vo.Review;
-import store.model.vo.Store;
 import store.model.vo.ReviewData;
+import store.model.vo.Store;
 
 public class StoreService {
 
@@ -96,6 +97,14 @@ public class StoreService {
 			}
 		}
 		return -1;
+	}
+
+	public ArrayList<Coupon> selectOneClientCp(String cliId) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Coupon> list = new StoreDao().selectOneClientCp(conn, cliId);
+		JDBCTemplate.close(conn);
+
+		return list;
 	}	
 
 
