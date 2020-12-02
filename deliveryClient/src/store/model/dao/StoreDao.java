@@ -306,6 +306,7 @@ public class StoreDao {
 				c.setCpListAdminId(rset.getString("cp_list_admin_id"));
 				c.setCpListUse(rset.getString("cp_list_use"));
 				c.setCpName(rset.getString("cp_name"));
+				c.setCpPrice(rset.getInt("cp_price"));
 				list.add(c);
 			}
 			

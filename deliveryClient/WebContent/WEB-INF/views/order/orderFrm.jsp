@@ -17,7 +17,6 @@
 <style>
         .content-all-wrap {
             width: 1300px;
-            /*            background-color: lightblue;*/
             padding-left: 100px;
             padding-right: 100px;
             margin: 0 auto;
@@ -34,18 +33,19 @@
         }
 
         .info-table>tbody>tr:first-child {
-            /*            border: 1px solid red;*/
             height: 80px;
         }
 
         .info-table>tbody>tr:nth-child(2n) {
-            /*            border: 1px solid red;*/
             height: 40px;
             vertical-align: bottom;
         }
+        
+        .info-table>tbody>tr:nth-child(3n)>td>input {
+            height: 40px;
+        }
 
         .info-table>tbody>tr:last-child {
-            /*            border: 1px solid red;*/
             height: 60px;
             vertical-align: top;
 
@@ -112,7 +112,6 @@
         }
 
         .sub-table>tbody>tr>td {
-            /*            border: 1px solid red;*/
             width: 1000px;
             height: 50px;
             text-indent: 50px;
@@ -123,13 +122,11 @@
         }
 
         .half-all-wrap{
-/*            background-color: aqua;*/
             display: flex;
             justify-content: space-between;
         }
         .half-wrap{
             width: 49%;
-/*            background-color: pink;*/
             overflow: hidden;
         }
 
@@ -158,7 +155,6 @@
             text-align:right;
         }
         .result-table>tbody>tr>td{
-/*            border: 1px solid red;*/
             height: 65px;
             font-size: 1.3em;
         }
@@ -271,8 +267,9 @@
 	
 	
 	<div class="content-all-wrap">
-        <form action="#">
+        <form action="/order" method="post">
             <div class="delivery-div">
+            <input type="hidden" name="ordStoreNo" value=<%=oc.getOrder().getOrdStoreNo() %>>
                 <table class="info-table">
                     <tr>
                         <td>
@@ -281,6 +278,11 @@
                     </tr>
                     <tr>
                         <td><input type="text" name="ordAddr" id="ordAddr" value=<%=oc.getOrder().getOrdAddr() %> readonly></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="이레빌딩 19F A강의실" placeholder="상세주소">
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -313,10 +315,13 @@
                 <div class="half-wrap">
                 <div class="coupon-div">
                     <h3>쿠폰</h3>
-                    <select>
+                    <select id="coupon" name="coupon">
                     <option value="no" selected>쿠폰 적용 안함</option>
                         <%for(Coupon cp : oc.getCpList()) {%>
-                        	<option value=<%=cp.getCpListNo() %>></option>
+                        	<%if(cp.getCpListUse().equals("FALSE ")){ %>
+                        		<%-- <option value=<%=cp.getCpListPk() %>/<%=cp.getCpPrice() %>><%=cp.getCpName() %>(<%=cp.getCpPrice() %>원)</option> --%>
+                        		<option value=<%=cp.getCpListPk() %>/<%=cp.getCpPrice() %>><%=cp.getCpName() %>(<%=cp.getCpPrice() %>원)</option>
+                        	<%} %>
                         <%} %>
                     </select>
                 </div>
@@ -357,11 +362,11 @@
                         </tr>
                         <tr>
                             <td>쿠폰할인</td>
-                            <td><input type="text" id="ordTPrice" name="ordTPrice" value=25800 readonly></td>
+                            <td><input type="text" id="couponPrice" name="couponPrice" value="0" readonly></td>
                         </tr>
                         <tr>
                             <td>총 금액</td>
-                            <td><input type="text" id="ordTPrice" name="ordTPrice" value="1234" readonly>원</td>
+                            <td><input type="text" id="ordTPrice" name="ordTPrice" value=<%=oc.getOrder().getOrdTPrice() %> readonly></td>
                         </tr>
                     </table>
                     <button id="cancel">취소</button>
@@ -375,6 +380,26 @@
     </div>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
-
+	<script>
+		$("#coupon").change(function(){
+			var coupon = $(this).val();
+			var plus = coupon.indexOf("/")+1;
+			var price = coupon.substr(plus,coupon.length);
+			var ordPrice = $("#ordPrice").val();
+			
+			if(coupon == "no"){
+				$("#couponPrice").val(0);
+				$("#ordTPrice").val(ordPrice);
+			} else {
+				$("#couponPrice").val(price);
+				var total = ordPrice-price;
+				
+				if(Number(ordPrice) < Number(price)){
+					total = 0;
+				}
+				$("#ordTPrice").val(total);
+			}
+		});
+	</script>
 </body>
 </html>
