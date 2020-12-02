@@ -11,12 +11,10 @@ public class Review {
 	private String revEnrollDate;
 	//private String MenuName;
 	
-	
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	public Review(int revNo, int revOrdNo, int revScore, String revContent, String revCliId, int revStore,
 			String revEnrollDate) {
@@ -29,7 +27,6 @@ public class Review {
 		this.revStore = revStore;
 		this.revEnrollDate = revEnrollDate;
 	}
-
 
 	public int getRevNo() {
 		return revNo;
@@ -81,7 +78,5 @@ public class Review {
 	public void setRevEnrollDate(String revEnrollDate) {
 		this.revEnrollDate = revEnrollDate;
 	}
-	
-
 	
 }
