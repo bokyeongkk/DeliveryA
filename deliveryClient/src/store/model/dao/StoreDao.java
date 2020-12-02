@@ -147,7 +147,11 @@ public class StoreDao {
 				+ "WHERE REV_STORE = ? ORDER BY 7";
 */
 		
-		String query = "select * from rev_db where rev_store = ? order by 1 desc";
+		String query = "SELECT REV_NO, REV_ORD_NO, REV_SCORE, REV_CONTENT, CLI_NICKNAME, REV_STORE, REV_ENROLL_DATE " + 
+				"FROM REV_DB " + 
+				"JOIN CLIENT_DB " + 
+				"ON (REV_CLI_ID = CLI_ID) " + 
+				"WHERE REV_STORE = ? ORDER BY 1 DESC";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -162,7 +166,7 @@ public class StoreDao {
 				//r.setMenuName(rset.getString("menu_name"));
 				r.setRevScore(rset.getInt("rev_score"));
 				r.setRevContent(rset.getString("rev_content"));
-				r.setRevCliId(rset.getString("rev_cli_id"));
+				r.setRevCliId(rset.getString("cli_nickname"));
 				r.setRevStore(rset.getInt("rev_store"));
 				r.setRevEnrollDate(rset.getString("rev_enroll_date"));
 
