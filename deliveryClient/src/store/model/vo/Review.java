@@ -9,17 +9,15 @@ public class Review {
 	private String revCliId;
 	private int revStore;
 	private String revEnrollDate;
-	private String MenuName;
-	
+	//private String MenuName;
 	
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
 	public Review(int revNo, int revOrdNo, int revScore, String revContent, String revCliId, int revStore,
-			String revEnrollDate, String menuName) {
+			String revEnrollDate) {
 		super();
 		this.revNo = revNo;
 		this.revOrdNo = revOrdNo;
@@ -28,9 +26,7 @@ public class Review {
 		this.revCliId = revCliId;
 		this.revStore = revStore;
 		this.revEnrollDate = revEnrollDate;
-		MenuName = menuName;
 	}
-
 
 	public int getRevNo() {
 		return revNo;
@@ -56,6 +52,14 @@ public class Review {
 	public void setRevContent(String revContent) {
 		this.revContent = revContent;
 	}
+	
+	
+	//br getter 추가
+	public String getRevContentBr() {
+		return revContent.replace("\r\n", "<br>");
+	}
+
+	
 	public String getRevCliId() {
 		return revCliId;
 	}
@@ -74,14 +78,5 @@ public class Review {
 	public void setRevEnrollDate(String revEnrollDate) {
 		this.revEnrollDate = revEnrollDate;
 	}
-
-	public String getMenuName() {
-		return MenuName;
-	}
-
-	public void setMenuName(String menuName) {
-		MenuName = menuName;
-	}
-
 	
 }

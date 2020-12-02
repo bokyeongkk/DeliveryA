@@ -56,10 +56,10 @@ public class InsertReviewServlet extends HttpServlet {
 		
 		//4. 결과 처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		if(result>0) { //수정이 성공 한 경우
+		if(result>0) { //등록이 성공 한 경우
 			request.setAttribute("msg", "리뷰가 등록되었습니다.");
 			request.setAttribute("loc", "/storeDetailView?storeNo="+storeNo);
-		} else { //수정이 실패한 경우
+		} else { //등록이 실패한 경우
 			request.setAttribute("msg", "리뷰가 등록되지 않았습니다. 관리자에게 문의해주세요.");
 			request.setAttribute("loc", "/storeDetailView?storeNo="+storeNo);
 		}

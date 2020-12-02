@@ -270,10 +270,12 @@
         }
 
         .review-menu {
-            width: 12%;
+        	display : inline-block;
             border-radius: 5px;
             background-color: #d8d8d8;
             text-align: center;
+            padding-left : 7px;
+            padding-right : 7px;
         }
 
         .review-more {

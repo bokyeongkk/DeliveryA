@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import order.model.vo.Order;
 import store.model.service.StoreService;
+import store.model.vo.Review;
 
 /**
  * Servlet implementation class SearchOrderServlet
@@ -50,10 +51,21 @@ public class SearchOrderServlet extends HttpServlet {
 		
 		//4. 결과처리
 		PrintWriter out = response.getWriter();
-		if(order == null) { //주문한 이력이 없을 때 
+		
+		if(order == null) { //오늘 주문한 이력이 조회되지 않을 때
 			out.print("0");
-		} else { //주문한 이력이 있을 때 
-			out.print("1");
+		} else {
+			
+			//주문한 이력이 있으면 주문번호로 리뷰가 존재하는지 조회
+			int ordNo = order.getOrdNo();
+			Review review = new StoreService().selectOrderRev(ordNo);
+			
+			if(review != null) {//작성한 리뷰가 있을 때
+				out.print("1");
+			} else { //작성한 리뷰가 없을 때
+				out.print("2"); 
+			}
+			
 		}
 		
 	}

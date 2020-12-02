@@ -1,3 +1,4 @@
+<%@page import="order.model.vo.OrderDetData"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="store.model.vo.Cart"%>
 <%@page import="store.model.vo.ReviewData"%>
@@ -147,10 +148,14 @@
 				},
 				type:"post",
 				success : function(data){
-					if(data  == "1"){
-						$(".reveiw-modal-wrap").css("display", "flex");			
-					}else{
-						alert("오늘 주문하신 내역이 존재하지 않습니다.");
+					if(data  == "0"){ //주문한 이력이 없을 때
+						alert("오늘 주문하신 내역이 존재하지 않습니다.");		
+					} else if(data  == "1"){ //작성한 리뷰가 있을 때
+						alert("이미 리뷰를 작성하셨습니다.");
+					} else if(data  == "2") { //
+						$(".reveiw-modal-wrap").css("display", "flex");	
+					} else {
+						alert("서비스 이용이 어렵습니다. 관리자에게 문의해주세요.");
 					}
 				}
 			})
@@ -333,9 +338,15 @@
                                     	<%} %>
                                     <%} %>
                                 </li>
-                                <li class="review-cont"><%=r.getRevContent() %></li>
+                                <li class="review-cont"><%=r.getRevContentBr() %></li>
                                 <br>
-                                <li class="review-menu"><%=r.getMenuName() %></li>
+                                <li>
+                                <%for(OrderDetData d : srd.getListOrdDet()) {%>
+                                	<%if(r.getRevOrdNo() == d.getOrdDetOrdNo()) {%>
+                                		<span class="review-menu"><%=d.getMenuName() %></span>
+                               	 	<%} %>
+                                <%} %>
+                                </li>
                             </ul>
                         </div>
                         <%} %>

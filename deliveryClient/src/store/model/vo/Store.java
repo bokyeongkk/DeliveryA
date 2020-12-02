@@ -37,6 +37,7 @@ public class Store {
 		this.storeFilename = storeFilename;
 		this.storeRest = storeRest;
 	}
+	
 	public int getStoreNo() {
 		return storeNo;
 	}
