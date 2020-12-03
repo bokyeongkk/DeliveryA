@@ -207,7 +207,7 @@
 			<!--가게정보div-->
 			<div class="store-info">
 				<div class="store-info-img">
-					<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+					<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
 					<!-- <img src="/filepath/01_store/<%=s.getStoreFilepath()%>" style="width: 100%; height: 100%;"> -->
 				</div>
 				<div class="store-info-text">
@@ -237,7 +237,7 @@
 					<div class="best-menus">
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
 								<!-- <img src="/filepath/02_menu/<%=listMenu.get(0).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
@@ -247,7 +247,7 @@
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
 								<!-- <img src="/filepath/02_menu/<%=listMenu.get(1).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
@@ -257,7 +257,7 @@
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
 								<!-- <img src="<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
@@ -346,36 +346,27 @@
 							<li class="nickname"><%=r.getRevCliId()%> <span
 								id="review-date"> <%=r.getRevEnrollDate()%></span></li>
 							<li>
-								<!--스코어 점수 따라서 별 모양 for문 돌리기 --> <%
- 	for (int i = 0; i < 5; i++) {
- %> <%
- 	if (r.getRevScore() > i) {
- %> <i class="fas fa-star" id="star-sm"></i> <%
- 	} else {
- %> <i class="far fa-star" id="star-sm"></i> <%
- 	}
- %> <%
- 	}
- %>
+								<!--스코어 점수 따라서 별 모양 for문 돌리기 --> 
+								<%for (int i = 0; i < 5; i++) { %> 
+									<%if (r.getRevScore() > i) { %> 
+									<i class="fas fa-star" id="star-sm"></i> 
+									<%} else { %> 
+									<i class="far fa-star" id="star-sm"></i> 
+									<%} %> 
+								<%} %>
 							</li>
 							<li class="review-cont"><%=r.getRevContentBr()%></li>
 							<br>
 							<li>
-								<%
-									for (OrderDetData d : srd.getListOrdDet()) {
-								%> <%
- 	if (r.getRevOrdNo() == d.getOrdDetOrdNo()) {
- %> <span class="review-menu"><%=d.getMenuName()%></span> <%
- 	}
- %> <%
- 	}
- %>
+								<%for (OrderDetData d : srd.getListOrdDet()) { %> 
+									<%if (r.getRevOrdNo() == d.getOrdDetOrdNo()) { %> 
+									<span class="review-menu"><%=d.getMenuName()%></span> 
+									<% } %> 
+								<% } %>
 							</li>
 						</ul>
 					</div>
-					<%
-						}
-					%>
+					<%} %>
 				</div>
 				<%
 					if (srd.getListRev().size() > 5) {
