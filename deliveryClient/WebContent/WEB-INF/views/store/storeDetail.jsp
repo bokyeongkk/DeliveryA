@@ -490,8 +490,7 @@
 					</div>
 					<div class="cart-order-btn">
 						<p>
-							<i class="fas fa-exclamation-circle"></i> 처음 주문이시면, 회원가입 하시고 쿠폰
-							사용하세요.
+							<i class="fas fa-exclamation-circle"></i> 처음 주문이시면, 회원가입 하시고 쿠폰사용하세요.
 						</p>
 						<input type="submit" class="btn btn-danger btn-order" value="주문하기">
 					</div>

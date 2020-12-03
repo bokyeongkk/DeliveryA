@@ -195,6 +195,18 @@
             float: left;
         }
         
+        .cancel>a {
+        	display : block;
+        	text-decoration: none;
+        	color: black;
+        }
+        
+        .cancel>a:hover {
+        	display : block;
+        	text-decoration: none;
+        	color: black;
+        }
+        
         .result-table>tbody>tr:last-child{
             height: 80px;
             border-top: 1px solid black;
@@ -287,19 +299,11 @@
                         </td>
                     </tr>
                     <tr>
-<<<<<<< HEAD
                         <td><input type="text" name="ordAddr" id="ordAddr" value="<%=oc.getOrder().getOrdAddr() %>" readonly></td>
-=======
-                        <td><input type="text" name="ordAddr" id="ordAddr" value='<%=oc.getClient().getCliAddr() %>' readonly></td>
->>>>>>> branch 'master' of https://github.com/seokchang/Delivery_Client.git
                     </tr>
                     <tr>
                         <td>
-<<<<<<< HEAD
-                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="" placeholder="상세주소">
-=======
-                            <input type="text" name="ordAddrDet" id="ordAddrDet" value='<%=oc.getClient().getCliAddrDet() %>' placeholder="상세주소">
->>>>>>> branch 'master' of https://github.com/seokchang/Delivery_Client.git
+                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="<%=oc.getClient().getCliAddrDet() %>" placeholder="상세주소">
                         </td>
                     </tr>
                     <tr>
@@ -387,17 +391,19 @@
                             <td><input type="text" id="ordTPrice" name="ordTPrice" value="<%=oc.getOrder().getOrdTPrice()%>" readonly></td>
                         </tr>
                     </table>
-                    <button type="button" class="cancel" id="cancel">취소</button>
+                    <button type="button" class="cancel" id="cancel">
+                    	<!-- 취소 버튼 누르면 다시 가게 페이로 이동 -->
+                    	<a href="/storeDetailView?storeNo=<%=oc.getOrder().getOrdStoreNo() %>">취소</a>
+                    </button>
                     <input type="hidden" id="paymentr">
                     <button type="button" class="ok" id="paymentf">결제하기</button>
                 </div>
             </div>
+            
             </div>
 
-           
         </form>
-        <br><br><br><br><br>
-        <p id="paymentResult">1231231123</p>
+
     </div>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
@@ -422,6 +428,7 @@
 				$("#ordTPrice").val(total);
 			}
 		});
+		
 		
 		
 		$("#paymentf").click(function() { 
