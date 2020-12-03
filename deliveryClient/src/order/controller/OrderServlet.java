@@ -73,11 +73,18 @@ public class OrderServlet extends HttpServlet {
 		if(result>0) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/order/resultOrder.jsp");
 			session.removeAttribute("listCart");
+
+			//주문번호랑 주문날짜 받아오기
 			Order order2 = new OrderService().searchOrdNoDate(loginClient.getCliId());
+			//주문 날짜 -빼고 하나로 붙여줌
 			String ordDate = order2.getOrdDate();
 			String[] array = ordDate.split("-");
 			ordDate = array[0]+array[1]+array[2];
 			order2.setOrdDate(ordDate);
+			//주문번호 zerofill
+			int ordNo = Integer.parseInt(String.format("%06d", order2.getOrdNo()));
+			order2.setOrdNo(ordNo);
+			
 			request.setAttribute("order",order2);
 			rd.forward(request, response);
 		} else {			

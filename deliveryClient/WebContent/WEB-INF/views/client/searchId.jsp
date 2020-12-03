@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>아이디 찾기</title>
+<title>delivery-A | 아이디 찾기</title>
 </head>
 <body>
 	<style>

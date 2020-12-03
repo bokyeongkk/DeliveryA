@@ -20,7 +20,7 @@
 	rel="stylesheet">
 <!-- storeLis.css 가져오기 -->	
 <link href="/css/store/storeList.css" rel="stylesheet" type="text/css">
-<title>Insert title here</title>
+<title>delivery-A | 가게 목록</title>
 </head>
 <body>
 	

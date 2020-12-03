@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>비밀번호 변경</title>
+<title>delivery-A | 비밀번호 변경 완료</title>
 <style>
         .content-all-wrap {
             width: 1300px;

@@ -108,7 +108,7 @@ public class OrderDao {
 	public Order searchOrdNoDate(Connection conn, String cliId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select max(ord_no) as ord_no, ord_date from ord_db where ORD_CLI_ID=?";
+		String query = "select max(ord_no) as ord_no, ord_date from ord_db where ORD_CLI_ID=? group by ord_date";
 		Order order = null;
 		try {
 			pstmt = conn.prepareStatement(query);

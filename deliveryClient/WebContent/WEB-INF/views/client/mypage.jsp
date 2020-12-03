@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>마이페이지</title>
+<title>delivery-A | 마이페이지</title>
 <style>
 .content-all-wrap {
 	width: 1300px;

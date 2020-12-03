@@ -46,7 +46,7 @@
 <!-- storeDetail.css 가져오기 -->
 <link href="/css/store/storeDetail.css" rel="stylesheet" type="text/css">
 
-<title>Insert title here</title>
+<title>delivery-A | 가게 상세</title>
 </head>
 <body>
 
