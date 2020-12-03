@@ -303,17 +303,13 @@
 				<div class="review-title">
 					<div class="review-title-left">
 						<h3><%=srd.getAvgRev()%></h3>
-						<span class="star"> <!--스코어 점수 따라서 별 모양 for문 돌리기 --> <%
- 	for (int i = 0; i < 5; i++) {
- %> <%
- 	if (storeStar > i) {
- %> <i class="fas fa-star" id="star-lg"></i> <%
- 	} else {
- %> <i class="far fa-star" id="star-lg"></i> <%
- 	}
- %> <%
- 	}
- %>
+						<span class="star"> <!--스코어 점수 따라서 별 모양 for문 돌리기 --> 
+						<% for (int i = 0; i < 5; i++) { %> 
+						<% if (storeStar > i) { %> 
+						<i class="fas fa-star" id="star-lg"></i> 
+						<% } else { %> <i class="far fa-star" id="star-lg"></i> 
+						<% } %> 
+					<%} %>
 						</span>
 					</div>
 					<div class="review-title-right">
@@ -471,13 +467,9 @@
 						</div>
 
 					</div>
-					<%
-						}
-					%>
+					<%} %>
 
-					<%
-						}
-					%>
+					<%} %>
 
 					<input type="hidden" name="orderStoreNo"
 						value="<%=s.getStoreNo()%>">
