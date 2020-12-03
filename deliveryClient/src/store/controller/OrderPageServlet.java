@@ -61,7 +61,7 @@ public class OrderPageServlet extends HttpServlet {
 			request.setAttribute("loc", "/storeDetailView?storeNo="+storeNo);
 			rd.forward(request, response);
 		} else {	
-			Order order = new Order();
+			Order order = new Order(); 
 			
 			order.setOrdTPrice(Integer.parseInt(request.getParameter("orderTotalPrice")));
 			order.setOrdCliId(loginClient.getCliId());
