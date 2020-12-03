@@ -287,11 +287,19 @@
                         </td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
                         <td><input type="text" name="ordAddr" id="ordAddr" value="<%=oc.getOrder().getOrdAddr() %>" readonly></td>
+=======
+                        <td><input type="text" name="ordAddr" id="ordAddr" value='<%=oc.getClient().getCliAddr() %>' readonly></td>
+>>>>>>> branch 'master' of https://github.com/seokchang/Delivery_Client.git
                     </tr>
                     <tr>
                         <td>
+<<<<<<< HEAD
                             <input type="text" name="ordAddrDet" id="ordAddrDet" value="" placeholder="상세주소">
+=======
+                            <input type="text" name="ordAddrDet" id="ordAddrDet" value='<%=oc.getClient().getCliAddrDet() %>' placeholder="상세주소">
+>>>>>>> branch 'master' of https://github.com/seokchang/Delivery_Client.git
                         </td>
                     </tr>
                     <tr>
