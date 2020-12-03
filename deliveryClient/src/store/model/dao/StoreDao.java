@@ -401,5 +401,40 @@ public class StoreDao {
 		return listOrdDet;
 	}
 
+	public ArrayList<Review> selectRev(Connection conn, String cliId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Review> revList = new ArrayList<Review>();
+		String query = "select * from rev_db where rev_cli_id=?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review r = new Review();
+				r.setRevNo(rset.getInt("rev_no"));
+				r.setRevOrdNo(rset.getInt("rev_ord_no"));
+				r.setRevScore(rset.getInt("rev_score"));
+				r.setRevContent(rset.getString("rev_content"));
+				r.setRevCliId(rset.getString("rev_cli_id"));
+				r.setRevStore(rset.getInt("rev_store"));
+				r.setRevEnrollDate(rset.getString("rev_enroll_date"));
+				
+				revList.add(r);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return revList;
+	}
+	
 
 }

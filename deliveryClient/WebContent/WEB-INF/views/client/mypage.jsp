@@ -185,6 +185,7 @@ input[readonly] {
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
 	<%@include file="/WEB-INF/views/client/couponList.jsp"%>
 	<%@include file="/WEB-INF/views/client/orderList.jsp"%>
+	<%@include file="/WEB-INF/views/client/reviewList.jsp"%>
 	<div class="content-all-wrap">
 		<div class="content-navi">
 			<div class="user-info">

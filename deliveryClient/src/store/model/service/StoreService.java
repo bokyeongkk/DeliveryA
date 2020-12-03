@@ -117,4 +117,12 @@ public class StoreService {
 
 		return list;
 	}
+
+	public ArrayList<Review> selectRev(String cliId) {
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Review> list = new StoreDao().selectRev(conn, cliId);
+		JDBCTemplate.close(conn);
+
+		return list;
+	}
 }

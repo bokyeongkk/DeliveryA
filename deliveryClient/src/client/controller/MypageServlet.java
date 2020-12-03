@@ -18,6 +18,7 @@ import order.model.service.OrderService;
 import order.model.vo.Order;
 import order.model.vo.OrderDet;
 import store.model.service.StoreService;
+import store.model.vo.Review;
 
 /**
  * Servlet implementation class MypageServlet
@@ -49,6 +50,7 @@ public class MypageServlet extends HttpServlet {
 		//3. 비지니스 로직
 		ArrayList<Coupon> cpList = new StoreService().selectOneClientCp(cliId);
 		ArrayList<Order> ordList = new OrderService().selectOrd(cliId);
+		ArrayList<Review> revList = new StoreService().selectRev(cliId);
 		
 		for(Coupon c : cpList) {
 			System.out.println("사용자ID>"+c.getCpListCliId());
@@ -72,6 +74,7 @@ public class MypageServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("cpList", cpList);
 			session.setAttribute("ordList", ordList);
+			session.setAttribute("revList", revList);
 			rd.forward(request, response);
 		}
 	}
