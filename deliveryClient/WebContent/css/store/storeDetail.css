@@ -199,15 +199,18 @@
         }
 
         .menu-name {
+       	 	width: 600px;
             font-size: 1.2em;
         }
 
         .menu-desc {
+        	width: 600px;
             color: #d8d8d8;
             font-size: 0.9em;
         }
 
         .menu-price {
+        	width: 600px;
             font-size: 1.1em;
             color: firebrick;
         }
@@ -267,7 +270,7 @@
             list-style: none;
             margin-bottom : 40px;
             padding: 10px;
-/*             border-bottom: 2px solid #d8d8d8;*/
+            border: 2px solid #d8d8d8;
         }
         
         .nickname {

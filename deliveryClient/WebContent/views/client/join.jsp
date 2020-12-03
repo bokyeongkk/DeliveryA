@@ -12,6 +12,9 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
 	rel="stylesheet">
+	
+<!-- 다음 주소찾기 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-3.3.1.js"></script>
@@ -233,24 +236,28 @@ input[type=checkbox] {
 					<th colspan="3">우편번호<span></span></th>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="text" id="cliPost"
-						class="join-input"></td>
-					<td style="text-align: right;"><button type="button">우편번호
-							찾기</button></td>
+					<td colspan="2">
+					<input type="text" id="postCode" class="join-input" placeholder="우편번호" readonly>
+					</td>
+					<td style="text-align: right;">
+					<button type="button" id="addrSearchBtn" onclick="addrSearch();">우편번호 찾기</button>
+					</td>
 				</tr>
 				<tr>
 					<th colspan="3">주소<span></span></th>
 				</tr>
 				<tr>
-					<td colspan="3"><input type="text" name="cliAddr" id="cliAddr"
-						class="join-input"></td>
+					<td colspan="3">
+					<input type="text" name="cliAddr" id="roadAddr" class="join-input" placeholder="도로명주소" readonly>
+					</td>
 				</tr>
 				<tr>
 					<th colspan="3">상세주소<span></span></th>
 				</tr>
 				<tr>
-					<td colspan="3"><input type="text" name="cliAddrDet"
-						id="cliAddrDet" class="join-input"></td>
+					<td colspan="3">
+					<input type="text" name="cliAddrDet" id="detailAddr" class="join-input">
+					</td>
 				</tr>
 				<tr>
 					<th colspan="3">이름<span></span></th>
@@ -507,6 +514,17 @@ input[type=checkbox] {
                 }
             });
         });
+        
+        //주소찾기 API
+        function addrSearch() { 
+        	new daum.Postcode({ 
+        		oncomplete : function(data) { 
+        			$("#postCode").val(data.zonecode); //우편번호
+        			$("#roadAddr").val(data.roadAddress); //도로명주소 
+					$("#detailAddr").focus(); //상세주소로 포커스 이동 
+				} 
+        	}).open(); 
+        }
 
     </script>
 </body>

@@ -352,7 +352,7 @@
                         </div>
                         <%} %>
                     </div>
-                    <%if(!srd.getListRev().isEmpty()) {%>
+                    <%if(srd.getListRev().size() > 5) {%>
                     <div class="review-more">
                         <button class="btn btn-dark" currentCount="0" value="" totalCount="" id="more-btn">더보기</button>
                     </div>

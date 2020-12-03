@@ -84,7 +84,7 @@
 	<div class="footer-all-wrap">
 		<div class="footer-wrap">
 			<div class="col-md-6 text">
-				<p>모방의 민족</p>
+				<p>delivery - A</p>
 				<span>(07212) 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F A강의실</span> <span> TEL. 02)1544-9970 |
 					FAX. 02)2163-8560 | 사업자등록번호 : 876-85-00632 </span>
 			</div>

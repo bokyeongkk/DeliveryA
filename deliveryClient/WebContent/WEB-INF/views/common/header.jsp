@@ -104,7 +104,7 @@
 	<div class="header-all-wrap">
 		<div class="header-wrap">
 			<div class="col-md-3 header">
-				<p class="title"><a href="/">모방의 민족</a></p>
+				<p class="title"><a href="/">delivery - A</a></p>
 			</div>
 			<div class="col-md-6 header"></div>
 			<div class="col-md-3 header">
