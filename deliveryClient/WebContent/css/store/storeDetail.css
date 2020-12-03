@@ -32,7 +32,6 @@
             padding: 20px;
             overflow: hidden;
             height: 220px;
-            border: 1px solid #d8d8d8;
         }
 
         .store-info-img {
@@ -107,13 +106,14 @@
         .store-cont {
             border: 1px solid #d8d8d8;
             border-top: none;
+            margin-bottom: 35px;
         }
 
         /*추천메뉴 스타일------------------------------*/
         .best-menu-wrap {
             width: 95%;
             margin: 0 auto;
-            margin-bottom: 55px;
+            margin-bottom: 60px;
             text-align: center;
         }
 
@@ -139,6 +139,16 @@
 
         .best-menu-text {
             margin-top: 25px;
+            font-size: 1.2em;
+        }
+        
+        .best-menu-text>p {
+        	margin : 0;
+        }
+        
+        .best-menu-text>p:last-child {
+        	color : firebrick;
+        	font-weight: bolder;
         }
 
 
@@ -146,17 +156,13 @@
 
         /*메뉴 스타일---------------------------------*/
         .menu-wrap {
-            width: 95%;
-            margin: 0 auto;
-            margin-bottom: 30px;
-
+            width: 100%;
         }
 
         .menu-wrap ul {
             list-style: none;
             margin: 0;
             padding: 0;
-            border : 1px solid #383a3f;
         }
 
         .menu-wrap li {
@@ -165,20 +171,19 @@
         }
 
         .menu-view>li:first-child {
-            height: 60px;
+            height: 63px;
             line-height: 58px;
             background-color: #383a3f;
             color: #f9a11b;
             font-size: 1.4em;
             text-align: center;
-            font-weight: bold;
-            border : 1px solid #383a3f;
+            font-weight: 600;
         }
 
         .menu-view>li {
             background-color: white;
             overflow: hidden;
-            border: 1px solid #d8d8d8;
+            border-bottom: 1px solid #383a3f;
         }
 
         .menu-text {
@@ -194,7 +199,7 @@
         }
 
         .menu-name {
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         .menu-desc {
@@ -260,13 +265,20 @@
 
         .review-view ul {
             list-style: none;
+            margin-bottom : 40px;
             padding: 10px;
-            border: 2px solid #d8d8d8;
+/*             border-bottom: 2px solid #d8d8d8;*/
         }
         
         .nickname {
         	font-weight: bolder;
         	font-size: 1.2em;
+        }
+        
+        #review-date {
+        	font-size : 0.7em;
+        	color : #8C8C8C;
+        	font-weight: 400;
         }
 
         .review-menu {
@@ -294,19 +306,20 @@
 
         .cart-sticky {
             width: 100%;
-/*             color: #f9a11b; */
-            background-color: rgb(249, 161, 27, 0.2);
+			border : 2px solid #d8d8d8;
             overflow: hidden;
             position: sticky;
             top: 0px;
             padding: 15px;
             box-shadow: 5px 5px 5px 3px gray;
+            border-radius: 5px;
+            color : #d8d8d8;
         }
 
         .cart-title {
             overflow: hidden;
             border-bottom: 2px solid #383a3f;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bolder;
             height: 65px;
             line-height: 50px;
@@ -319,19 +332,20 @@
             width: 40px;
 			padding-top: 18px;
             text-align: center;
-            background-color: transparent;
             font-size: 20px;
-            color: #383a3f;
+            background-color: transparent;
+            color: #d8d8d8;
             cursor: pointer;
         }
 
         .cart-menu-box {
-            background-color: white;
             width: 100%;
             margin: 0 auto;
             margin-top: 20px;
             overflow: hidden;
             padding: 10px;
+            border-top : 2px solid #d8d8d8;
+            border-bottom : 2px solid #d8d8d8;
         }
 
         .cart-menu-box input {
@@ -341,7 +355,7 @@
         }
 
         .btn-delete {
-        	color : #d8d8d8;
+        	color : #383a3f;
         	text-decoration : none;
             width: 30px;
             text-align: center;
@@ -352,29 +366,32 @@
         }
 
        .cart-name {
-            margin-bottom: 12px;
-            font-size: 1.2em;
-            font-weight: 600;
+            margin-bottom: 3px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color : #383a3f;
         }
 
-        .btn-cart-num {
+         .btn-cart-num {
         	border: none;
             outline: none;
             width: 25px;
+            height : 20px;
             text-align: center;
-            color: #383a3f;
+            border-radius: 3px;
         }
 
-        #count-price {
-            color: firebrick;
-            font-weight: bold;
-            padding-left : 220px;
-            font-size: 1.2em;
+        .count-price {
+        	width : 100%;
+            color: #383a3f;
+            font-weight: 500;
+            font-size: 1.1em;
+            text-align: right;
         }
 
         .total-price-box {
             border-top: 2px solid #383a3f;
-            margin-top: 40px;
+            margin-top: 30px;
             padding-top : 20px;
             padding-left: 8px;
         }
@@ -382,13 +399,13 @@
         .total-price-box span {
             color: #383a3f;
             font-size: 1.2em;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         .total-price-prt {
         	display : inline-block;
         	text-align : right;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bolder;
             width: 250px;
             color: firebrick;
@@ -407,17 +424,20 @@
             font-weight: 800;
         }
         
+        .cart-order-btn>p {
+        	color : #f9a11b;
+        	font-size: 13px;
+        }
+        
         /*모달창 스타일------------------------------*/
         .reveiw-modal-wrap {
             display: none;
-  
             position: fixed;
             top: 0px;
             left: 0px;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-
             justify-content: center;
             align-items: center;
         }

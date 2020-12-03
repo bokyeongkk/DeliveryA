@@ -241,8 +241,8 @@
                                     <img src="" style="width:100%; height: 100%;">
                                 </div>
                                 <div class="best-menu-text">
-                                    <p>메뉴이름</p>
-                                    <p>메뉴가격</p>
+                                    <p><%=listMenu.get(0).getMenuName() %></p>
+                                    <p><%=formatter.format(listMenu.get(0).getMenuPrice()) %></p>
                                 </div>
                             </div>
                             <div class="best-menu">
@@ -326,8 +326,9 @@
                     	<%for(Review r : srd.getListRev()) {%>
                         <div class="review-view">
                             <ul>
-                                <li class=""><%=r.getRevCliId() %></li>
-                                <li class="review-date"><%=r.getRevEnrollDate() %></li>
+                                <li class="nickname"><%=r.getRevCliId() %>
+                                <span id="review-date"> <%=r.getRevEnrollDate() %></span>
+                                </li>
                                 <li>
                                     <!--스코어 점수 따라서 별 모양 for문 돌리기 -->
                                     <%for (int i=0;i<5; i++) {%>
@@ -351,13 +352,13 @@
                         </div>
                         <%} %>
                     </div>
+                    <%if(!srd.getListRev().isEmpty()) {%>
                     <div class="review-more">
                         <button class="btn btn-dark" currentCount="0" value="" totalCount="" id="more-btn">더보기</button>
                     </div>
+                    <%} %>
                 </div>
-                <br><br><br><br><br><br>
             </div><!-- store-wrap 닫는 div -->
-            
             
 
          <!--모달div-->
@@ -408,19 +409,18 @@
                         		</a>
                             
                             	<input type="hidden" name="orderMenuNo" value="<%=t.getMenuNo() %>">
-                            	<input type="text" name="orderMenuName" class="cart-name" value="<%=t.getMenuName() %>">
+                            	<input type="text" name="orderMenuName" class="cart-name" value="<%=t.getMenuName() %>"><br>
 
-                            	<button type="button" class="btn-cart-num minus">
+                            	<button type="button" class="btn-danger btn-cart-num minus">
                             	<i class="fas fa-minus"></i>
                             	</button>
                             	<input type="text" name="orderMenuCount" class="btn-cart-num count" value="<%=t.getMenuCount() %>">
-                            	<button type="button" class="btn-cart-num plus">
+                            	<button type="button" class="btn-danger btn-cart-num plus">
                             	<i class="fas fa-plus"></i>
                             	</button><br>
 
                             	<input type="hidden" name="orderMenuPrice" class="count-price" value="<%=t.getCountPrice() %>">
-                            	<span id="count-price"><%=formatter.format(t.getCountPrice()) %></span>
-                            	<span> 원</span>
+                            	<div class="count-price"><%=formatter.format(t.getCountPrice()) %> 원</div>
                             	
                         	</div>
                         	<%} %> 
@@ -434,13 +434,16 @@
                             <span>합계</span><div class="total-price-prt"></div><span> 원</span>
                         </div>
                         <div class="cart-order-btn">
-                            <input type="submit" class="btn btn-danger btn-order" value="주문하기">
+                        	<p><i class="fas fa-exclamation-circle"></i> 처음 주문이시면, 회원가입 하시고 쿠폰 사용하세요.</p>
+                        	<input type="submit" class="btn btn-danger btn-order" value="주문하기">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
       </section>
+      
+      <%@include file ="/WEB-INF/views/common/footer.jsp" %>
       
 </body>
 </html>

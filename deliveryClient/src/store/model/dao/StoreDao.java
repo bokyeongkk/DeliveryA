@@ -102,7 +102,7 @@ public class StoreDao {
 		ResultSet rset = null;
 		ArrayList<Menu> listMenu = new ArrayList<Menu>();
 		
-		String query = "select * from menu_db where menu_store_no = ?";
+		String query = "select * from menu_db where menu_store_no = ? order by 1";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
