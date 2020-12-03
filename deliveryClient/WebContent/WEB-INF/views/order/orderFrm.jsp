@@ -29,14 +29,23 @@
             margin: 0 auto;
             padding-top: 50px;
             padding-bottom: 50px;
-            border: 1px solid #cccccc;
+/*             border: 1px solid #cccccc; */
             overflow: hidden;
         }
 
         .delivery-div {
-            background-color: lightgray;
+        	border : 2px solid #383a3f;
+            background-color: white;
             text-indent: 50px;
             margin-bottom: 30px;
+        }
+        
+        #ordAddrDet {
+        	border : 1px solid #d8d8d8;
+        }
+        
+        #ordSub {
+        	border : 1px solid #d8d8d8;
         }
 
         .info-table>tbody>tr:first-child {
@@ -139,7 +148,8 @@
 
 
         .result-div {
-            background-color: lightgray;
+        	border : 2px solid #383a3f;
+            background-color: white;
             width: 100%;
             height: 100%;
             padding-left: 50px;
@@ -214,7 +224,8 @@
         }
         
         .coupon-div {
-            background-color: lightgray;
+        	border : 2px solid #383a3f;
+            background-color: white;
             width: 100%;
             height: 170px;
             padding-left: 50px;
@@ -238,7 +249,9 @@
         }
         
         .notice-div {
-            background-color: lightgray;
+        	border : 2px solid #383a3f;
+        	border-bottom : none;
+            background-color: white;
             width: 100%;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -247,7 +260,9 @@
         }
         
         .notice-text {
-            background-color: white;
+        	border : 2px solid #383a3f;
+        	border-top : none;
+            background-color: #d8d8d8;
             width: 100%;
             margin-top: -10px;
             height: 168px;
@@ -350,7 +365,8 @@
                 </div>
                 <div class="notice-div"><h6>개인정보 제 3자 제공</h6></div>
                 <div class="notice-text" style="overflow-y:scroll;overflow-x:hidden;">
-                    <b>1. 총칙</b><br>
+                	
+                    <br><b>1. 총칙</b><br>
                     (주)delivery-A(이하 ‘회사’)은 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등 관련 법령에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립하여 공개합니다.<br><br>
 
 

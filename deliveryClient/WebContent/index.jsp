@@ -97,8 +97,7 @@
 
         .category-box-wrap {
             width: 1300px;
-            /* background-color: lightblue; */
-            border : 1px solid #cccccc;
+/*             border : 1px solid #cccccc; */
             padding-top: 250px;
             margin: 0 auto;
 
@@ -149,7 +148,7 @@
         .content-recommend{
             width: 1300px;
             padding-top: 100px;
-            background-color: lightcyan;
+            background-color: white;
             margin: 0 auto;
         }
         

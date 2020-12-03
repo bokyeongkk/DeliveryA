@@ -14,7 +14,7 @@
             width: 1300px;
             margin: 0 auto;
             overflow: hidden;
-            border: 1px solid #c7c7c7;
+/*             border: 1px solid #c7c7c7; */
             box-sizing: border-box;
         }
 

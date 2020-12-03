@@ -46,7 +46,7 @@ public class StoreDetailViewServlet extends HttpServlet {
 		ReviewData srd = new StoreService().selectRevView(storeNo);
 		
 		//4. 결과처리
-		if(s == null || listMenu.isEmpty()) { //가게 정보가 없거나 메뉴가 없을 때
+		if(s == null || listMenu.size() < 3) { //가게 정보가 없거나 메뉴가 3개 보다 적을 때
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			request.setAttribute("msg", "상세 페이지 준비중");
 			request.setAttribute("loc", "/searchCategory?categoryNo="+s.getStoreCateId());

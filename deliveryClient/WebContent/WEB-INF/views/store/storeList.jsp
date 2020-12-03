@@ -49,7 +49,8 @@
 		<%for(Store s : listStore) {%>
 			<div class="store-box">
 				<div class="store-box-img">
-					<img src="\upload\test.png" style="width: 100%; height: 100%;">
+					<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
+					<!-- <img src="/filepath/01_store/<%=s.getStoreFilepath()%>" style="width: 100%; height: 100%;"> -->
 				</div>
 				<div class="store-box-text">
 					<ul>
