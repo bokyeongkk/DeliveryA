@@ -84,9 +84,6 @@ public class OrderPageServlet extends HttpServlet {
 			oc.setOrderDet(orderDet);
 			oc.setClient(loginClient);
 			ArrayList<Coupon> cpList = new StoreService().selectOneClientCp(loginClient.getCliId());
-			for(Coupon cp : cpList) {
-				System.out.println("쿠폰명>"+cp.getCpName());
-			}
 			oc.setCpList(cpList);
 			///////////////////////////////////////////////////
 			
