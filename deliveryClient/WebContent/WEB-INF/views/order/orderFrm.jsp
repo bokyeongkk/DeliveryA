@@ -207,6 +207,7 @@
         	color: black;
         }
         
+        
         .result-table>tbody>tr:last-child{
             height: 80px;
             border-top: 1px solid black;
@@ -392,7 +393,7 @@
                         </tr>
                     </table>
                     <button type="button" class="cancel" id="cancel">
-                    	<!-- 취소 버튼 누르면 다시 가게 페이로 이동 -->
+                    	<!-- 취소 버튼 누르면 다시 가게 페이지로 이동 -->
                     	<a href="/storeDetailView?storeNo=<%=oc.getOrder().getOrdStoreNo() %>">취소</a>
                     </button>
                     <input type="hidden" id="paymentr">
