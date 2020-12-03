@@ -98,8 +98,8 @@ public class OrderPageServlet extends HttpServlet {
 			request.setAttribute("orderClient", oc);
 			rd.forward(request, response);
 			
-			//"listCart" 세션 삭제
-			session.removeAttribute("listCart");
+//			//"listCart" 세션 삭제
+//			session.removeAttribute("listCart");
 		}
 		
 	}
