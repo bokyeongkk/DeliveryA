@@ -207,8 +207,8 @@
 			<!--가게정보div-->
 			<div class="store-info">
 				<div class="store-info-img">
-					<img src="/filepath/01_store/<%=s.getStoreFilepath()%>"
-						style="width: 100%; height: 100%;">
+					<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+					<!-- <img src="/filepath/01_store/<%=s.getStoreFilepath()%>" style="width: 100%; height: 100%;"> -->
 				</div>
 				<div class="store-info-text">
 					<ul>
@@ -237,7 +237,8 @@
 					<div class="best-menus">
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<!-- <img src="/filepath/02_menu/<%=listMenu.get(0).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
 								<p><%=listMenu.get(0).getMenuName()%></p>
@@ -246,20 +247,22 @@
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<!-- <img src="/filepath/02_menu/<%=listMenu.get(1).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
-								<p>메뉴이름</p>
-								<p>메뉴가격</p>
+								<p><%=listMenu.get(1).getMenuName()%></p>
+								<p><%=formatter.format(listMenu.get(1).getMenuPrice())%></p>
 							</div>
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="" style="width: 100%; height: 100%;">
+								<img src="/upload/ready.png" style="width: 100%; height: 100%;">
+								<!-- <img src="<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
 							</div>
 							<div class="best-menu-text">
-								<p>메뉴이름</p>
-								<p>메뉴가격</p>
+								<p><%=listMenu.get(2).getMenuName()%></p>
+								<p><%=formatter.format(listMenu.get(0).getMenuPrice())%></p>
 							</div>
 						</div>
 					</div>
