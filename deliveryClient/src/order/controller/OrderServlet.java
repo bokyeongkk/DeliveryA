@@ -74,12 +74,20 @@ public class OrderServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
 			session.removeAttribute("listCart");
-			request.setAttribute("msg", "주문 성공");			
-		}else {			
-			request.setAttribute("msg", "주문 실패");
+			request.setAttribute("msg", "주문 되었습니다! 빨리 배달해드릴게요~~");
+			
+			//"listCart" 세션 삭제
+			session.removeAttribute("listCart");
+			
+			request.setAttribute("loc", "/");
+			
+		} else {			
+			request.setAttribute("msg", "주문이 되지 않았습니다. 관리자에게 문의해주세요.");
+			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());	
 		}
-		request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
+
 		rd.forward(request, response);
+		
 		
 		/*
 		int result = new OrderService().insertOrder(order);

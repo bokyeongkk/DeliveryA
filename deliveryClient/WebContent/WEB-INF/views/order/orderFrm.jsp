@@ -13,6 +13,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- 아임포트 결제 API -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+
 <title>주문하기</title>
 <style>
         .content-all-wrap {
@@ -168,7 +175,7 @@
         }
         
         
-        #ok {
+        .ok {
             width: 49%;
             height: 50px;
             outline: none;
@@ -178,10 +185,10 @@
             float: right;
         }
 
-        #cancel {
+        .cancel {
             width: 49%;
             height: 50px;
-            outline: none;sss아직안끈ㅌ겻어 ㅋ
+            outline: none;
             background-color: white;
             border: 1px solid #383a3f;
             color: #383a3f;
@@ -269,7 +276,10 @@
 	<div class="content-all-wrap">
         <form action="/order" method="post">
             <div class="delivery-div">
-            <input type="hidden" name="ordStoreNo" value=<%=oc.getOrder().getOrdStoreNo() %>>
+            <input type="hidden" name="ordStoreNo" value="<%=oc.getOrder().getOrdStoreNo() %>">
+            <input type="hidden"  id="ordName" value="<%=oc.getClient().getCliName() %>">
+            <input type="hidden" id="ordEmail" value="<%=oc.getClient().getCliEmail() %>">
+            
                 <table class="info-table">
                     <tr>
                         <td>
@@ -277,16 +287,16 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="ordAddr" id="ordAddr" value=<%=oc.getOrder().getOrdAddr() %> readonly></td>
+                        <td><input type="text" name="ordAddr" id="ordAddr" value="<%=oc.getOrder().getOrdAddr() %>" readonly></td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="이레빌딩 19F A강의실" placeholder="상세주소">
+                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="" placeholder="상세주소">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="ordTel" id="ordTel" value=<%=oc.getClient().getCliTel() %> readonly>
+                            <input type="text" name="ordTel" id="ordTel" value="<%=oc.getClient().getCliTel() %>" readonly>
                         </td>
                     </tr>
                 </table>
@@ -328,7 +338,7 @@
                 <div class="notice-div"><h6>개인정보 제 3자 제공</h6></div>
                 <div class="notice-text" style="overflow-y:scroll;overflow-x:hidden;">
                     <b>1. 총칙</b><br>
-                    (주)우아한형제들(이하 ‘회사’)은 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등 관련 법령에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립하여 공개합니다.<br><br>
+                    (주)delivery-A(이하 ‘회사’)은 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등 관련 법령에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립하여 공개합니다.<br><br>
 
 
                     <b>2. 개인정보의 수집</b><br>
@@ -358,7 +368,7 @@
                     <table class="result-table">
                     	<tr>
                             <td>주문금액</td>
-                            <td><input type="text" id="ordPrice" name="ordPrice" value=<%=oc.getOrder().getOrdTPrice() %> readonly></td>
+                            <td><input type="text" id="ordPrice" name="ordPrice" value="<%=oc.getOrder().getOrdTPrice() %>" readonly></td>
                         </tr>
                         <tr>
                             <td>쿠폰할인</td>
@@ -366,20 +376,24 @@
                         </tr>
                         <tr>
                             <td>총 금액</td>
-                            <td><input type="text" id="ordTPrice" name="ordTPrice" value=<%=oc.getOrder().getOrdTPrice() %> readonly></td>
+                            <td><input type="text" id="ordTPrice" name="ordTPrice" value="<%=oc.getOrder().getOrdTPrice()%>" readonly></td>
                         </tr>
                     </table>
-                    <button id="cancel">취소</button>
-                    <button id="ok">결제하기</button>
+                    <button type="button" class="cancel" id="cancel">취소</button>
+                    <input type="hidden" id="paymentr">
+                    <button type="button" class="ok" id="paymentf">결제하기</button>
                 </div>
             </div>
             </div>
-            
+
            
         </form>
+        <br><br><br><br><br>
+        <p id="paymentResult">1231231123</p>
     </div>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
+	
 	<script>
 		$("#coupon").change(function(){
 			var coupon = $(this).val();
@@ -400,6 +414,53 @@
 				$("#ordTPrice").val(total);
 			}
 		});
+		
+		
+		$("#paymentf").click(function() { 
+			//현재 일자 가져오기
+			var d = new Date(); 
+			//숫자끼리 더하면 숫자 연산되기 때문에 중간에('')값 더하기 
+			var date = d.getFullYear()+''+(d.getMonth()+1)+''+d.getDate()+''+d.getHours()+''+d.getMinutes()+''+d.getSeconds(); 
+
+			var price = $("#ordTPrice").val();
+			var name = $("#ordName").val();
+			var email = $("#ordEmail").val();
+			var tel = $("#ordTel").val();
+			var addr = $("#ordAddr").val();
+			var addrDet = $("#ordAddrDet").val();
+			
+ 			//내정보-가맹점 식별코드 넣기 
+			IMP.init("imp34654718"); 
+			IMP.request_pay({ 
+				merchant_uid : 'merchant_'+date, //거래ID(고유) 
+				name : 'deliveryA_주문', //결제이름
+				amount : price, //결제금액 
+				buyer_name : name, //구매자이름 
+				buyer_email : email,
+				buyer_tel : tel, //구매자 전화번호 
+				buyer_addr : addr, //구매자 주소 
+				buyer_addr_det : addrDet, //구매자 상세주소
+				}, function(rsp) { 
+					if (rsp.success) { //결제가 성공한 경우 
+						var r1 = "고유ID : "+rsp.imp_uid; 
+						var r2 = "상점 거래 아이디 : "+rsp.merchant_uid; 
+						var r3 = "결제금액 : "+rsp.paid_amount; 
+						var r4 = "카드승인번호 : "+rsp.apply_num; 
+						console.log(r1+"/"+r2+"/"+r3+"/"+r4)
+						
+						//숨겨둔 input태그 변수로 가져오기
+						var paymentr = document.getElementById("paymentr");
+						//타입 hidden -> submit으로 변경
+						paymentr.type= "submit";
+						//클릭 이벤트 주기
+						paymentr.click();
+
+					} else { //결제가 실패한 경우 
+						alert("결제 실패 - "+rsp.error_msg);
+					} 
+				});
+		});
+
 	</script>
 </body>
 </html>
