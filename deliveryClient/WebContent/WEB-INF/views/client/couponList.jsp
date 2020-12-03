@@ -98,7 +98,7 @@
 	<div class="order-modal-wrap">
 		<div class="order-modal">
 			<div class="order-modal-top">
-				<h1>쿠폰함</h1>
+				<h1>쿠폰함</h1> 
 			</div>
 			<div class="order-modal-content">
 				<div class="coupon-list"
