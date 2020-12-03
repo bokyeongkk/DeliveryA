@@ -72,7 +72,7 @@
             margin: 0 auto;
             position: absolute;
             background-color: white;
-            top: 55%;
+            top: 60%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;

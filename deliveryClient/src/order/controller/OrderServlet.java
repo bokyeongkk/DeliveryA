@@ -87,31 +87,6 @@ public class OrderServlet extends HttpServlet {
 		}
 
 		rd.forward(request, response);
-		
-		
-		/*
-		int result = new OrderService().insertOrder(order);
-		System.out.println("result>"+result);
-		int result2 = new OrderService().useCoupon(order);
-		System.out.println("result2>"+result2);
-		int result3 = new OrderService().insertOrderDet(listCart);
-		System.out.println("result3>"+result3);
-		
-		if(result>0 && result2>0 && result3>0) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			//"listCart" 세션 삭제
-			
-			session.removeAttribute("listCart");
-			request.setAttribute("msg", "주문 성공");
-			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-			request.setAttribute("msg", "주문 실패");
-			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
-			rd.forward(request, response);
-		}
-		*/
 	}
 
 	/**
