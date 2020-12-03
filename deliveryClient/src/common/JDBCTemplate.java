@@ -12,8 +12,8 @@ public class JDBCTemplate {
 
 		String driver = "oracle.jdbc.driver.OracleDriver";
 		String url = "jdbc:oracle:thin:@1.220.236.74:15214:xe";
-		String dbID = "delivery";
-		String dbPW = "delivery";
+		String dbID = "SEMI";
+		String dbPW = "SEMI";
 
 		try {
 			Class.forName(driver);

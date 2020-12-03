@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import client.model.vo.Client;
+import coupon.model.vo.Coupon;
 import order.model.vo.Order;
+import order.model.vo.OrderClient;
 import order.model.vo.OrderDet;
+import store.model.service.StoreService;
 import store.model.vo.Cart;
 
 /**
@@ -75,11 +78,24 @@ public class OrderPageServlet extends HttpServlet {
 				orderDet.add(det);
 			}
 
+			//수경 수정////////////////////////////////////////////
+			OrderClient oc = new OrderClient();
+			oc.setOrder(order);
+			oc.setOrderDet(orderDet);
+			oc.setClient(loginClient);
+			ArrayList<Coupon> cpList = new StoreService().selectOneClientCp(loginClient.getCliId());
+			for(Coupon cp : cpList) {
+				System.out.println("쿠폰명>"+cp.getCpName());
+			}
+			oc.setCpList(cpList);
+			///////////////////////////////////////////////////
+			
+			
 			//주문하는 jsp페이지로 이동
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/order/orderFrm.jsp");
-			request.setAttribute("order", order);
-			request.setAttribute("orderDet", orderDet);
-			
+//			request.setAttribute("order", order);
+//			request.setAttribute("orderDet", orderDet);
+			request.setAttribute("orderClient", oc);
 			rd.forward(request, response);
 			
 			//"listCart" 세션 삭제

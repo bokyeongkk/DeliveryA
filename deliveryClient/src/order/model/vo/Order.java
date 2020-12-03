@@ -1,7 +1,6 @@
 package order.model.vo;
 
 public class Order {
-	
 	private int ordNo;
 	private int ordTPrice;
 	private String ordCliId;
