@@ -255,7 +255,7 @@ input[readonly] {
 					</tr>
 					<tr>
 						<td colspan="3"><input type="text" name="cliAddr"
-							id="cliAddr" class="join-input" value=<%=client.getCliAddr() %>></td>
+							id="cliAddr" class="join-input" value='<%=client.getCliAddr() %>'></td>
 					</tr>
 					<tr>
 						<th colspan="3">상세주소<span></span></th>
@@ -263,7 +263,7 @@ input[readonly] {
 					<tr>
 						<td colspan="3"><input type="text" name="cliAddrDet"
 							id="cliAddrDet" class="join-input"
-							value=<%=client.getCliAddrDet() %>></td>
+							value='<%=client.getCliAddrDet() %>'></td>
 					</tr>
 					<tr>
 						<th colspan="3">이름<span></span></th>

@@ -123,7 +123,7 @@
         .category-img{
             width: 100%;
             height: 80%;
-            background-color: pink;
+            //background-color: pink;
             padding-left: 20px;
             padding-right: 20px;
         }
@@ -173,38 +173,44 @@
         </div>
         <div class="search-addr">
             <h3>어디로 배달해드릴까요?</h3>
-            <input type="text" name="cliAddr">
+            <%if(c!=null) {%>
+            	<input type="text" name="cliAddr" value='<%=c.getCliAddr() %>' readonly>
+            <%} else { %>
+            	<input type="text" name="cliAddr" readonly>
+            <%} %>
+            
         </div>
         <div class="category-box-wrap">
             <div class="category-box-list">
 				<div class="category-box">
 					<div class="category-img">
 						<a href="/searchCategory?categoryNo=1"> 
-							<!--여기에 img 넣기-->테스트
+							<!--여기에 img 넣기-->
+							<img src="/upload/chicken.png">
 						</a>
 					</div>
 					<div class="category-text">
-						<p>text</p>
+						<p>치킨</p>
 					</div>
 				</div>
 				<div class="category-box">
                     <div class="category-img">
                     	<a href="/searchCategory?categoryNo=2"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/pizza.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>피자</p>
                     </div>
                 </div>
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=3"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/rice.png">
 						</a>                    
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>한식</p>
                     </div>
                 </div>
             </div>
@@ -212,31 +218,31 @@
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=4"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/china.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>중식</p>
                     </div>
                 </div>
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=5"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/japan.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>일식</p>
                     </div>
                 </div>
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=6"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/brunch.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>양식</p>
                     </div>
                 </div>
             </div>
@@ -244,31 +250,31 @@
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=7"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/meat.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>분식</p>
                     </div>
                 </div>
                 <div class="category-box">
                     <div class="category-img">
 						<a href="/searchCategory?categoryNo=8"> 
-							<!--여기에 img 넣기-->
+							<img src="/upload/dessert.png">
 						</a>
                     </div>
                     <div class="category-text">
-                        <p>text</p>
+                        <p>디저트</p>
                     </div>
                 </div>
 				<div class="category-box">
 					<div class="category-img">
 						<a href="/searchCategory?categoryNo=9">
-							<!--여기에 img 넣기-->
+							<img src="/upload/bread.png">
 						</a>
 					</div>
 					<div class="category-text">
-						<p>text</p>
+						<p>패스트푸드</p>
 					</div>
 				</div>
 			</div>

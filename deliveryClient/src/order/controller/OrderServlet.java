@@ -1,6 +1,7 @@
 package order.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import client.model.vo.Client;
+import order.model.dao.OrderDao;
 import order.model.service.OrderService;
 import order.model.vo.Order;
+import store.model.vo.Cart;
 
 /**
  * Servlet implementation class OrderServlet
@@ -50,22 +53,47 @@ public class OrderServlet extends HttpServlet {
 		//주문 쿠폰아이디
 		String cpId1 =request.getParameter("coupon");
 		String[] cpId2 = cpId1.split("/");
-		int ordCpId = Integer.parseInt(cpId2[0]);
-		System.out.println("ciId2[0] >"+cpId2[0]+"/ ORDCPID >"+ordCpId);
+		
 		//주문 가게아이디
 		int ordStoreNo = Integer.parseInt(request.getParameter("ordStoreNo"));
 		
 		Order order = new Order();
 		order.setOrdCliId(loginClient.getCliId());
 		order.setOrdAddr(ordAddr);
-		order.setOrdCpId(ordCpId);
+		if(!cpId2[0].equals("no")) {
+			int ordCpId = Integer.parseInt(cpId2[0]);
+			order.setOrdCpId(ordCpId);
+		}
+		System.out.println("ordCpId>>"+order.getOrdCpId());
 		order.setOrdSub(ordSub);
 		order.setOrdTPrice(ordTPrice);
 		order.setOrdStoreNo(ordStoreNo);
 		
-		int result = new OrderService().insertOrder(order);
+		ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
+		int result = new OrderService().order(order,listCart);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
+			session.removeAttribute("listCart");
+			request.setAttribute("msg", "주문 성공");			
+		}else {			
+			request.setAttribute("msg", "주문 실패");
+		}
+		request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
+		rd.forward(request, response);
+		
+		/*
+		int result = new OrderService().insertOrder(order);
+		System.out.println("result>"+result);
+		int result2 = new OrderService().useCoupon(order);
+		System.out.println("result2>"+result2);
+		int result3 = new OrderService().insertOrderDet(listCart);
+		System.out.println("result3>"+result3);
+		
+		if(result>0 && result2>0 && result3>0) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			//"listCart" 세션 삭제
+			
+			session.removeAttribute("listCart");
 			request.setAttribute("msg", "주문 성공");
 			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
 			rd.forward(request, response);
@@ -75,7 +103,7 @@ public class OrderServlet extends HttpServlet {
 			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
 			rd.forward(request, response);
 		}
-		
+		*/
 	}
 
 	/**
