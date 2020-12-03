@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import client.model.vo.Client;
+import order.model.dao.OrderDao;
 import order.model.service.OrderService;
 import order.model.vo.Order;
 import store.model.vo.Cart;
@@ -63,18 +64,31 @@ public class OrderServlet extends HttpServlet {
 			int ordCpId = Integer.parseInt(cpId2[0]);
 			order.setOrdCpId(ordCpId);
 		}
-		
+		System.out.println("ordCpId>>"+order.getOrdCpId());
 		order.setOrdSub(ordSub);
 		order.setOrdTPrice(ordTPrice);
 		order.setOrdStoreNo(ordStoreNo);
 		
-		int result = new OrderService().insertOrder(order);
-		int result2 = new OrderService().useCoupon(order);
 		ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
-		int result3 = new OrderService().insertOrderDet(listCart);
+		int result = new OrderService().order(order,listCart);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		if(result>0) {
+			session.removeAttribute("listCart");
+			request.setAttribute("msg", "주문 성공");			
+		}else {			
+			request.setAttribute("msg", "주문 실패");
+		}
+		request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
+		rd.forward(request, response);
+		
+		/*
+		int result = new OrderService().insertOrder(order);
 		System.out.println("result>"+result);
+		int result2 = new OrderService().useCoupon(order);
 		System.out.println("result2>"+result2);
+		int result3 = new OrderService().insertOrderDet(listCart);
 		System.out.println("result3>"+result3);
+		
 		if(result>0 && result2>0 && result3>0) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			//"listCart" 세션 삭제
@@ -89,7 +103,7 @@ public class OrderServlet extends HttpServlet {
 			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());
 			rd.forward(request, response);
 		}
-		
+		*/
 	}
 
 	/**

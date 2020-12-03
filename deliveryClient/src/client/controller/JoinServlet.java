@@ -51,9 +51,10 @@ public class JoinServlet extends HttpServlet {
 		}
 		
 		//test용 주소
-		client.setCliAddr("주소");
-		client.setCliAddrDet("상세주소");
-		
+		client.setCliAddr(request.getParameter("cliAddr"));
+		System.out.println("servlet>"+client.getCliAddr());
+		client.setCliAddrDet(request.getParameter("cliAddrDet"));
+		System.out.println("servlet>"+client.getCliAddrDet());
 		//3. 비지니스 로직
 		int result = new ClientService().insertClient(client);
 		

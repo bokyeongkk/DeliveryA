@@ -44,7 +44,7 @@ public class LogoutServlet extends HttpServlet {
 				//4. 결과처리
 				String uri = request.getParameter("uri");
 				String param = request.getParameter("param");
-				if(uri.equals("/mypage")) {
+				if(uri.equals("/mypage") || uri.equals("/orderPage")) {
 					uri = "/";
 					param= "";
 				}

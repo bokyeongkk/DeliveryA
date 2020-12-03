@@ -173,7 +173,12 @@
         </div>
         <div class="search-addr">
             <h3>어디로 배달해드릴까요?</h3>
-            <input type="text" name="cliAddr">
+            <%if(c!=null) {%>
+            	<input type="text" name="cliAddr" value='<%=c.getCliAddr() %>' readonly>
+            <%} else { %>
+            	<input type="text" name="cliAddr" readonly>
+            <%} %>
+            
         </div>
         <div class="category-box-wrap">
             <div class="category-box-list">
