@@ -1,6 +1,7 @@
 package client.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,9 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import client.model.service.ClientService;
 import client.model.vo.Client;
+import coupon.model.vo.Coupon;
+import order.model.service.OrderService;
+import order.model.vo.OrderDet;
+import store.model.service.StoreService;
 
 /**
  * Servlet implementation class MypageServlet
@@ -37,6 +43,12 @@ public class MypageServlet extends HttpServlet {
 		//2. view에서 넘어온 값 받기
 		String cliId = request.getParameter("cliId");
 		Client client = new ClientService().selectOneClient(cliId);
+		System.out.println("servlet cliId>"+cliId);
+		ArrayList<Coupon> cpList = new StoreService().selectOneClientCp(cliId);
+		for(Coupon c : cpList) {
+			System.out.println("사용자ID>"+c.getCpListCliId());
+			System.out.println("쿠폰명>"+c.getCpName());
+		}
 		//3. 비지니스 로직
 		//4. 결과 처리
 		if(cliId.equals("")) {	//에러처리
@@ -47,6 +59,8 @@ public class MypageServlet extends HttpServlet {
 		} else {
 			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/client/mypage.jsp");
 			request.setAttribute("client", client);
+			HttpSession session = request.getSession();
+			session.setAttribute("cpList", cpList);
 			rd.forward(request, response);
 		}
 	}
