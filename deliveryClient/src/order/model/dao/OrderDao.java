@@ -105,29 +105,27 @@ public class OrderDao {
 		return result;
 	}
 	
-	public int ordDetCurrval(Connection conn) {
+	public Order searchOrdNoDate(Connection conn, String cliId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		//String query = "select last_number from user_sequences where sequence_name='ORD_SEQ'";
-		String query = "select ord_seq.currval from dual";
-		int curval = -1;
+		String query = "select max(ord_no) as ord_no, ord_date from ord_db where ORD_CLI_ID=?";
+		Order order = null;
 		try {
 			pstmt = conn.prepareStatement(query);
-			
+			pstmt.setString(1, cliId);
 			rset = pstmt.executeQuery();
-			
 			if(rset.next()) {
-				curval = rset.getInt("last_number");
+				order = new Order();
+				order.setOrdNo(rset.getInt("ord_no"));
+				order.setOrdDate(rset.getString("ord_date"));
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}finally {
+			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
-		
-		return curval;
+		return order;
 	}
-
 }

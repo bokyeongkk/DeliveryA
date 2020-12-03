@@ -64,29 +64,29 @@ public class OrderServlet extends HttpServlet {
 			int ordCpId = Integer.parseInt(cpId2[0]);
 			order.setOrdCpId(ordCpId);
 		}
-		System.out.println("ordCpId>>"+order.getOrdCpId());
 		order.setOrdSub(ordSub);
 		order.setOrdTPrice(ordTPrice);
 		order.setOrdStoreNo(ordStoreNo);
 		
 		ArrayList<Cart> listCart = (ArrayList<Cart>)session.getAttribute("listCart");
 		int result = new OrderService().order(order,listCart);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if(result>0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/order/resultOrder.jsp");
 			session.removeAttribute("listCart");
-			request.setAttribute("msg", "주문 되었습니다! 빨리 배달해드릴게요~~");
-			
-			//"listCart" 세션 삭제
-			session.removeAttribute("listCart");
-			
-			request.setAttribute("loc", "/");
-			
+			Order order2 = new OrderService().searchOrdNoDate(loginClient.getCliId());
+			String ordDate = order2.getOrdDate();
+			String[] array = ordDate.split("-");
+			ordDate = array[0]+array[1]+array[2];
+			order2.setOrdDate(ordDate);
+			request.setAttribute("order",order2);
+			rd.forward(request, response);
 		} else {			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			request.setAttribute("msg", "주문이 되지 않았습니다. 관리자에게 문의해주세요.");
 			request.setAttribute("loc", "/storeDetailView?storeNo="+order.getOrdStoreNo());	
+			rd.forward(request, response);
 		}
 
-		rd.forward(request, response);
 	}
 
 	/**

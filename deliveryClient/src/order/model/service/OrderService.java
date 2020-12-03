@@ -96,5 +96,11 @@ public class OrderService {
 		return result1;
 	}
 
+	public Order searchOrdNoDate(String cliId) {
+		Connection conn = JDBCTemplate.getConnection();
+		Order order = new OrderDao().searchOrdNoDate(conn, cliId);
+		JDBCTemplate.close(conn);
+		return order;
+	}
 
 }
