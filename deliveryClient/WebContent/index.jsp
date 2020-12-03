@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>delivery-A</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <!-- Link Swiper-->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -42,7 +42,7 @@
             text-align: center;
             font-size: 18px;
             background: #fff;
-            height: 400px;
+            height: 500px;
             /* Center slide text vertically */
             display: -webkit-box;
             display: -ms-flexbox;
@@ -72,7 +72,7 @@
             margin: 0 auto;
             position: absolute;
             background-color: white;
-            top: 42%;
+            top: 55%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -166,7 +166,7 @@
             position: absolute;
 /*            border: 1px solid red;*/
             text-align: left;
-            top: 21%;
+            top: 25%;
             left: 20%;
         }
         .slide-text>p{
@@ -177,9 +177,9 @@
         .slide-text>h1{
             font-size: 60px;
             margin: 0;
-            margin-top: -15px;
+            margin-top: -10px;
+            margin-bottom:10px;
             padding: 0;
-/*            border: 1px solid red;*/
         }
         .light{
             font-size: 40px;
@@ -190,7 +190,7 @@
             position: absolute;
 /*            border: 1px solid red;*/
             text-align: left;
-            top: 5%;
+            top: 10%;
             right: 20%;
         }
         
@@ -221,16 +221,16 @@
                 </div>
 				<div class="swiper-slide slide-wrap">
                    <div class="slide-text2">
-                       <h1>너는</h1>
+                       <h1>너는 지금</h1>
                        <h1><span class="bold">치킨</span>이</h1>
                        <h1>땡긴다.</h1>
                    </div>
                     <img src="/upload/slide2.png">
                 </div>                
 
-                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
-                <div class="swiper-slide">Slide</div>
-                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
+                <div class="swiper-slide slide-wrap">
+                    <img src="/upload/slide3.png">
+                </div>                
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
