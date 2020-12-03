@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -76,7 +77,11 @@
 .footer-img {
 	width: 50px;
 	height: 50px;
-	background-color: pink;
+}
+
+.footer-img>img {
+	width: 100%;
+	height: 100%;
 }
 </style>
 </head>
@@ -85,8 +90,8 @@
 		<div class="footer-wrap">
 			<div class="col-md-6 text">
 				<p>delivery - A</p>
-				<span>(07212) 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F A강의실</span> <span> TEL. 02)1544-9970 |
-					FAX. 02)2163-8560 | 사업자등록번호 : 876-85-00632 </span>
+				<span>(07212) 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F A강의실</span> <span>
+					TEL. 02)1544-9970 | FAX. 02)2163-8560 | 사업자등록번호 : 876-85-00632 </span>
 			</div>
 			<div class="col-md-6">
 				<div class="footer-info">
@@ -98,10 +103,26 @@
 				</div>
 				<div class="footer-sns">
 					<ul class="nav justify-content-center">
-						<li class="nav-item"><a class="nav-link" href="#"><div class="footer-img"></div></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><div class="footer-img"></div></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><div class="footer-img"></div></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><div class="footer-img"></div></a></li>
+						<li class="nav-item"><a class="nav-link" href="#">
+								<div class="footer-img">
+									<img src="/upload/facebook.png">
+								</div>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">
+								<div class="footer-img">
+									<img src="/upload/instagram.png">
+								</div>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">
+								<div class="footer-img">
+									<img src="/upload/twitter.png">
+								</div>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">
+								<div class="footer-img">
+									<img src="/upload/naver.png">
+								</div>
+						</a></li>
 					</ul>
 				</div>
 			</div>
