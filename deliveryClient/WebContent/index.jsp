@@ -342,9 +342,9 @@
 				</div>
 			</div>
         </div>
-        <div class="content-recommend">
+<!--         <div class="content-recommend">
             
-        </div>
+        </div> -->
     </div>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>

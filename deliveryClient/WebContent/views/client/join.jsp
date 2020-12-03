@@ -446,14 +446,14 @@ input[type=checkbox] {
 
             //닉네임 확인
             $("#cliNick").change(function() {
-                var reg = /^[0-9A-Za-z가-힣]{2,10}$/;
+                var reg = /^[0-9A-Za-z가-힣]{2,6}$/;
                 if (reg.test($(this).val())) {
                     check[6] = true;
                     $("span").eq(9).text("");
                     $("#cliNick").css('border', '1px solid #64de40');
                 } else {
                     check[6] = false;
-                    $("span").eq(9).text("2~10글자");
+                    $("span").eq(9).text("2~6글자");
                     $("span").eq(9).css('color', 'red');
                     $("#cliNick").css('border', '1px solid red');
                 }
