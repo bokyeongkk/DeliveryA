@@ -184,6 +184,7 @@ input[readonly] {
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
 	<%@include file="/WEB-INF/views/client/couponList.jsp"%>
+	<%@include file="/WEB-INF/views/client/orderList.jsp"%>
 	<div class="content-all-wrap">
 		<div class="content-navi">
 			<div class="user-info">
@@ -199,7 +200,7 @@ input[readonly] {
 			<div class="user-menu">
 				<div class="menu-wrap">
 					<div class="menu-img">
-						<a href="javascript:void(0);"><img src="/upload/card.png" id="card-img"></a>
+						<a href="javascript:void(0);"><img src="/upload/card.png" id="order-img"></a>
 					</div>
 					<div class="menu-text">
 						<span>주문 내역</span>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import common.JDBCTemplate;
 import order.model.vo.Order;
@@ -127,5 +128,38 @@ public class OrderDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return order;
+	}
+
+	public ArrayList<Order> selectOrd(Connection conn, String cliId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from ord_db where ORD_CLI_ID=?";
+		ArrayList<Order> ordList = new ArrayList<Order>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, cliId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Order o = new Order();
+				o.setOrdNo(rset.getInt("ord_no"));
+				o.setOrdTPrice(rset.getInt("ord_t_price"));
+				o.setOrdCliId(rset.getString("ord_cli_id"));
+				o.setOrdStoreNo(rset.getInt("ord_store_no"));
+				o.setOrdAddr(rset.getString("ord_addr"));
+				o.setOrdSub(rset.getString("ord_sub"));
+				o.setOrdCpId(rset.getInt("ord_cp_id"));
+				o.setOrdDate(rset.getString("ord_date"));
+				ordList.add(o);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return ordList;
 	}
 }

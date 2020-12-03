@@ -15,6 +15,7 @@ import client.model.service.ClientService;
 import client.model.vo.Client;
 import coupon.model.vo.Coupon;
 import order.model.service.OrderService;
+import order.model.vo.Order;
 import order.model.vo.OrderDet;
 import store.model.service.StoreService;
 
@@ -44,12 +45,21 @@ public class MypageServlet extends HttpServlet {
 		String cliId = request.getParameter("cliId");
 		Client client = new ClientService().selectOneClient(cliId);
 		System.out.println("servlet cliId>"+cliId);
+		
+		//3. 비지니스 로직
 		ArrayList<Coupon> cpList = new StoreService().selectOneClientCp(cliId);
+		ArrayList<Order> ordList = new OrderService().selectOrd(cliId);
+		
 		for(Coupon c : cpList) {
 			System.out.println("사용자ID>"+c.getCpListCliId());
 			System.out.println("쿠폰명>"+c.getCpName());
 		}
-		//3. 비지니스 로직
+		
+		for(Order o : ordList) {
+			System.out.println("ORD사용자ID>"+o.getOrdCliId());
+			System.out.println("주문번호>"+o.getOrdNo());
+		}
+		
 		//4. 결과 처리
 		if(cliId.equals("")) {	//에러처리
 			RequestDispatcher rd  = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
@@ -61,6 +71,7 @@ public class MypageServlet extends HttpServlet {
 			request.setAttribute("client", client);
 			HttpSession session = request.getSession();
 			session.setAttribute("cpList", cpList);
+			session.setAttribute("ordList", ordList);
 			rd.forward(request, response);
 		}
 	}

@@ -9,56 +9,6 @@ import order.model.vo.Order;
 import store.model.vo.Cart;
 
 public class OrderService {
-	
-	/*
-	public int insertOrder(Order order) {
-		Connection conn = JDBCTemplate.getConnection();
-		int result = new OrderDao().insertOrder(conn, order);
-
-		if(result>0) {
-			JDBCTemplate.commit(conn);
-		} else {
-			JDBCTemplate.rollback(conn);
-		}
-		//JDBCTemplate.close(conn);
-		return result;
-	}
-	
-	public int useCoupon(Order order) {
-		//Connection conn = JDBCTemplate.getConnection();
-		int result = new OrderDao().useCoupon(conn, order);
-		if(result>0) {
-			JDBCTemplate.commit(conn);
-		} else {
-			JDBCTemplate.rollback(conn);
-		}
-		//JDBCTemplate.close(conn);
-		return result;
-	}
-
-	public int insertOrderDet(ArrayList<Cart> listCart) {
-		//Connection conn = JDBCTemplate.getConnection();
-		int total = 0;
-		for(Cart c : listCart) {
-			int result = new OrderDao().insertOrderDet(conn, c);
-
-			if(result>0) {
-				total++;
-			}
-
-		}
-		if(total==listCart.size()) {
-			JDBCTemplate.commit(conn);
-			JDBCTemplate.close(conn);
-			return 1;
-		}
-		else {
-			JDBCTemplate.rollback(conn);
-			JDBCTemplate.close(conn);
-			return 0;
-		}
-	}
-	 */
 	public int order(Order order, ArrayList<Cart> listCart) {
 		Connection conn = JDBCTemplate.getConnection();
 		OrderDao dao = new OrderDao();
@@ -102,5 +52,11 @@ public class OrderService {
 		JDBCTemplate.close(conn);
 		return order;
 	}
-
+	
+	public ArrayList<Order> selectOrd(String cliId){
+		Connection conn = JDBCTemplate.getConnection();
+		ArrayList<Order> ordList = new OrderDao().selectOrd(conn, cliId);
+		JDBCTemplate.close(conn);
+		return ordList;
+	}
 }

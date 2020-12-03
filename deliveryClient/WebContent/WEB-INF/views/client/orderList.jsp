@@ -1,9 +1,10 @@
+<%@page import="order.model.vo.Order"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="coupon.model.vo.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-		ArrayList<Coupon> cpList = (ArrayList<Coupon>)session.getAttribute("cpList");
+		ArrayList<Order> ordList = (ArrayList<Order>)session.getAttribute("ordList");
 	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,7 +16,7 @@
 	font-family: 'Noto Sans KR';
 }
 
-.coupon-modal-wrap {
+.order-modal-wrap {
 	/*원랜 상위 요소에 relative를 줘야하는데 얘는 브라우저 전체를 채울거라서 굳이 안써도 됨*/
 	position: absolute;
 	top: 0px;
@@ -31,7 +32,7 @@
 	align-items: center;
 }
 
-.coupon-modal {
+.order-modal {
 	background-color: #fff;
 	width: 70vw;
 	height: 50vh;
@@ -41,78 +42,39 @@
 	min-height: 400px;
 }
 
-.coupon-modal-top>h1 {
+.order-modal-top>h1 {
 	text-align: center;
 	margin-top : 15px;
 	margin-bottom: 15px;
 }
 
-.coupon-modal-content {
+.order-modal-content {
 	text-align: center;
 }
 
-.coupon-list {
+.order-list {
 	border: 1px solid #383a3f;
 	margin: 0 auto;
-}
-
-#cancel {
-	height: 50px;
-	width: 200px;
-	background-color: #383a3f;
-	color: white;
-	margin-top: 30px;
-}
-
-.cp-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.cp-list>li {
-	display: inline-block;
-	width: 100%;
-}
-
-.cp-list>li:nth-child(2n-1) {
-	background-color: lightgray;
-}
-
-.cp-list>li>p {
-	margin: 0;
-	padding: 0;
-}
-
-.cp-list>li>div>p:first-child {
-	margin-top: 15px;
-}
-
-.cp-list>li>div>p:last-child {
-	text-align: right;
-	margin-right:5px;
 }
 </style>
 </head>
 <body>
-	<div class="coupon-modal-wrap">
-		<div class="coupon-modal">
-			<div class="coupon-modal-top">
-				<h1>쿠폰함</h1> 
+	<div class="order-modal-wrap">
+		<div class="order-modal">
+			<div class="order-modal-top">
+				<h1>주문 내역</h1> 
 			</div>
-			<div class="coupon-modal-content">
-				<div class="coupon-list"
+			<div class="order-modal-content">
+				<div class="order-list"
 					style="overflow-y: scroll; width: 400px; height: 250px; overflow-x: hidden;">
 					<ul class="cp-list">
-						<%for(Coupon coupon : cpList) {%>
-							<%if(coupon.getCpListUse().equals("FALSE ")){ %>
+						<%for(Order o : ordList) {%>
 								<li>
 									<div class="cp-text">
-										<p><%=coupon.getCpName() %>(<%=coupon.getCpPrice() %>원)</p>
-										<p>~ <%=coupon.getCpListDate() %>까지</p>
+										<p>주문번호 : <%=o.getOrdNo() %>(총 주문액 : <%=o.getOrdTPrice() %>원)</p>
+										<p><%=o.getOrdDate() %></p>
 									</div>
 								</li>
-							<%} %>
 						<%} %>
 					</ul>
 				</div>
@@ -122,21 +84,21 @@
 	</div>
 	<script>
         $(function(){
-			$("#coupon-img").click(function(){
-              $(".coupon-modal-wrap").css('display','flex');
+			$("#order-img").click(function(){
+              $(".order-modal-wrap").css('display','flex');
               $('body').css("overflow", "hidden");	//body 스크롤 막기	
            	});
             
             //닫기 버튼
             $("input[type=button]").click(function(){
-                $(".coupon-modal-wrap").css('display','none');
+                $(".order-modal-wrap").css('display','none');
             });
             
-            $(".coupon-modal-wrap").click(function(){
-                $(".coupon-modal-wrap").css('display','none');
+            $(".order-modal-wrap").click(function(){
+                $(".order-modal-wrap").css('display','none');
             });
             
-            $(".coupon-modal-wrap>*").click(function(event){
+            $(".order-modal-wrap>*").click(function(event){
                 event.stopPropagation();
             });
         });
