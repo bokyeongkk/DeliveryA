@@ -277,11 +277,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="ordAddr" id="ordAddr" value=<%=oc.getOrder().getOrdAddr() %> readonly></td>
+                        <td><input type="text" name="ordAddr" id="ordAddr" value='<%=oc.getClient().getCliAddr() %>' readonly></td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="ordAddrDet" id="ordAddrDet" value="이레빌딩 19F A강의실" placeholder="상세주소">
+                            <input type="text" name="ordAddrDet" id="ordAddrDet" value='<%=oc.getClient().getCliAddrDet() %>' placeholder="상세주소">
                         </td>
                     </tr>
                     <tr>

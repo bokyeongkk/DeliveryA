@@ -157,12 +157,48 @@
         	width:100%;
         	height:100%;
         }
+        
+        
+                .slide-wrap{
+            position: relative;
+        }
+        .slide-text{
+            position: absolute;
+/*            border: 1px solid red;*/
+            text-align: left;
+            top: 20%;
+            left: 20%;
+        }
+        .slide-text>p{
+            margin: 0;
+            text-indent: 8px;
+            font-weight: 100;
+        }
+        .slide-text>h1{
+            font-size: 60px;
+            margin: 0;
+            margin-top: -15px;
+            padding: 0;
+/*            border: 1px solid red;*/
+        }
+        .light{
+            font-size: 40px;
+            margin-bottom: -10px;
+        }
     </style>
 
     <div class="content-all-wrap">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="/upload/slide1.png"></div>
+                <div class="swiper-slide slide-wrap">
+                   <div class="slide-text">
+                       <p class="light">오늘 첫 만남,</p>
+                       <h1>신규가입 웰컴쿠폰 혜택</h1>
+                       <p>Delivery-A 신규가입을 하신 고객님과의 소중한 첫 만남을 위해,</p>
+                       <p>가입 즉시 사용 가능한 웰컴쿠폰을 준비하였습니다.</p>
+                   </div>
+                    <img src="slide1.png">
+                </div>
                 <div class="swiper-slide">Slide</div>
                 <div class="swiper-slide"><img src="/upload/slide1.png"></div>
                 <div class="swiper-slide">Slide</div>
