@@ -330,7 +330,7 @@ input[type=checkbox] {
             //아이디 확인 및 중복체크
             $("#cliId").change(function() {
                 var cliId = $(this).val();
-                var reg = /^[a-zA-Z][A-Za-z0-9_-]{3,12}$/;
+                var reg = /^[a-zA-Z][A-Za-z0-9_-]{2,12}$/;
                 if (reg.test(cliId)) {
                     check[0] = true;
                     $("span").eq(0).text("");

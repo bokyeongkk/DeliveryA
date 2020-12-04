@@ -131,7 +131,6 @@
 	<%@ include file="/views/client/login.jsp"%>
 	<script>
 		function logout(){
-			alert(window.location.pathname);
 			$("#uri").val(window.location.pathname);
 			$("#param").val(window.location.search);
 			var logoutFrm = $("[name=logoutFrm]");
