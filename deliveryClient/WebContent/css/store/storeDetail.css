@@ -317,6 +317,7 @@
             box-shadow: 5px 5px 5px 3px gray;
             border-radius: 5px;
             color : #d8d8d8;
+            
         }
 
         .cart-title {
@@ -443,6 +444,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            z-index : 50;
         }
 
         .review-modal {
@@ -452,6 +454,7 @@
             min-width: 300px;
             min-height: 340px;
             padding: 35px;
+            z-index: 100;
         }
 
         .review-modal-btn {
