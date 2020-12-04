@@ -258,7 +258,7 @@
 						<div class="best-menu">
 							<div class="best-menu-img">
 								<!-- <img src="/upload/ready.jpg" style="width: 100%; height: 100%;"> -->
-								<img src="<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;">
+								<img src="/filepath/02_menu/<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;">
 							</div>
 							<div class="best-menu-text">
 								<p><%=listMenu.get(2).getMenuName()%></p>
