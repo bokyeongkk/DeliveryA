@@ -207,8 +207,8 @@
 			<!--가게정보div-->
 			<div class="store-info">
 				<div class="store-info-img">
-					<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
-					<!-- <img src="/filepath/01_store/<%=s.getStoreFilepath()%>" style="width: 100%; height: 100%;"> -->
+					<!-- <img src="/upload/ready.jpg" style="width: 100%; height: 100%;"> -->
+					<img src="/filepath/01_store/<%=s.getStoreFilepath()%>" style="width: 100%; height: 100%;">
 				</div>
 				<div class="store-info-text">
 					<ul>
@@ -237,8 +237,8 @@
 					<div class="best-menus">
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
-								<!-- <img src="/filepath/02_menu/<%=listMenu.get(0).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
+								<!-- <img src="/upload/ready.jpg" style="width: 100%; height: 100%;"> -->
+								<img src="/filepath/02_menu/<%=listMenu.get(0).getMenuFilepath() %>" style="width: 100%; height: 100%;">
 							</div>
 							<div class="best-menu-text">
 								<p><%=listMenu.get(0).getMenuName()%></p>
@@ -247,8 +247,8 @@
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
-								<!-- <img src="/filepath/02_menu/<%=listMenu.get(1).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
+								<!-- <img src="/upload/ready.jpg" style="width: 100%; height: 100%;"> -->
+								<img src="/filepath/02_menu/<%=listMenu.get(1).getMenuFilepath() %>" style="width: 100%; height: 100%;">
 							</div>
 							<div class="best-menu-text">
 								<p><%=listMenu.get(1).getMenuName()%></p>
@@ -257,8 +257,8 @@
 						</div>
 						<div class="best-menu">
 							<div class="best-menu-img">
-								<img src="/upload/ready.jpg" style="width: 100%; height: 100%;">
-								<!-- <img src="<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;"> -->
+								<!-- <img src="/upload/ready.jpg" style="width: 100%; height: 100%;"> -->
+								<img src="<%=listMenu.get(2).getMenuFilepath() %>" style="width: 100%; height: 100%;">
 							</div>
 							<div class="best-menu-text">
 								<p><%=listMenu.get(2).getMenuName()%></p>
@@ -397,10 +397,10 @@
 						class="far fa-star grade-mark" id="star"></i> <i
 						class="far fa-star grade-mark" id="star"></i> <i
 						class="far fa-star grade-mark" id="star"></i> <i
-						class="far fa-star grade-mark" id="star"></i> <input class="grade"
-						name="reviewScore" type="hidden" value=""> <br> <br>
+						class="far fa-star grade-mark" id="star"></i> 
+						<input class="grade" name="reviewScore" type="hidden" value="0"> <br> <br>
 					<textarea class="form-control modal-content" name="reviewContent"
-						cols="40" rows="8" style="resize: none"></textarea>
+						cols="40" rows="8" style="resize: none" required></textarea>
 
 					<input type="hidden" name="cliId" value="<%=c.getCliId()%>">
 					<input type="hidden" name="storeNo" value="<%=s.getStoreNo()%>">

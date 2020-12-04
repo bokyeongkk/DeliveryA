@@ -44,6 +44,7 @@ public class InsertCartServlet extends HttpServlet {
 		cart.setMenuName(menuName);
 		cart.setMenuCount(1);
 		cart.setMenuPrice(Integer.parseInt(request.getParameter("menuPrice")));
+		cart.setStoreNo(storeNo);
 
 		// 3. 비지니스로직
 		// 장바구니 세션이 존재하는지 검사
@@ -61,15 +62,25 @@ public class InsertCartServlet extends HttpServlet {
 			session.setAttribute("listCart", listCart); // 세션에 담는 것 까지 세팅
 
 		} else {
+			
+			System.out.println(listCart.get(0).getStoreNo());
+			System.out.println(storeNo);
+			
+			if(listCart.get(0).getStoreNo() != storeNo) { //다른 가게 메뉴가 담겨 있을 때
+				request.setAttribute("msg", "다른 가게의 메뉴를 삭제해주세요.");
 
-			// 동일한 메뉴는 장바구니에 담지 않도록 하는 조건
-			int index = new StoreService().searchIndex(listCart, menuName);
-			if (index < 0) { // 동일한 메뉴명이 존재하지 않음
-				listCart.add(cart); // listCart에 담기
-				request.setAttribute("msg", "장바구니에 담겼습니다.");
-			} else { // 동일한 메뉴명이 존재함
-				request.setAttribute("msg", "동일한 메뉴가 장바구니 안에 존재합니다.");
-			}
+			} else {
+				
+				// 동일한 메뉴는 장바구니에 담지 않도록 하는 조건
+				int index = new StoreService().searchIndex(listCart, menuName);
+				if (index < 0) { // 동일한 메뉴명이 존재하지 않음
+					listCart.add(cart); // listCart에 담기
+					request.setAttribute("msg", "장바구니에 담겼습니다.");
+				} else { // 동일한 메뉴명이 존재함
+					request.setAttribute("msg", "동일한 메뉴가 장바구니 안에 존재합니다.");
+				}
+
+			}			
 
 		}
 
