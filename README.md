@@ -1,32 +1,32 @@
-#🛵delivery - A (Client)
+# 🛵delivery - A (Client)
 ------
 
 > 앱이 아닌 웹사이트에서도 배달 주문을 이용하고 싶어 구축하게 된 프로젝트 입니다.
 
 <br>
 
-### 🛠사용 기술 
+### 사용 기술 
 ------
 
-#####__Front end__
+##### 🛠__Front end__
 
 +  Javascipt
 +  HTML5
 +  CSS3
 
-#####__Back-end__
+##### __Back-end__
 
 +  Java
 
-#####__Database__
+##### __Database__
 
 + Oracle
 
-#####__Server__
+##### __Server__
 
 + Apache Tomcat
 
-#####__API__
+##### __API__
 
 + Daum Postcode API
 + Iamport API
@@ -34,4 +34,4 @@
 <br>
 
 ### 📌주요 기능
--------
+------
