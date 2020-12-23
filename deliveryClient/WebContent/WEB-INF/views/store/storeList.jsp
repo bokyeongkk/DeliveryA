@@ -55,7 +55,7 @@
 				<div class="store-box-text">
 					<ul>
 						<li class="store-name"><a href="/storeDetailView?storeNo=<%=s.getStoreNo() %>" id="store-name"><%=s.getStoreName() %></a></li>
-						<li class="store-etc">매주 <%=s.getStoreRest() %> 휴무</li>
+						<li class="store-etc">휴무일 : <%=s.getStoreRest() %></li>
 						<li class="store-etc">운영시간  : <%=s.getStoreStartT() %> ~ <%=s.getStoreEndT() %></li>
 						<br>
 						<li id="coupon">쿠폰사용가능</li>
